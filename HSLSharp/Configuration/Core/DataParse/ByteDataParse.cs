@@ -32,6 +32,11 @@ namespace HSLSharp.Configuration
         /// </summary>
         public int TypeLength { get; set; }
 
+        
+
+
+
+        #region Const Resource
 
 
         /// <summary>
@@ -88,5 +93,6 @@ namespace HSLSharp.Configuration
         public const int DataParseStringUTF8 = 13;
 
 
+        #endregion
     }
 }

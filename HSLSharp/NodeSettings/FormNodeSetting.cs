@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace HSLSharp
 {
-    public partial class FormServer : Form
+    public partial class FormNodeSetting : Form
     {
-        public FormServer()
+        public FormNodeSetting( )
         {
             InitializeComponent( );
-        }
-        
-        private void button1_Click( object sender, EventArgs e )
-        {
-
         }
     }
 }

@@ -43,9 +43,37 @@ namespace HSLSharp.Configuration
         
         #region Load Configuration
 
+        /// <summary>
+        /// 从指定的文件夹加载规则信息
+        /// </summary>
         public void LoadBy()
         {
+            string[] fileNames = Directory.GetFiles( m_PathSave + "\\Regulars", "R*.regular" );
 
+            dict_lock.Enter( );
+
+            dic_reagulars.Clear( );
+
+            try
+            {
+                foreach (var item in fileNames)
+                {
+                    DataParseRegular parseRegular = new DataParseRegular( )
+                    {
+                        FileSavePath = item
+                    };
+
+                    parseRegular.LoadByFile( );
+                    dic_reagulars.Add( parseRegular.RegularCode, parseRegular );
+                }
+
+                dict_lock.Leave( );
+            }
+            catch
+            {
+                dict_lock.Leave( );
+                throw;                          // 保证异常的时候，退出锁并且还原异常
+            }
         }
 
 
@@ -62,7 +90,9 @@ namespace HSLSharp.Configuration
             {
                 RegularCode = name,
                 RegularDescription = regularDescription,
-                DataParses = dataParses
+                DataParses = dataParses,
+                FileSavePath = filePath,
+                ILogNet = Utils.ServerUtils.LogNet,
             };
 
 
@@ -208,7 +238,7 @@ namespace HSLSharp.Configuration
 
         #region Get Regulars
 
-
+        
 
 
         #endregion
