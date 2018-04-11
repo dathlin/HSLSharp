@@ -136,8 +136,8 @@
   <data name="FlagRed_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\FlagRed_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="xbox1Color_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Imgs\xbox1Color_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="envelope_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\envelope_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GenericVSEditor_9905" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\GenericVSEditor_9905.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,8 +151,8 @@
   <data name="flag_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\flag_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="server_Local_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Imgs\server_Local_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="xbox1Color_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\xbox1Color_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="action_Cancel_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\action_Cancel_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -165,6 +165,9 @@
   </data>
   <data name="HotSpot_10548" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\HotSpot_10548.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PencilAngled_16xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\PencilAngled_16xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WindowsAzure_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\WindowsAzure_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,6 +184,9 @@
   <data name="library_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\library_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="server_Local_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\server_Local_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="HotSpot_10548_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\HotSpot_10548_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -189,6 +195,9 @@
   </data>
   <data name="Module_648" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\Module_648.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ExtensionManager_vsix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\ExtensionManager_vsix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WindowsAzure_16xLG_Cyan" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\WindowsAzure_16xLG_Cyan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -205,13 +214,10 @@
   <data name="PencilAngled_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imgs\PencilAngled_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="envelope_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Imgs\envelope_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="arrow_open_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\arrow_open_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ExtensionManager_vsix" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Imgs\ExtensionManager_vsix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PencilAngled_16xLG_color" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Imgs\PencilAngled_16xLG_color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="save_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imgs\save_16xLG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

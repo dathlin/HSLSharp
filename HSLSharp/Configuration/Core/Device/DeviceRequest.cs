@@ -12,6 +12,15 @@ namespace HSLSharp.Configuration
     /// </summary>
     public class DeviceRequest
     {
+
+        /// <summary>
+        /// 实例化一个对象
+        /// </summary>
+        public DeviceRequest()
+        {
+
+        }
+
         /// <summary>
         /// 本次请求的名称，方便在节点中显示的
         /// </summary>

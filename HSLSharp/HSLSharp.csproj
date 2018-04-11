@@ -92,6 +92,9 @@
     <Compile Include="Configuration\Device\ModbusTcpClient.cs" />
     <Compile Include="Configuration\Node\NodeClass.cs" />
     <Compile Include="Configuration\Node\XmlNode.cs" />
+    <Compile Include="Controls\TreeViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="NodeSettings\FormModbusTcp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +121,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestSettings\FormRequest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RequestSettings\FormRequest.Designer.cs">
+      <DependentUpon>FormRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Utils.cs" />
     <EmbeddedResource Include="NodeSettings\FormModbusTcp.resx">
       <DependentUpon>FormModbusTcp.cs</DependentUpon>
@@ -141,6 +150,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RequestSettings\FormRequest.resx">
+      <DependentUpon>FormRequest.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -253,6 +265,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Imgs\PencilAngled_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\arrow_open_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\save_16xLG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

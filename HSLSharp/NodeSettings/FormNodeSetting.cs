@@ -81,7 +81,7 @@ namespace HSLSharp
             if (node.Tag is NodeClass nodeClass)
             {
                 // 允许添加设备
-                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( ))
+                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new ModbusTcpClient() ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
@@ -115,7 +115,18 @@ namespace HSLSharp
                     {
                         node.Text = formNode.SelectedNodeClass.Name;
                         node.Tag = formNode.SelectedNodeClass;
-                       
+                    }
+                }
+            }
+            else if(node.Tag is ModbusTcpClient modbusTcpNode)
+            {
+                // 编辑了Modbus-tcp节点
+                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( modbusTcpNode ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        node.Text = formNode.ModbusTcpNode.Name;
+                        node.Tag = formNode.ModbusTcpNode;
                     }
                 }
             }
@@ -215,6 +226,49 @@ namespace HSLSharp
             }
         }
 
+        private void 删除deleteToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 删除节点信息
+            TreeNode node = treeView1.SelectedNode;
+            if (node.ImageKey == "VirtualMachine_16xLG")
+            {
+                MessageBox.Show( "无法删除系统节点！" );
+                return;
+            }
 
+            if(node.Nodes.Count == 0)
+            {
+                node.Parent.Nodes.Remove( node );
+            }
+            else
+            {
+                if(MessageBox.Show("还有子节点数据存在，是否真的删除节点及子节点信息？","删除确认",MessageBoxButtons.YesNo,MessageBoxIcon.Warning)==DialogResult.Yes)
+                {
+                    node.Parent.Nodes.Remove( node );
+                }
+            }
+        }
+
+        private void 新增RequestToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了Modbus-Tcp客户端
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is DeviceNode deviceNode)
+            {
+                // 允许添加设备
+                using(RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        TreeNode nodeNew = new TreeNode( formNode.ModbusTcpNode.Name );
+                        nodeNew.ImageKey = "Module_648";
+                        nodeNew.SelectedImageKey = "Module_648";
+                        nodeNew.Tag = formNode.ModbusTcpNode;
+                        node.Nodes.Add( nodeNew );
+                        node.Expand( );
+                    }
+                }
+            }
+        }
     }
 }

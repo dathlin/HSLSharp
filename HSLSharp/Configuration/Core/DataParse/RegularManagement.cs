@@ -46,7 +46,7 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// 从指定的文件夹加载规则信息
         /// </summary>
-        public void LoadBy()
+        public void LoadResource()
         {
             string[] fileNames = Directory.GetFiles( m_PathSave + "\\Regulars", "R*.regular" );
 

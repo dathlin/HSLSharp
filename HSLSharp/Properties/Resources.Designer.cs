@@ -93,6 +93,16 @@ namespace HSLSharp.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap arrow_open_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("arrow_open_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap Class_489 {
             get {
                 object obj = ResourceManager.GetObject("Class_489", resourceCulture);
@@ -306,6 +316,16 @@ namespace HSLSharp.Properties {
         internal static System.Drawing.Bitmap Property_501 {
             get {
                 object obj = ResourceManager.GetObject("Property_501", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap save_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("save_16xLG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -6,14 +6,26 @@ using System.Threading.Tasks;
 
 namespace HSLSharp.Configuration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ModbusTcpClient : DeviceNode
     {
         #region Constructor
 
+        /// <summary>
+        /// 实例化一个默认参数的对象
+        /// </summary>
         public ModbusTcpClient()
         {
             CreateTime = DateTime.Now;
             DeviceType = DeviceNode.ModbusTcpClient;
+
+            Name = "ModbusTcp客户端";
+            Description = "这是描述";
+            ConnectTimeOut = 1000;
+            Port = 502;
+            Station = 1;
         }
 
 
