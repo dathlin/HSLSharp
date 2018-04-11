@@ -27,6 +27,11 @@ namespace HSLSharp.Configuration
         public int Port { get; set; }
 
         /// <summary>
+        /// 设备的类别
+        /// </summary>
+        public int DeviceType { get; set; }
+
+        /// <summary>
         /// 设备的文本描述
         /// </summary>
         public string Description { get; set; }
@@ -40,5 +45,23 @@ namespace HSLSharp.Configuration
         /// 设备的所有的数据请求
         /// </summary>
         public List<DeviceRequest> Requests { get; set; }
+
+
+
+
+
+
+
+        #region Const Define
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const int MelsecMcQna3EBinary = 1;
+
+        #endregion
+
+
+
     }
 }

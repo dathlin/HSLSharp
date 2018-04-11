@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using HslCommunication.LogNet;
 
 namespace HSLSharp.Utils
@@ -17,6 +18,9 @@ namespace HSLSharp.Utils
         /// </summary>
         public static ILogNet LogNet { get; set; }
 
-
+        /// <summary>
+        /// 系统的所有的图片资源信息
+        /// </summary>
+        public static ImageList SharpImageList { get; set; }
     }
 }

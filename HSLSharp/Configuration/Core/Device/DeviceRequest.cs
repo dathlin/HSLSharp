@@ -28,6 +28,11 @@ namespace HSLSharp.Configuration
         public ushort Length { get; set; }
 
         /// <summary>
+        /// 本次请求的时间间隔，单位为毫秒
+        /// </summary>
+        public int CaptureInterval { get; set; }
+
+        /// <summary>
         /// 本次请求解析字节数据的规则
         /// </summary>
         public string PraseRegularCode { get; set; }

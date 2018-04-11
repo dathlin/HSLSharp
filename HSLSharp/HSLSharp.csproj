@@ -91,6 +91,12 @@
     <Compile Include="Configuration\Core\ModbusServer\ModbusRequest.cs" />
     <Compile Include="Configuration\Node\NodeClass.cs" />
     <Compile Include="Configuration\Node\XmlNode.cs" />
+    <Compile Include="NodeSettings\FormNodeClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormNodeClass.Designer.cs">
+      <DependentUpon>FormNodeClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="NodeSettings\FormNodeSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Utils.cs" />
+    <EmbeddedResource Include="NodeSettings\FormNodeClass.resx">
+      <DependentUpon>FormNodeClass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormNodeSetting.resx">
       <DependentUpon>FormNodeSetting.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +129,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -137,6 +147,93 @@
   <ItemGroup>
     <Folder Include="OpcUaServer\" />
     <Folder Include="SettingsSupport\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\abstr1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\action_add_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\action_Cancel_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Class_489.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\ClassIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Enum_582.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Event_594.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Event_594_exp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\FieldsHeader_12x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\flag_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\FlagRed_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\FlagSpace_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\GenericVSEditor_9905.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\HotSpot_10548.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\HotSpot_10548_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\library_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Method_636.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Module_648.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Monitor_Screen_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Operator_660.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\PencilAngled_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\Property_501.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\server_Local_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\star_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\usbcontroller.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\VirtualMachine_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\WindowsAzure_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\WindowsAzure_16xLG_Cyan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imgs\xbox1Color_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

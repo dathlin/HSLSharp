@@ -29,24 +29,27 @@
         private void InitializeComponent( )
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Devices");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("ModbusServer");
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.HslSharpValueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HslSharpValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增类别ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.编辑类别editClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.类别classToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.西门子PlcsiemensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.三菱plcmelsecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.欧姆龙plcomronToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modbustcpclientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modbustcpserverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.编辑类别editClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.HslSharpValueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HslSharpValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -56,8 +59,92 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.Location = new System.Drawing.Point(20, 35);
             this.treeView1.Name = "treeView1";
+            treeNode3.Name = "node_devices";
+            treeNode3.Text = "Devices";
+            treeNode4.Name = "node_modbusServer";
+            treeNode4.Text = "ModbusServer";
+            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode4});
             this.treeView1.Size = new System.Drawing.Size(528, 577);
             this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.新增类别ToolStripMenuItem,
+            this.编辑类别editClassToolStripMenuItem,
+            this.删除deleteToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
+            // 
+            // 新增类别ToolStripMenuItem
+            // 
+            this.新增类别ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.类别classToolStripMenuItem,
+            this.西门子PlcsiemensToolStripMenuItem,
+            this.三菱plcmelsecToolStripMenuItem,
+            this.欧姆龙plcomronToolStripMenuItem,
+            this.modbustcpclientToolStripMenuItem,
+            this.modbustcpserverToolStripMenuItem});
+            this.新增类别ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
+            this.新增类别ToolStripMenuItem.Name = "新增类别ToolStripMenuItem";
+            this.新增类别ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.新增类别ToolStripMenuItem.Text = "新增(add new)";
+            // 
+            // 类别classToolStripMenuItem
+            // 
+            this.类别classToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Class_489;
+            this.类别classToolStripMenuItem.Name = "类别classToolStripMenuItem";
+            this.类别classToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.类别classToolStripMenuItem.Text = "类别(class)";
+            this.类别classToolStripMenuItem.Click += new System.EventHandler(this.类别classToolStripMenuItem_Click);
+            // 
+            // 西门子PlcsiemensToolStripMenuItem
+            // 
+            this.西门子PlcsiemensToolStripMenuItem.Name = "西门子PlcsiemensToolStripMenuItem";
+            this.西门子PlcsiemensToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.西门子PlcsiemensToolStripMenuItem.Text = "西门子Plc(siemens)";
+            // 
+            // 三菱plcmelsecToolStripMenuItem
+            // 
+            this.三菱plcmelsecToolStripMenuItem.Name = "三菱plcmelsecToolStripMenuItem";
+            this.三菱plcmelsecToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.三菱plcmelsecToolStripMenuItem.Text = "三菱plc(melsec)";
+            // 
+            // 欧姆龙plcomronToolStripMenuItem
+            // 
+            this.欧姆龙plcomronToolStripMenuItem.Name = "欧姆龙plcomronToolStripMenuItem";
+            this.欧姆龙plcomronToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.欧姆龙plcomronToolStripMenuItem.Text = "欧姆龙plc(omron)";
+            // 
+            // modbustcpclientToolStripMenuItem
+            // 
+            this.modbustcpclientToolStripMenuItem.Name = "modbustcpclientToolStripMenuItem";
+            this.modbustcpclientToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.modbustcpclientToolStripMenuItem.Text = "Modbus-tcp-client";
+            // 
+            // modbustcpserverToolStripMenuItem
+            // 
+            this.modbustcpserverToolStripMenuItem.Name = "modbustcpserverToolStripMenuItem";
+            this.modbustcpserverToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.modbustcpserverToolStripMenuItem.Text = "Modbus-tcp-server";
+            // 
+            // 编辑类别editClassToolStripMenuItem
+            // 
+            this.编辑类别editClassToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG;
+            this.编辑类别editClassToolStripMenuItem.Name = "编辑类别editClassToolStripMenuItem";
+            this.编辑类别editClassToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.编辑类别editClassToolStripMenuItem.Text = "编辑(edit)";
+            // 
+            // 删除deleteToolStripMenuItem
+            // 
+            this.删除deleteToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
+            this.删除deleteToolStripMenuItem.Name = "删除deleteToolStripMenuItem";
+            this.删除deleteToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.删除deleteToolStripMenuItem.Text = "删除(delete)";
             // 
             // label1
             // 
@@ -82,8 +169,8 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
@@ -112,69 +199,6 @@
             this.HslSharpValue.ReadOnly = true;
             this.HslSharpValue.Width = 180;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.新增类别ToolStripMenuItem,
-            this.编辑类别editClassToolStripMenuItem,
-            this.删除deleteToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
-            // 
-            // 新增类别ToolStripMenuItem
-            // 
-            this.新增类别ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.类别classToolStripMenuItem,
-            this.西门子PlcsiemensToolStripMenuItem,
-            this.三菱plcmelsecToolStripMenuItem,
-            this.欧姆龙plcomronToolStripMenuItem,
-            this.modbustcpclientToolStripMenuItem});
-            this.新增类别ToolStripMenuItem.Name = "新增类别ToolStripMenuItem";
-            this.新增类别ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.新增类别ToolStripMenuItem.Text = "新增(add new)";
-            // 
-            // 编辑类别editClassToolStripMenuItem
-            // 
-            this.编辑类别editClassToolStripMenuItem.Name = "编辑类别editClassToolStripMenuItem";
-            this.编辑类别editClassToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.编辑类别editClassToolStripMenuItem.Text = "编辑(edit)";
-            // 
-            // 类别classToolStripMenuItem
-            // 
-            this.类别classToolStripMenuItem.Name = "类别classToolStripMenuItem";
-            this.类别classToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.类别classToolStripMenuItem.Text = "类别(class)";
-            // 
-            // 西门子PlcsiemensToolStripMenuItem
-            // 
-            this.西门子PlcsiemensToolStripMenuItem.Name = "西门子PlcsiemensToolStripMenuItem";
-            this.西门子PlcsiemensToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.西门子PlcsiemensToolStripMenuItem.Text = "西门子Plc(siemens)";
-            // 
-            // 三菱plcmelsecToolStripMenuItem
-            // 
-            this.三菱plcmelsecToolStripMenuItem.Name = "三菱plcmelsecToolStripMenuItem";
-            this.三菱plcmelsecToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.三菱plcmelsecToolStripMenuItem.Text = "三菱plc(melsec)";
-            // 
-            // 欧姆龙plcomronToolStripMenuItem
-            // 
-            this.欧姆龙plcomronToolStripMenuItem.Name = "欧姆龙plcomronToolStripMenuItem";
-            this.欧姆龙plcomronToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.欧姆龙plcomronToolStripMenuItem.Text = "欧姆龙plc(omron)";
-            // 
-            // modbustcpclientToolStripMenuItem
-            // 
-            this.modbustcpclientToolStripMenuItem.Name = "modbustcpclientToolStripMenuItem";
-            this.modbustcpclientToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.modbustcpclientToolStripMenuItem.Text = "Modbus-tcp-client";
-            // 
-            // 删除deleteToolStripMenuItem
-            // 
-            this.删除deleteToolStripMenuItem.Name = "删除deleteToolStripMenuItem";
-            this.删除deleteToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.删除deleteToolStripMenuItem.Text = "删除(delete)";
-            // 
             // FormNodeSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -187,9 +211,11 @@
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormNodeSetting";
-            this.Text = "FormNodeSetting";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "节点配置器";
+            this.Load += new System.EventHandler(this.FormNodeSetting_Load);
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,5 +238,6 @@
         private System.Windows.Forms.ToolStripMenuItem modbustcpclientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 编辑类别editClassToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 删除deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modbustcpserverToolStripMenuItem;
     }
 }
