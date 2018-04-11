@@ -59,12 +59,14 @@
             // 
             this.系统配置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.节点配置器ToolStripMenuItem});
+            this.系统配置ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Property_501;
             this.系统配置ToolStripMenuItem.Name = "系统配置ToolStripMenuItem";
-            this.系统配置ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.系统配置ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
             this.系统配置ToolStripMenuItem.Text = "系统配置";
             // 
             // 节点配置器ToolStripMenuItem
             // 
+            this.节点配置器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.ClassIcon;
             this.节点配置器ToolStripMenuItem.Name = "节点配置器ToolStripMenuItem";
             this.节点配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.节点配置器ToolStripMenuItem.Text = "节点配置器";

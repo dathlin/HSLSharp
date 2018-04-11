@@ -11,25 +11,26 @@ namespace HSLSharp.Configuration
     /// </summary>
     public class DeviceNode
     {
+        public DeviceNode()
+        {
+            Requests = new List<DeviceRequest>( );
+        }
+
+
         /// <summary>
         /// 设备的名字，节点显示就显示这个信息
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// 设备的Ip地址
-        /// </summary>
-        public string Ip { get; set; }
-
-        /// <summary>
-        /// 设备的端口号
-        /// </summary>
-        public int Port { get; set; }
-
-        /// <summary>
         /// 设备的类别
         /// </summary>
         public int DeviceType { get; set; }
+
+        /// <summary>
+        /// 连接超时的时间，单位毫秒
+        /// </summary>
+        public int ConnectTimeOut { get; set; }
 
         /// <summary>
         /// 设备的文本描述
@@ -45,11 +46,8 @@ namespace HSLSharp.Configuration
         /// 设备的所有的数据请求
         /// </summary>
         public List<DeviceRequest> Requests { get; set; }
-
-
-
-
-
+        
+        
 
 
         #region Const Define
@@ -58,6 +56,9 @@ namespace HSLSharp.Configuration
         /// 
         /// </summary>
         public const int MelsecMcQna3EBinary = 1;
+
+        public const int ModbusTcpClient = 10;
+
 
         #endregion
 

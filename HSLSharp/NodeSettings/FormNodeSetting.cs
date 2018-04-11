@@ -73,6 +73,54 @@ namespace HSLSharp
             }
         }
 
+
+        private void modbustcpclientToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了Modbus-Tcp客户端
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                // 允许添加设备
+                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        TreeNode nodeNew = new TreeNode( formNode.ModbusTcpNode.Name );
+                        nodeNew.ImageKey = "Module_648";
+                        nodeNew.SelectedImageKey = "Module_648";
+                        nodeNew.Tag = formNode.ModbusTcpNode;
+                        node.Nodes.Add( nodeNew );
+                        node.Expand( );
+                    }
+                }
+            }
+        }
+
+        private void 编辑类别editClassToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 节点被选择的时候
+            TreeNode node = treeView1.SelectedNode;
+            if(node.ImageKey == "VirtualMachine_16xLG")
+            {
+                MessageBox.Show( "无法编辑系统节点！" );
+                return;
+            }
+
+            if (node.Tag is NodeClass nodeClass)
+            {
+                // 编辑了节点
+                using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( nodeClass ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        node.Text = formNode.SelectedNodeClass.Name;
+                        node.Tag = formNode.SelectedNodeClass;
+                       
+                    }
+                }
+            }
+        }
+
         private void treeView1_AfterSelect( object sender, TreeViewEventArgs e )
         {
             // 节点被选择的时候
@@ -81,6 +129,10 @@ namespace HSLSharp
             {
                 // 显示选择的节点信息
                 DataGridViewRenderNodeClass( nodeClass );
+            }
+            else if(node.Tag is ModbusTcpClient modbusTcpNode)
+            {
+                DataGridViewRenderNodeClass( modbusTcpNode );
             }
         }
 
@@ -105,6 +157,10 @@ namespace HSLSharp
                     dataGridView1.Rows.RemoveAt( dataGridView1.Rows.Count - 1 );
                 }
             }
+            if(row>0)
+            {
+                dataGridView1.Rows[0].Cells[0].Selected = false;
+            }
         }
 
         private void DataGridViewRenderNodeClass(NodeClass nodeClass)
@@ -115,6 +171,30 @@ namespace HSLSharp
             dataGridView1.Rows[1].Cells[0].Value = "描述";
             dataGridView1.Rows[1].Cells[1].Value = nodeClass.Description;
         }
+
+
+        private void DataGridViewRenderNodeClass( ModbusTcpClient modbusTcpNode)
+        {
+            DataGridSpecifyRowCount( 7 );
+            dataGridView1.Rows[0].Cells[0].Value = "节点名称";
+            dataGridView1.Rows[0].Cells[1].Value = modbusTcpNode.Name;
+            dataGridView1.Rows[1].Cells[0].Value = "描述";
+            dataGridView1.Rows[1].Cells[1].Value = modbusTcpNode.Description;
+            dataGridView1.Rows[2].Cells[0].Value = "Ip地址";
+            dataGridView1.Rows[2].Cells[1].Value = modbusTcpNode.IpAddress;
+            dataGridView1.Rows[3].Cells[0].Value = "端口号";
+            dataGridView1.Rows[3].Cells[1].Value = modbusTcpNode.Port;
+            dataGridView1.Rows[4].Cells[0].Value = "站号";
+            dataGridView1.Rows[4].Cells[1].Value = modbusTcpNode.Station;
+            dataGridView1.Rows[5].Cells[0].Value = "连接超时";
+            dataGridView1.Rows[5].Cells[1].Value = modbusTcpNode.ConnectTimeOut;
+            dataGridView1.Rows[6].Cells[0].Value = "是否地址0开始";
+            dataGridView1.Rows[6].Cells[1].Value = modbusTcpNode.IsAddressStartWithZero;
+        }
+
+
+
+
 
         private void treeView1_MouseDown( object sender, MouseEventArgs e )
         {
@@ -127,7 +207,14 @@ namespace HSLSharp
                     // 显示第一个菜单框
                     contextMenuStrip1.Show( treeView1, e.Location );
                 }
+                else if (node.Tag is DeviceNode deviceNode)
+                {
+                    // 显示第二个菜单框
+                    contextMenuStrip2.Show( treeView1, e.Location );
+                }
             }
         }
+
+
     }
 }

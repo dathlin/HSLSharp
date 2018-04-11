@@ -123,6 +123,16 @@ namespace HSLSharp.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap envelope_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("envelope_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap Event_594 {
             get {
                 object obj = ResourceManager.GetObject("Event_594", resourceCulture);
@@ -136,6 +146,16 @@ namespace HSLSharp.Properties {
         internal static System.Drawing.Bitmap Event_594_exp {
             get {
                 object obj = ResourceManager.GetObject("Event_594_exp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ExtensionManager_vsix {
+            get {
+                object obj = ResourceManager.GetObject("ExtensionManager_vsix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -266,6 +286,16 @@ namespace HSLSharp.Properties {
         internal static System.Drawing.Bitmap PencilAngled_16xLG {
             get {
                 object obj = ResourceManager.GetObject("PencilAngled_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap PencilAngled_16xLG_color {
+            get {
+                object obj = ResourceManager.GetObject("PencilAngled_16xLG_color", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

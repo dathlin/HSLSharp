@@ -11,46 +11,45 @@ using System.Windows.Forms;
 
 namespace HSLSharp.NodeSettings
 {
-    public partial class FormNodeClass : Form
+    public partial class FormModbusTcp : Form
     {
-        public FormNodeClass( )
+        public FormModbusTcp( )
         {
             InitializeComponent( );
         }
 
-
-        public FormNodeClass( NodeClass nodeClass )
+        private void FormModbusTcp_Load( object sender, EventArgs e )
         {
-            InitializeComponent( );
-            SelectedNodeClass = nodeClass;
-        }
 
-        private void FormNodeClass_Load( object sender, EventArgs e )
-        {
-            if(SelectedNodeClass != null)
-            {
-                textBox1.Text = SelectedNodeClass.Name;
-                textBox2.Text = SelectedNodeClass.Description;
-            }
         }
 
         private void userButton1_Click( object sender, EventArgs e )
         {
-            if(string.IsNullOrEmpty(textBox1.Text))
+            if (string.IsNullOrEmpty( textBox1.Text ))
             {
                 MessageBox.Show( "节点名称不能为空" );
                 return;
             }
 
-            SelectedNodeClass = new NodeClass( )
+            ModbusTcpNode = new ModbusTcpClient( )
             {
                 Name = textBox1.Text,
                 Description = textBox2.Text,
+                IpAddress = textBox3.Text,
+                Port = int.Parse(textBox4.Text),
+                Station = byte.Parse(textBox5.Text),
+                IsAddressStartWithZero = !checkBox1.Checked,
+                ConnectTimeOut = int.Parse(textBox6.Text),
             };
             DialogResult = DialogResult.OK;
         }
 
 
-        public NodeClass SelectedNodeClass { get; set; }
+
+
+
+        public ModbusTcpClient ModbusTcpNode { get; set; }
+
+
     }
 }
