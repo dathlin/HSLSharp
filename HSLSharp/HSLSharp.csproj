@@ -90,6 +90,7 @@
     <Compile Include="Configuration\Core\ModbusServer\ModbusNode.cs" />
     <Compile Include="Configuration\Core\ModbusServer\ModbusRequest.cs" />
     <Compile Include="Configuration\Device\ModbusTcpClient.cs" />
+    <Compile Include="Configuration\Node\IXmlConvert.cs" />
     <Compile Include="Configuration\Node\NodeClass.cs" />
     <Compile Include="Configuration\Node\XmlNode.cs" />
     <Compile Include="Controls\TreeViewEx.cs">

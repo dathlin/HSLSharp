@@ -35,15 +35,6 @@ namespace HSLSharp
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Devices");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("ModbusServer");
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.HslSharpValueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HslSharpValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.保存文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.打开文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新增类别ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.类别classToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.西门子PlcsiemensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,14 +44,27 @@ namespace HSLSharp
             this.modbustcpserverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑类别editClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.HslSharpValueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HslSharpValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增RequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑RequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除RequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.打开文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new HSLSharp.Controls.TreeViewEx();
+            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.编辑节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -70,7 +74,77 @@ namespace HSLSharp
             this.编辑类别editClassToolStripMenuItem,
             this.删除deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(159, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 70);
+            // 
+            // 新增类别ToolStripMenuItem
+            // 
+            this.新增类别ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.类别classToolStripMenuItem,
+            this.西门子PlcsiemensToolStripMenuItem,
+            this.三菱plcmelsecToolStripMenuItem,
+            this.欧姆龙plcomronToolStripMenuItem,
+            this.modbustcpclientToolStripMenuItem,
+            this.modbustcpserverToolStripMenuItem});
+            this.新增类别ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
+            this.新增类别ToolStripMenuItem.Name = "新增类别ToolStripMenuItem";
+            this.新增类别ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.新增类别ToolStripMenuItem.Text = "新增类别";
+            // 
+            // 类别classToolStripMenuItem
+            // 
+            this.类别classToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Class_489;
+            this.类别classToolStripMenuItem.Name = "类别classToolStripMenuItem";
+            this.类别classToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.类别classToolStripMenuItem.Text = "类别(class)";
+            this.类别classToolStripMenuItem.Click += new System.EventHandler(this.类别classToolStripMenuItem_Click);
+            // 
+            // 西门子PlcsiemensToolStripMenuItem
+            // 
+            this.西门子PlcsiemensToolStripMenuItem.Name = "西门子PlcsiemensToolStripMenuItem";
+            this.西门子PlcsiemensToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.西门子PlcsiemensToolStripMenuItem.Text = "西门子Plc(siemens)";
+            // 
+            // 三菱plcmelsecToolStripMenuItem
+            // 
+            this.三菱plcmelsecToolStripMenuItem.Name = "三菱plcmelsecToolStripMenuItem";
+            this.三菱plcmelsecToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.三菱plcmelsecToolStripMenuItem.Text = "三菱plc(melsec)";
+            // 
+            // 欧姆龙plcomronToolStripMenuItem
+            // 
+            this.欧姆龙plcomronToolStripMenuItem.Name = "欧姆龙plcomronToolStripMenuItem";
+            this.欧姆龙plcomronToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.欧姆龙plcomronToolStripMenuItem.Text = "欧姆龙plc(omron)";
+            // 
+            // modbustcpclientToolStripMenuItem
+            // 
+            this.modbustcpclientToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Module_648;
+            this.modbustcpclientToolStripMenuItem.Name = "modbustcpclientToolStripMenuItem";
+            this.modbustcpclientToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.modbustcpclientToolStripMenuItem.Text = "Modbus-tcp-client";
+            this.modbustcpclientToolStripMenuItem.Click += new System.EventHandler(this.modbustcpclientToolStripMenuItem_Click);
+            // 
+            // modbustcpserverToolStripMenuItem
+            // 
+            this.modbustcpserverToolStripMenuItem.Name = "modbustcpserverToolStripMenuItem";
+            this.modbustcpserverToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.modbustcpserverToolStripMenuItem.Text = "Modbus-tcp-server";
+            // 
+            // 编辑类别editClassToolStripMenuItem
+            // 
+            this.编辑类别editClassToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG_color;
+            this.编辑类别editClassToolStripMenuItem.Name = "编辑类别editClassToolStripMenuItem";
+            this.编辑类别editClassToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.编辑类别editClassToolStripMenuItem.Text = "编辑节点";
+            this.编辑类别editClassToolStripMenuItem.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
+            // 
+            // 删除deleteToolStripMenuItem
+            // 
+            this.删除deleteToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
+            this.删除deleteToolStripMenuItem.Name = "删除deleteToolStripMenuItem";
+            this.删除deleteToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.删除deleteToolStripMenuItem.Text = "删除节点";
+            this.删除deleteToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -132,7 +206,31 @@ namespace HSLSharp
             this.编辑RequestToolStripMenuItem,
             this.删除RequestToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(148, 70);
+            // 
+            // 新增RequestToolStripMenuItem
+            // 
+            this.新增RequestToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
+            this.新增RequestToolStripMenuItem.Name = "新增RequestToolStripMenuItem";
+            this.新增RequestToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.新增RequestToolStripMenuItem.Text = "新增Request";
+            this.新增RequestToolStripMenuItem.Click += new System.EventHandler(this.新增RequestToolStripMenuItem_Click);
+            // 
+            // 编辑RequestToolStripMenuItem
+            // 
+            this.编辑RequestToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG_color;
+            this.编辑RequestToolStripMenuItem.Name = "编辑RequestToolStripMenuItem";
+            this.编辑RequestToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.编辑RequestToolStripMenuItem.Text = "编辑节点";
+            this.编辑RequestToolStripMenuItem.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
+            // 
+            // 删除RequestToolStripMenuItem
+            // 
+            this.删除RequestToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
+            this.删除RequestToolStripMenuItem.Name = "删除RequestToolStripMenuItem";
+            this.删除RequestToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.删除RequestToolStripMenuItem.Text = "删除节点";
+            this.删除RequestToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -146,13 +244,6 @@ namespace HSLSharp
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // 保存文件ToolStripMenuItem
-            // 
-            this.保存文件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.save_16xLG;
-            this.保存文件ToolStripMenuItem.Name = "保存文件ToolStripMenuItem";
-            this.保存文件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
-            this.保存文件ToolStripMenuItem.Text = "保存文件";
-            // 
             // 打开文件ToolStripMenuItem
             // 
             this.打开文件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.arrow_open_16xLG;
@@ -160,99 +251,12 @@ namespace HSLSharp
             this.打开文件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
             this.打开文件ToolStripMenuItem.Text = "打开文件";
             // 
-            // 新增类别ToolStripMenuItem
+            // 保存文件ToolStripMenuItem
             // 
-            this.新增类别ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.类别classToolStripMenuItem,
-            this.西门子PlcsiemensToolStripMenuItem,
-            this.三菱plcmelsecToolStripMenuItem,
-            this.欧姆龙plcomronToolStripMenuItem,
-            this.modbustcpclientToolStripMenuItem,
-            this.modbustcpserverToolStripMenuItem});
-            this.新增类别ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
-            this.新增类别ToolStripMenuItem.Name = "新增类别ToolStripMenuItem";
-            this.新增类别ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.新增类别ToolStripMenuItem.Text = "新增(add new)";
-            // 
-            // 类别classToolStripMenuItem
-            // 
-            this.类别classToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Class_489;
-            this.类别classToolStripMenuItem.Name = "类别classToolStripMenuItem";
-            this.类别classToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.类别classToolStripMenuItem.Text = "类别(class)";
-            this.类别classToolStripMenuItem.Click += new System.EventHandler(this.类别classToolStripMenuItem_Click);
-            // 
-            // 西门子PlcsiemensToolStripMenuItem
-            // 
-            this.西门子PlcsiemensToolStripMenuItem.Name = "西门子PlcsiemensToolStripMenuItem";
-            this.西门子PlcsiemensToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.西门子PlcsiemensToolStripMenuItem.Text = "西门子Plc(siemens)";
-            // 
-            // 三菱plcmelsecToolStripMenuItem
-            // 
-            this.三菱plcmelsecToolStripMenuItem.Name = "三菱plcmelsecToolStripMenuItem";
-            this.三菱plcmelsecToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.三菱plcmelsecToolStripMenuItem.Text = "三菱plc(melsec)";
-            // 
-            // 欧姆龙plcomronToolStripMenuItem
-            // 
-            this.欧姆龙plcomronToolStripMenuItem.Name = "欧姆龙plcomronToolStripMenuItem";
-            this.欧姆龙plcomronToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.欧姆龙plcomronToolStripMenuItem.Text = "欧姆龙plc(omron)";
-            // 
-            // modbustcpclientToolStripMenuItem
-            // 
-            this.modbustcpclientToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Module_648;
-            this.modbustcpclientToolStripMenuItem.Name = "modbustcpclientToolStripMenuItem";
-            this.modbustcpclientToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.modbustcpclientToolStripMenuItem.Text = "Modbus-tcp-client";
-            this.modbustcpclientToolStripMenuItem.Click += new System.EventHandler(this.modbustcpclientToolStripMenuItem_Click);
-            // 
-            // modbustcpserverToolStripMenuItem
-            // 
-            this.modbustcpserverToolStripMenuItem.Name = "modbustcpserverToolStripMenuItem";
-            this.modbustcpserverToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.modbustcpserverToolStripMenuItem.Text = "Modbus-tcp-server";
-            // 
-            // 编辑类别editClassToolStripMenuItem
-            // 
-            this.编辑类别editClassToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG_color;
-            this.编辑类别editClassToolStripMenuItem.Name = "编辑类别editClassToolStripMenuItem";
-            this.编辑类别editClassToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.编辑类别editClassToolStripMenuItem.Text = "编辑(edit)";
-            this.编辑类别editClassToolStripMenuItem.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
-            // 
-            // 删除deleteToolStripMenuItem
-            // 
-            this.删除deleteToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
-            this.删除deleteToolStripMenuItem.Name = "删除deleteToolStripMenuItem";
-            this.删除deleteToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.删除deleteToolStripMenuItem.Text = "删除(delete)";
-            this.删除deleteToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
-            // 
-            // 新增RequestToolStripMenuItem
-            // 
-            this.新增RequestToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
-            this.新增RequestToolStripMenuItem.Name = "新增RequestToolStripMenuItem";
-            this.新增RequestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.新增RequestToolStripMenuItem.Text = "新增Request";
-            this.新增RequestToolStripMenuItem.Click += new System.EventHandler(this.新增RequestToolStripMenuItem_Click);
-            // 
-            // 编辑RequestToolStripMenuItem
-            // 
-            this.编辑RequestToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG_color;
-            this.编辑RequestToolStripMenuItem.Name = "编辑RequestToolStripMenuItem";
-            this.编辑RequestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.编辑RequestToolStripMenuItem.Text = "编辑节点";
-            this.编辑RequestToolStripMenuItem.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
-            // 
-            // 删除RequestToolStripMenuItem
-            // 
-            this.删除RequestToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
-            this.删除RequestToolStripMenuItem.Name = "删除RequestToolStripMenuItem";
-            this.删除RequestToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.删除RequestToolStripMenuItem.Text = "删除节点";
-            this.删除RequestToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
+            this.保存文件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.save_16xLG;
+            this.保存文件ToolStripMenuItem.Name = "保存文件ToolStripMenuItem";
+            this.保存文件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
+            this.保存文件ToolStripMenuItem.Text = "保存文件";
             // 
             // treeView1
             // 
@@ -272,6 +276,30 @@ namespace HSLSharp
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            // 
+            // contextMenuStrip3
+            // 
+            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.编辑节点ToolStripMenuItem,
+            this.删除节点ToolStripMenuItem});
+            this.contextMenuStrip3.Name = "contextMenuStrip3";
+            this.contextMenuStrip3.Size = new System.Drawing.Size(125, 48);
+            // 
+            // 编辑节点ToolStripMenuItem
+            // 
+            this.编辑节点ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG_color;
+            this.编辑节点ToolStripMenuItem.Name = "编辑节点ToolStripMenuItem";
+            this.编辑节点ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.编辑节点ToolStripMenuItem.Text = "编辑节点";
+            this.编辑节点ToolStripMenuItem.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
+            // 
+            // 删除节点ToolStripMenuItem
+            // 
+            this.删除节点ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
+            this.删除节点ToolStripMenuItem.Name = "删除节点ToolStripMenuItem";
+            this.删除节点ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.删除节点ToolStripMenuItem.Text = "删除节点";
+            this.删除节点ToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
             // 
             // FormNodeSetting
             // 
@@ -295,6 +323,7 @@ namespace HSLSharp
             this.contextMenuStrip2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStrip3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,5 +354,8 @@ namespace HSLSharp
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 打开文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 保存文件ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
+        private System.Windows.Forms.ToolStripMenuItem 编辑节点ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除节点ToolStripMenuItem;
     }
 }

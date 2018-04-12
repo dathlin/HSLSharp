@@ -55,12 +55,12 @@ namespace HSLSharp
         {
             // 新增了类别
             TreeNode node = treeView1.SelectedNode;
-            if(node.Tag is NodeClass nodeClass)
+            if (node.Tag is NodeClass nodeClass)
             {
                 // 允许添加类别
                 using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( ))
                 {
-                    if(formNode.ShowDialog() == DialogResult.OK)
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
                         TreeNode nodeNew = new TreeNode( formNode.SelectedNodeClass.Name );
                         nodeNew.ImageKey = "Class_489";
@@ -81,7 +81,7 @@ namespace HSLSharp
             if (node.Tag is NodeClass nodeClass)
             {
                 // 允许添加设备
-                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new ModbusTcpClient() ))
+                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new ModbusTcpClient( ) ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
@@ -100,7 +100,7 @@ namespace HSLSharp
         {
             // 节点被选择的时候
             TreeNode node = treeView1.SelectedNode;
-            if(node.ImageKey == "VirtualMachine_16xLG")
+            if (node.ImageKey == "VirtualMachine_16xLG")
             {
                 MessageBox.Show( "无法编辑系统节点！" );
                 return;
@@ -118,7 +118,7 @@ namespace HSLSharp
                     }
                 }
             }
-            else if(node.Tag is ModbusTcpClient modbusTcpNode)
+            else if (node.Tag is ModbusTcpClient modbusTcpNode)
             {
                 // 编辑了Modbus-tcp节点
                 using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( modbusTcpNode ))
@@ -127,6 +127,18 @@ namespace HSLSharp
                     {
                         node.Text = formNode.ModbusTcpNode.Name;
                         node.Tag = formNode.ModbusTcpNode;
+                    }
+                }
+            }
+            else if (node.Tag is DeviceRequest deviceRequest)
+            {
+                // 编辑了Request节点
+                using (RequestSettings.FormRequest formRequest = new RequestSettings.FormRequest( deviceRequest ))
+                {
+                    if (formRequest.ShowDialog( ) == DialogResult.OK)
+                    {
+                        node.Text = formRequest.DeviceRequest.Name;
+                        node.Tag = formRequest.DeviceRequest;
                     }
                 }
             }
@@ -141,9 +153,15 @@ namespace HSLSharp
                 // 显示选择的节点信息
                 DataGridViewRenderNodeClass( nodeClass );
             }
-            else if(node.Tag is ModbusTcpClient modbusTcpNode)
+            else if (node.Tag is ModbusTcpClient modbusTcpNode)
             {
+                // 显示Modbus-tcp的客户端
                 DataGridViewRenderNodeClass( modbusTcpNode );
+            }
+            else if (node.Tag is DeviceRequest deviceRequest)
+            {
+                // 显示单次的数据请求
+                DataGridViewRenderNodeClass( deviceRequest );
             }
         }
 
@@ -160,7 +178,7 @@ namespace HSLSharp
                 // 扩充
                 dataGridView1.Rows.Add( row - dataGridView1.RowCount );
             }
-            else if(dataGridView1.RowCount > row)
+            else if (dataGridView1.RowCount > row)
             {
                 int deleteRows = dataGridView1.RowCount - row;
                 for (int i = 0; i < deleteRows; i++)
@@ -168,13 +186,13 @@ namespace HSLSharp
                     dataGridView1.Rows.RemoveAt( dataGridView1.Rows.Count - 1 );
                 }
             }
-            if(row>0)
+            if (row > 0)
             {
                 dataGridView1.Rows[0].Cells[0].Selected = false;
             }
         }
 
-        private void DataGridViewRenderNodeClass(NodeClass nodeClass)
+        private void DataGridViewRenderNodeClass( NodeClass nodeClass )
         {
             DataGridSpecifyRowCount( 2 );
             dataGridView1.Rows[0].Cells[0].Value = "节点名称";
@@ -184,7 +202,7 @@ namespace HSLSharp
         }
 
 
-        private void DataGridViewRenderNodeClass( ModbusTcpClient modbusTcpNode)
+        private void DataGridViewRenderNodeClass( ModbusTcpClient modbusTcpNode )
         {
             DataGridSpecifyRowCount( 7 );
             dataGridView1.Rows[0].Cells[0].Value = "节点名称";
@@ -203,13 +221,28 @@ namespace HSLSharp
             dataGridView1.Rows[6].Cells[1].Value = modbusTcpNode.IsAddressStartWithZero;
         }
 
-
+        private void DataGridViewRenderNodeClass( DeviceRequest deviceRequest )
+        {
+            DataGridSpecifyRowCount( 6 );
+            dataGridView1.Rows[0].Cells[0].Value = "节点名称";
+            dataGridView1.Rows[0].Cells[1].Value = deviceRequest.Name;
+            dataGridView1.Rows[1].Cells[0].Value = "描述";
+            dataGridView1.Rows[1].Cells[1].Value = deviceRequest.Description;
+            dataGridView1.Rows[2].Cells[0].Value = "地址";
+            dataGridView1.Rows[2].Cells[1].Value = deviceRequest.Address;
+            dataGridView1.Rows[3].Cells[0].Value = "地址长度";
+            dataGridView1.Rows[3].Cells[1].Value = deviceRequest.Length;
+            dataGridView1.Rows[4].Cells[0].Value = "读取间隔";
+            dataGridView1.Rows[4].Cells[1].Value = deviceRequest.CaptureInterval;
+            dataGridView1.Rows[5].Cells[0].Value = "解析规则";
+            dataGridView1.Rows[5].Cells[1].Value = deviceRequest.PraseRegularCode;
+        }
 
 
 
         private void treeView1_MouseDown( object sender, MouseEventArgs e )
         {
-            if(e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 // 右键了控件
                 TreeNode node = treeView1.SelectedNode;
@@ -222,6 +255,11 @@ namespace HSLSharp
                 {
                     // 显示第二个菜单框
                     contextMenuStrip2.Show( treeView1, e.Location );
+                }
+                else if (node.Tag is DeviceRequest deviceRequest)
+                {
+                    // 显示第三个菜单框
+                    contextMenuStrip3.Show( treeView1, e.Location );
                 }
             }
         }
@@ -236,13 +274,13 @@ namespace HSLSharp
                 return;
             }
 
-            if(node.Nodes.Count == 0)
+            if (node.Nodes.Count == 0)
             {
                 node.Parent.Nodes.Remove( node );
             }
             else
             {
-                if(MessageBox.Show("还有子节点数据存在，是否真的删除节点及子节点信息？","删除确认",MessageBoxButtons.YesNo,MessageBoxIcon.Warning)==DialogResult.Yes)
+                if (MessageBox.Show( "还有子节点数据存在，是否真的删除节点及子节点信息？", "删除确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning ) == DialogResult.Yes)
                 {
                     node.Parent.Nodes.Remove( node );
                 }
@@ -256,14 +294,14 @@ namespace HSLSharp
             if (node.Tag is DeviceNode deviceNode)
             {
                 // 允许添加设备
-                using(RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( ))
+                using (RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
-                        TreeNode nodeNew = new TreeNode( formNode.ModbusTcpNode.Name );
-                        nodeNew.ImageKey = "Module_648";
-                        nodeNew.SelectedImageKey = "Module_648";
-                        nodeNew.Tag = formNode.ModbusTcpNode;
+                        TreeNode nodeNew = new TreeNode( formNode.DeviceRequest.Name );
+                        nodeNew.ImageKey = "usbcontroller";
+                        nodeNew.SelectedImageKey = "usbcontroller";
+                        nodeNew.Tag = formNode.DeviceRequest;
                         node.Nodes.Add( nodeNew );
                         node.Expand( );
                     }

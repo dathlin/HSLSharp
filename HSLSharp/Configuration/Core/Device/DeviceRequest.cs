@@ -18,7 +18,12 @@ namespace HSLSharp.Configuration
         /// </summary>
         public DeviceRequest()
         {
-
+            Name = "数据请求";
+            Description = "一次完整的数据请求";
+            Address = "123";
+            Length = 10;
+            CaptureInterval = 1000;
+            PraseRegularCode = "ABCDEFG";
         }
 
         /// <summary>
