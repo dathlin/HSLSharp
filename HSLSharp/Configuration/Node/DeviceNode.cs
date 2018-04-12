@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace HSLSharp.Configuration
 {
@@ -14,6 +15,7 @@ namespace HSLSharp.Configuration
         public DeviceNode()
         {
             Requests = new List<DeviceRequest>( );
+            NodeType = NodeClassInfo.DeviceNode;
         }
 
         
@@ -43,20 +45,21 @@ namespace HSLSharp.Configuration
         public override List<NodeClassRenderItem> GetNodeClassRenders( )
         {
             var list = base.GetNodeClassRenders( );
-            list.Add( new NodeClassRenderItem( )
-            {
-                ValueName = "ConnectTimeOut",
-                Value = ConnectTimeOut.ToString( ),
-            } );
-            list.Add( new NodeClassRenderItem( )
-            {
-                ValueName = "CreateTime",
-                Value = CreateTime.ToString( ),
-            } );
-
+            list.Add( NodeClassRenderItem.CreateConnectTimeOut( ConnectTimeOut ) );
+            list.Add( NodeClassRenderItem.CreateTime( CreateTime ) );
             return list;
         }
 
+        public override XElement ToXmlElement( )
+        {
+            XElement element = new XElement( "DeviceNode" );
+            element.SetAttributeValue( "Name", Name );
+            element.SetAttributeValue( "DeviceType", DeviceType );
+            element.SetAttributeValue( "ConnectTimeOut", ConnectTimeOut );
+            element.SetAttributeValue( "CreateTime", ConnectTimeOut );
+            element.SetAttributeValue( "Description", Description );
+            return element;
+        }
 
         #endregion
 

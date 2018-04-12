@@ -12,6 +12,11 @@ namespace HSLSharp.Configuration
     /// </summary>
     public class NodeClass : IXmlConvert
     {
+        public NodeClass( )
+        {
+            NodeType = NodeClassInfo.NodeClass;
+        }
+
         /// <summary>
         /// 节点的名称，在节点上显示的
         /// </summary>
@@ -26,7 +31,7 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// 节点的类型，标记其派生类不同的类型对象
         /// </summary>
-        public int NodeType { get; private set; }
+        public int NodeType { get; protected set; }
 
 
 
@@ -42,7 +47,7 @@ namespace HSLSharp.Configuration
         {
             XElement element = new XElement( "NodeClass" );
             element.SetAttributeValue( "Name", Name );
-            element.SetElementValue( "Description", Description );
+            element.SetAttributeValue( "Description", Description );
             return element;
         }
 
@@ -55,16 +60,8 @@ namespace HSLSharp.Configuration
         {
             return new List<NodeClassRenderItem>( )
             {
-                new NodeClassRenderItem()
-                {
-                    ValueName = "Name",
-                    Value = Name,
-                },
-                new NodeClassRenderItem()
-                {
-                    ValueName = "Description",
-                    Value = Description,
-                }
+                NodeClassRenderItem.CreatNodeeName(Name),
+                NodeClassRenderItem.CreateNodeDescription(Description),
             };
         }
 

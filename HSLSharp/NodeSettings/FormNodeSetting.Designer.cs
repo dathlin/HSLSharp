@@ -306,6 +306,7 @@ namespace HSLSharp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.AliceBlue;
             this.ClientSize = new System.Drawing.Size(1020, 635);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.dataGridView1);

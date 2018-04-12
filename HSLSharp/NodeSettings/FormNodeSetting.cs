@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using HSLSharp.Configuration;
 using System.Xml.Linq;
+using HSLSharp.Configuration;
 
 
 /**********************************************************************************************
@@ -58,17 +59,20 @@ namespace HSLSharp
             TreeNode node = treeView1.SelectedNode;
             if (node.Tag is NodeClass nodeClass)
             {
-                // 允许添加类别
-                using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( ))
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
-                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    // 允许添加类别
+                    using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( ))
                     {
-                        TreeNode nodeNew = new TreeNode( formNode.SelectedNodeClass.Name );
-                        nodeNew.ImageKey = "Class_489";
-                        nodeNew.SelectedImageKey = "Class_489";
-                        nodeNew.Tag = formNode.SelectedNodeClass;
-                        node.Nodes.Add( nodeNew );
-                        node.Expand( );
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            TreeNode nodeNew = new TreeNode( formNode.SelectedNodeClass.Name );
+                            nodeNew.ImageKey = "Class_489";
+                            nodeNew.SelectedImageKey = "Class_489";
+                            nodeNew.Tag = formNode.SelectedNodeClass;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                        }
                     }
                 }
             }
@@ -81,17 +85,20 @@ namespace HSLSharp
             TreeNode node = treeView1.SelectedNode;
             if (node.Tag is NodeClass nodeClass)
             {
-                // 允许添加设备
-                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new ModbusTcpClient( ) ))
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
-                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    // 允许添加设备
+                    using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new ModbusTcpClient( ) ))
                     {
-                        TreeNode nodeNew = new TreeNode( formNode.ModbusTcpNode.Name );
-                        nodeNew.ImageKey = "Module_648";
-                        nodeNew.SelectedImageKey = "Module_648";
-                        nodeNew.Tag = formNode.ModbusTcpNode;
-                        node.Nodes.Add( nodeNew );
-                        node.Expand( );
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            TreeNode nodeNew = new TreeNode( formNode.ModbusTcpNode.Name );
+                            nodeNew.ImageKey = "Module_648";
+                            nodeNew.SelectedImageKey = "Module_648";
+                            nodeNew.Tag = formNode.ModbusTcpNode;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                        }
                     }
                 }
             }
@@ -109,37 +116,43 @@ namespace HSLSharp
 
             if (node.Tag is NodeClass nodeClass)
             {
-                // 编辑了节点
-                using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( nodeClass ))
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
-                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    // 编辑了节点
+                    using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( nodeClass ))
                     {
-                        node.Text = formNode.SelectedNodeClass.Name;
-                        node.Tag = formNode.SelectedNodeClass;
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            node.Text = formNode.SelectedNodeClass.Name;
+                            node.Tag = formNode.SelectedNodeClass;
+                        }
                     }
                 }
-            }
-            else if (node.Tag is ModbusTcpClient modbusTcpNode)
-            {
-                // 编辑了Modbus-tcp节点
-                using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( modbusTcpNode ))
+                else
                 {
-                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    if (node.Tag is ModbusTcpClient modbusTcpNode)
                     {
-                        node.Text = formNode.ModbusTcpNode.Name;
-                        node.Tag = formNode.ModbusTcpNode;
+                        // 编辑了Modbus-tcp节点
+                        using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( modbusTcpNode ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.ModbusTcpNode.Name;
+                                node.Tag = formNode.ModbusTcpNode;
+                            }
+                        }
                     }
-                }
-            }
-            else if (node.Tag is DeviceRequest deviceRequest)
-            {
-                // 编辑了Request节点
-                using (RequestSettings.FormRequest formRequest = new RequestSettings.FormRequest( deviceRequest ))
-                {
-                    if (formRequest.ShowDialog( ) == DialogResult.OK)
+                    else if (node.Tag is DeviceRequest deviceRequest)
                     {
-                        node.Text = formRequest.DeviceRequest.Name;
-                        node.Tag = formRequest.DeviceRequest;
+                        // 编辑了Request节点
+                        using (RequestSettings.FormRequest formRequest = new RequestSettings.FormRequest( deviceRequest ))
+                        {
+                            if (formRequest.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formRequest.DeviceRequest.Name;
+                                node.Tag = formRequest.DeviceRequest;
+                            }
+                        }
                     }
                 }
             }
@@ -208,12 +221,12 @@ namespace HSLSharp
                     // 显示第一个菜单框
                     contextMenuStrip1.Show( treeView1, e.Location );
                 }
-                else if (node.Tag.GetType( ) == typeof( DeviceNode ))
+                else if (node.Tag is DeviceNode )
                 {
                     // 显示第二个菜单框
                     contextMenuStrip2.Show( treeView1, e.Location );
                 }
-                else if (node.Tag.GetType( ) == typeof( DeviceRequest ))
+                else if (node.Tag is DeviceRequest )
                 {
                     // 显示第三个菜单框
                     contextMenuStrip3.Show( treeView1, e.Location );
@@ -270,16 +283,15 @@ namespace HSLSharp
 
         private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
         {
-
+            SaveNodes( );
         }
 
 
 
         private XElement AddTreeNode( TreeNode node )
         {
-            if(node.Tag.GetType() == typeof(NodeClass))
+            if (node.Tag is NodeClass nodeClass)
             {
-                NodeClass nodeClass = (NodeClass)node.Tag;
                 XElement element = nodeClass.ToXmlElement( );
                 foreach (TreeNode item in node.Nodes)
                 {
@@ -287,16 +299,20 @@ namespace HSLSharp
                 }
                 return element;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
 
-        private void SaveNodes(string fileName)
+        private void SaveNodes()
         {
+            XElement element = new XElement( "Settings" );
+            foreach (TreeNode item in treeView1.Nodes)
+            {
+                element.Add( AddTreeNode( item ) );
+            }
 
+            element.Save( "123.xml" );
         }
 
     }

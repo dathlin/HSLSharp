@@ -66,16 +66,11 @@ namespace HSLSharp.Configuration
 
         public override XElement ToXmlElement( )
         {
-            XElement element = new XElement( "DeviceNode" );
-            element.SetAttributeValue( "DeviceType", DeviceType );
-            element.SetAttributeValue( "Name", Name );
-            element.SetElementValue( "Description", Description );
-            element.SetElementValue( "IpAddress", IpAddress );
-            element.SetElementValue( "Port", Port );
-            element.SetElementValue( "Station", Station );
-            element.SetElementValue( "IsAddressStartWithZero", IsAddressStartWithZero );
-            element.SetElementValue( "ConnectTimeOut", ConnectTimeOut );
-            element.SetElementValue( "CreateTime", CreateTime );
+            XElement element = base.ToXmlElement();
+            element.SetAttributeValue( "IpAddress", IpAddress );
+            element.SetAttributeValue( "Port", Port );
+            element.SetAttributeValue( "Station", Station );
+            element.SetAttributeValue( "IsAddressStartWithZero", IsAddressStartWithZero );
             return element;
         }
 
@@ -86,26 +81,10 @@ namespace HSLSharp.Configuration
         public override List<NodeClassRenderItem> GetNodeClassRenders( )
         {
             var list = base.GetNodeClassRenders( );
-            list.Add( new NodeClassRenderItem( )
-            {
-                ValueName = "IpAddress",
-                Value = IpAddress,
-            } );
-            list.Add( new NodeClassRenderItem( )
-            {
-                ValueName = "Port",
-                Value = Port.ToString(),
-            } );
-            list.Add( new NodeClassRenderItem( )
-            {
-                ValueName = "Station",
-                Value = Station.ToString(),
-            } );
-            list.Add( new NodeClassRenderItem( )
-            {
-                ValueName = "IsAddressStartWithZero",
-                Value = IsAddressStartWithZero.ToString(),
-            } );
+            list.Add( NodeClassRenderItem.CreateIpAddress( IpAddress ) );
+            list.Add( NodeClassRenderItem.CreateIpPort( Port ) );
+            list.Add( NodeClassRenderItem.CreateStation( Station ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "是否从0开始", IsAddressStartWithZero.ToString( ) ) );
 
             return list;
         }

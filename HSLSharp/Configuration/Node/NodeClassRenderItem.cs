@@ -36,5 +36,84 @@ namespace HSLSharp.Configuration
         }
 
         #endregion
+
+
+        #region Static Resource
+
+        public static NodeClassRenderItem CreatNodeeName(string value)
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "节点名称",
+                Value = value,
+            };
+        }
+
+        public static NodeClassRenderItem CreateNodeDescription(string description )
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "节点描述",
+                Value = description,
+            };
+        }
+
+        public static NodeClassRenderItem CreateIpAddress( string ip )
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "Ip地址",
+                Value = ip,
+            };
+        }
+
+        public static NodeClassRenderItem CreateIpPort( int port )
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "以太网端口号",
+                Value = port.ToString(),
+            };
+        }
+
+
+        public static NodeClassRenderItem CreateConnectTimeOut(int timeout)
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "连接超时",
+                Value = timeout.ToString( ),
+            };
+        }
+
+
+        public static NodeClassRenderItem CreateTime(DateTime time)
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "创建时间",
+                Value = time.ToString( ),
+            };
+        }
+
+        public static NodeClassRenderItem CreateStation( int station )
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = "设备站号",
+                Value = station.ToString( ),
+            };
+        }
+
+        public static NodeClassRenderItem CreateCustomer( string valueName,string value )
+        {
+            return new NodeClassRenderItem( )
+            {
+                ValueName = valueName,
+                Value = value,
+            };
+        }
+
+        #endregion
     }
 }

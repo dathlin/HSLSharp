@@ -25,6 +25,7 @@ namespace HSLSharp.Configuration
             Length = 10;
             CaptureInterval = 1000;
             PraseRegularCode = "ABCDEFG";
+            NodeType = NodeClassInfo.DeviceRequest;
         }
         
 
@@ -62,15 +63,43 @@ namespace HSLSharp.Configuration
         {
             XElement element = new XElement( "DeviceRequest" );
             element.SetAttributeValue( "Name", Name );
-            element.SetElementValue( "Description", Description );
-            element.SetElementValue( "Address", Address );
-            element.SetElementValue( "Length", Length );
-            element.SetElementValue( "CaptureInterval", CaptureInterval );
-            element.SetElementValue( "PraseRegularCode", PraseRegularCode );
+            element.SetAttributeValue( "Description", Description );
+            element.SetAttributeValue( "Address", Address );
+            element.SetAttributeValue( "Length", Length );
+            element.SetAttributeValue( "CaptureInterval", CaptureInterval );
+            element.SetAttributeValue( "PraseRegularCode", PraseRegularCode );
             return element;
         }
 
 
         #endregion
+
+
+        public override List<NodeClassRenderItem> GetNodeClassRenders( )
+        {
+            var result = base.GetNodeClassRenders( );
+            result.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "地址",
+                Value = Address,
+            } );
+            result.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "读取长度",
+                Value = Length.ToString(),
+            } );
+            result.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "读取间隔",
+                Value = CaptureInterval.ToString(),
+            } );
+            result.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "解析代号",
+                Value = Address,
+            } );
+
+            return result;
+        }
     }
 }
