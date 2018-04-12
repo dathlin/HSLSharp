@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HSLSharp.Configuration;
+using System.Xml.Linq;
 
 
 /**********************************************************************************************
@@ -153,16 +154,6 @@ namespace HSLSharp
                 // 显示选择的节点信息
                 DataGridViewRenderNodeClass( nodeClass );
             }
-            else if (node.Tag is ModbusTcpClient modbusTcpNode)
-            {
-                // 显示Modbus-tcp的客户端
-                DataGridViewRenderNodeClass( modbusTcpNode );
-            }
-            else if (node.Tag is DeviceRequest deviceRequest)
-            {
-                // 显示单次的数据请求
-                DataGridViewRenderNodeClass( deviceRequest );
-            }
         }
 
 
@@ -194,50 +185,16 @@ namespace HSLSharp
 
         private void DataGridViewRenderNodeClass( NodeClass nodeClass )
         {
-            DataGridSpecifyRowCount( 2 );
-            dataGridView1.Rows[0].Cells[0].Value = "节点名称";
-            dataGridView1.Rows[0].Cells[1].Value = nodeClass.Name;
-            dataGridView1.Rows[1].Cells[0].Value = "描述";
-            dataGridView1.Rows[1].Cells[1].Value = nodeClass.Description;
+            var renders = nodeClass.GetNodeClassRenders( );
+            DataGridSpecifyRowCount( renders.Count );
+            for (int i = 0; i < renders.Count; i++)
+            {
+                dataGridView1.Rows[i].Cells[0].Value = renders[i].ValueName;
+                dataGridView1.Rows[i].Cells[1].Value = renders[i].Value;
+            }
         }
 
-
-        private void DataGridViewRenderNodeClass( ModbusTcpClient modbusTcpNode )
-        {
-            DataGridSpecifyRowCount( 7 );
-            dataGridView1.Rows[0].Cells[0].Value = "节点名称";
-            dataGridView1.Rows[0].Cells[1].Value = modbusTcpNode.Name;
-            dataGridView1.Rows[1].Cells[0].Value = "描述";
-            dataGridView1.Rows[1].Cells[1].Value = modbusTcpNode.Description;
-            dataGridView1.Rows[2].Cells[0].Value = "Ip地址";
-            dataGridView1.Rows[2].Cells[1].Value = modbusTcpNode.IpAddress;
-            dataGridView1.Rows[3].Cells[0].Value = "端口号";
-            dataGridView1.Rows[3].Cells[1].Value = modbusTcpNode.Port;
-            dataGridView1.Rows[4].Cells[0].Value = "站号";
-            dataGridView1.Rows[4].Cells[1].Value = modbusTcpNode.Station;
-            dataGridView1.Rows[5].Cells[0].Value = "连接超时";
-            dataGridView1.Rows[5].Cells[1].Value = modbusTcpNode.ConnectTimeOut;
-            dataGridView1.Rows[6].Cells[0].Value = "是否地址0开始";
-            dataGridView1.Rows[6].Cells[1].Value = modbusTcpNode.IsAddressStartWithZero;
-        }
-
-        private void DataGridViewRenderNodeClass( DeviceRequest deviceRequest )
-        {
-            DataGridSpecifyRowCount( 6 );
-            dataGridView1.Rows[0].Cells[0].Value = "节点名称";
-            dataGridView1.Rows[0].Cells[1].Value = deviceRequest.Name;
-            dataGridView1.Rows[1].Cells[0].Value = "描述";
-            dataGridView1.Rows[1].Cells[1].Value = deviceRequest.Description;
-            dataGridView1.Rows[2].Cells[0].Value = "地址";
-            dataGridView1.Rows[2].Cells[1].Value = deviceRequest.Address;
-            dataGridView1.Rows[3].Cells[0].Value = "地址长度";
-            dataGridView1.Rows[3].Cells[1].Value = deviceRequest.Length;
-            dataGridView1.Rows[4].Cells[0].Value = "读取间隔";
-            dataGridView1.Rows[4].Cells[1].Value = deviceRequest.CaptureInterval;
-            dataGridView1.Rows[5].Cells[0].Value = "解析规则";
-            dataGridView1.Rows[5].Cells[1].Value = deviceRequest.PraseRegularCode;
-        }
-
+        
 
 
         private void treeView1_MouseDown( object sender, MouseEventArgs e )
@@ -246,17 +203,17 @@ namespace HSLSharp
             {
                 // 右键了控件
                 TreeNode node = treeView1.SelectedNode;
-                if (node.Tag is NodeClass nodeClass)
+                if (node.Tag.GetType() == typeof(NodeClass))
                 {
                     // 显示第一个菜单框
                     contextMenuStrip1.Show( treeView1, e.Location );
                 }
-                else if (node.Tag is DeviceNode deviceNode)
+                else if (node.Tag.GetType( ) == typeof( DeviceNode ))
                 {
                     // 显示第二个菜单框
                     contextMenuStrip2.Show( treeView1, e.Location );
                 }
-                else if (node.Tag is DeviceRequest deviceRequest)
+                else if (node.Tag.GetType( ) == typeof( DeviceRequest ))
                 {
                     // 显示第三个菜单框
                     contextMenuStrip3.Show( treeView1, e.Location );
@@ -308,5 +265,39 @@ namespace HSLSharp
                 }
             }
         }
+
+
+
+        private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+
+        }
+
+
+
+        private XElement AddTreeNode( TreeNode node )
+        {
+            if(node.Tag.GetType() == typeof(NodeClass))
+            {
+                NodeClass nodeClass = (NodeClass)node.Tag;
+                XElement element = nodeClass.ToXmlElement( );
+                foreach (TreeNode item in node.Nodes)
+                {
+                    element.Add( AddTreeNode( item ) );
+                }
+                return element;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        private void SaveNodes(string fileName)
+        {
+
+        }
+
     }
 }

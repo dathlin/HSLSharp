@@ -22,17 +22,54 @@ namespace HSLSharp.Configuration
         /// </summary>
         public string Description { get; set; }
 
-        public void LoadByXmlElement( XElement element )
+
+        /// <summary>
+        /// 节点的类型，标记其派生类不同的类型对象
+        /// </summary>
+        public int NodeType { get; private set; }
+
+
+
+
+        #region XmlConvert Support
+        
+        public virtual void LoadByXmlElement( XElement element )
         {
             throw new NotImplementedException( );
         }
 
-        public XElement ToXmlElement( )
+        public virtual XElement ToXmlElement( )
         {
             XElement element = new XElement( "NodeClass" );
             element.SetAttributeValue( "Name", Name );
-            element.SetAttributeValue( "Description", Description );
+            element.SetElementValue( "Description", Description );
             return element;
         }
+
+        #endregion
+
+
+        #region RenderValues
+
+        public virtual List<NodeClassRenderItem> GetNodeClassRenders()
+        {
+            return new List<NodeClassRenderItem>( )
+            {
+                new NodeClassRenderItem()
+                {
+                    ValueName = "Name",
+                    Value = Name,
+                },
+                new NodeClassRenderItem()
+                {
+                    ValueName = "Description",
+                    Value = Description,
+                }
+            };
+        }
+
+
+        #endregion
+
     }
 }

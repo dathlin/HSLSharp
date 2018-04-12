@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace HSLSharp.Configuration
 {
@@ -10,7 +11,7 @@ namespace HSLSharp.Configuration
     /// <summary>
     /// 通用的客户端模型，指示了一般的客户端模式下的，一次数据请求，一个客户端可以进行多次的数据请求
     /// </summary>
-    public class DeviceRequest
+    public class DeviceRequest : NodeClass, IXmlConvert
     {
 
         /// <summary>
@@ -25,11 +26,7 @@ namespace HSLSharp.Configuration
             CaptureInterval = 1000;
             PraseRegularCode = "ABCDEFG";
         }
-
-        /// <summary>
-        /// 本次请求的名称，方便在节点中显示的
-        /// </summary>
-        public string Name { get; set; }
+        
 
         /// <summary>
         /// 变量的地址
@@ -51,11 +48,29 @@ namespace HSLSharp.Configuration
         /// </summary>
         public string PraseRegularCode { get; set; }
         
-        /// <summary>
-        /// 本次请求的描述
-        /// </summary>
-        public string Description { get; set; }
 
-        
+
+        #region Xml Support
+
+
+        public override void LoadByXmlElement( XElement element )
+        {
+            throw new NotImplementedException( );
+        }
+
+        public override XElement ToXmlElement( )
+        {
+            XElement element = new XElement( "DeviceRequest" );
+            element.SetAttributeValue( "Name", Name );
+            element.SetElementValue( "Description", Description );
+            element.SetElementValue( "Address", Address );
+            element.SetElementValue( "Length", Length );
+            element.SetElementValue( "CaptureInterval", CaptureInterval );
+            element.SetElementValue( "PraseRegularCode", PraseRegularCode );
+            return element;
+        }
+
+
+        #endregion
     }
 }

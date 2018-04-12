@@ -243,6 +243,16 @@ namespace HSLSharp.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap interface_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("interface_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap library_16xLG {
             get {
                 object obj = ResourceManager.GetObject("library_16xLG", resourceCulture);

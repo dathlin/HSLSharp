@@ -56,10 +56,10 @@ namespace HSLSharp
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.打开文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1 = new HSLSharp.Controls.TreeViewEx();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.编辑节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeView1 = new HSLSharp.Controls.TreeViewEx();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip2.SuspendLayout();
@@ -257,25 +257,7 @@ namespace HSLSharp
             this.保存文件ToolStripMenuItem.Name = "保存文件ToolStripMenuItem";
             this.保存文件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
             this.保存文件ToolStripMenuItem.Text = "保存文件";
-            // 
-            // treeView1
-            // 
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeView1.Location = new System.Drawing.Point(20, 47);
-            this.treeView1.Name = "treeView1";
-            treeNode1.Name = "node_devices";
-            treeNode1.Text = "Devices";
-            treeNode2.Name = "node_modbusServer";
-            treeNode2.Text = "ModbusServer";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            this.treeView1.Size = new System.Drawing.Size(528, 565);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
+            this.保存文件ToolStripMenuItem.Click += new System.EventHandler(this.保存文件ToolStripMenuItem_Click);
             // 
             // contextMenuStrip3
             // 
@@ -300,6 +282,25 @@ namespace HSLSharp
             this.删除节点ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.删除节点ToolStripMenuItem.Text = "删除节点";
             this.删除节点ToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
+            // 
+            // treeView1
+            // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeView1.Location = new System.Drawing.Point(20, 47);
+            this.treeView1.Name = "treeView1";
+            treeNode1.Name = "node_devices";
+            treeNode1.Text = "Devices";
+            treeNode2.Name = "node_modbusServer";
+            treeNode2.Text = "ModbusServer";
+            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            this.treeView1.Size = new System.Drawing.Size(528, 565);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
             // 
             // FormNodeSetting
             // 

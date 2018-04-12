@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace HSLSharp.Configuration
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ModbusTcpClient : DeviceNode
+    public class ModbusTcpClient : DeviceNode, IXmlConvert
     {
         #region Constructor
 
@@ -55,6 +56,62 @@ namespace HSLSharp.Configuration
         /// </summary>
         public bool IsAddressStartWithZero { get; set; } = true;
 
+
+        #region Xml Interface
+        
+        public override void LoadByXmlElement( XElement element )
+        {
+            throw new NotImplementedException( );
+        }
+
+        public override XElement ToXmlElement( )
+        {
+            XElement element = new XElement( "DeviceNode" );
+            element.SetAttributeValue( "DeviceType", DeviceType );
+            element.SetAttributeValue( "Name", Name );
+            element.SetElementValue( "Description", Description );
+            element.SetElementValue( "IpAddress", IpAddress );
+            element.SetElementValue( "Port", Port );
+            element.SetElementValue( "Station", Station );
+            element.SetElementValue( "IsAddressStartWithZero", IsAddressStartWithZero );
+            element.SetElementValue( "ConnectTimeOut", ConnectTimeOut );
+            element.SetElementValue( "CreateTime", CreateTime );
+            return element;
+        }
+
+        #endregion
+
+        #region Overide Method
+
+        public override List<NodeClassRenderItem> GetNodeClassRenders( )
+        {
+            var list = base.GetNodeClassRenders( );
+            list.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "IpAddress",
+                Value = IpAddress,
+            } );
+            list.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "Port",
+                Value = Port.ToString(),
+            } );
+            list.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "Station",
+                Value = Station.ToString(),
+            } );
+            list.Add( new NodeClassRenderItem( )
+            {
+                ValueName = "IsAddressStartWithZero",
+                Value = IsAddressStartWithZero.ToString(),
+            } );
+
+            return list;
+        }
+
+
+        #endregion
 
     }
 }
