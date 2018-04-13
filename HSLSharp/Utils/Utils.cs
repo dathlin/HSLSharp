@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HslCommunication.LogNet;
+using HSLSharp.SettingsSupport;
 
 namespace HSLSharp.Utils
 {
@@ -22,5 +23,10 @@ namespace HSLSharp.Utils
         /// 系统的所有的图片资源信息
         /// </summary>
         public static ImageList SharpImageList { get; set; }
+
+        /// <summary>
+        /// 系统的所有的配置信息
+        /// </summary>
+        public static SharpSettings SharpSettings { get; set; }
     }
 }

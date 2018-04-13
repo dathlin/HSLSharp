@@ -40,7 +40,8 @@ namespace HSLSharp.Configuration
         
         public virtual void LoadByXmlElement( XElement element )
         {
-            throw new NotImplementedException( );
+            Name = element.Attribute( "Name" ).Value;
+            Description = element.Attribute( "Description" ).Value;
         }
 
         public virtual XElement ToXmlElement( )

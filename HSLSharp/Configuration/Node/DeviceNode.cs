@@ -56,9 +56,17 @@ namespace HSLSharp.Configuration
             element.SetAttributeValue( "Name", Name );
             element.SetAttributeValue( "DeviceType", DeviceType );
             element.SetAttributeValue( "ConnectTimeOut", ConnectTimeOut );
-            element.SetAttributeValue( "CreateTime", ConnectTimeOut );
+            element.SetAttributeValue( "CreateTime", CreateTime.ToString() );
             element.SetAttributeValue( "Description", Description );
             return element;
+        }
+
+        public override void LoadByXmlElement( XElement element )
+        {
+            base.LoadByXmlElement( element );
+            DeviceType = int.Parse( element.Attribute( "DeviceType" ).Value );
+            ConnectTimeOut = int.Parse( element.Attribute( "ConnectTimeOut" ).Value );
+            CreateTime = DateTime.Parse( element.Attribute( "CreateTime" ).Value );
         }
 
         #endregion

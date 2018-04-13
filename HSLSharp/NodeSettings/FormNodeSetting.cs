@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using HSLSharp.Configuration;
 using System.Xml.Linq;
-using HSLSharp.Configuration;
 
 
 /**********************************************************************************************
@@ -26,11 +25,18 @@ namespace HSLSharp
 {
     public partial class FormNodeSetting : Form
     {
-        public FormNodeSetting( )
+        #region Constructor
+
+
+        public FormNodeSetting()
         {
             InitializeComponent( );
         }
 
+        #endregion
+
+        #region Form Load Show Close
+        
         private void FormNodeSetting_Load( object sender, EventArgs e )
         {
             treeView1.ImageList = Utils.ServerUtils.SharpImageList;
@@ -49,8 +55,26 @@ namespace HSLSharp
                 Name = "ModbusServer",
                 Description = "所有的设备的集合对象"
             };
+
+
+            LoadByFile( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
         }
 
+
+        private void FormNodeSetting_FormClosing( object sender, FormClosingEventArgs e )
+        {
+            if(isNodeSettingsModify)
+            {
+                if(MessageBox.Show("当前的配置信息已经修改过，但还未保存，是否需要保存？","保存确认",MessageBoxButtons.YesNo,MessageBoxIcon.Warning)==DialogResult.Yes)
+                {
+                    SaveNodes( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+                }
+            }
+        }
+
+        #endregion
+
+        #region ClassNode Add
 
 
         private void 类别classToolStripMenuItem_Click( object sender, EventArgs e )
@@ -72,13 +96,17 @@ namespace HSLSharp
                             nodeNew.Tag = formNode.SelectedNodeClass;
                             node.Nodes.Add( nodeNew );
                             node.Expand( );
+                            isNodeSettingsModify = true;
                         }
                     }
                 }
             }
         }
 
-
+        #endregion
+        
+        #region Modbus-Tcp Node Add
+        
         private void modbustcpclientToolStripMenuItem_Click( object sender, EventArgs e )
         {
             // 新增了Modbus-Tcp客户端
@@ -98,11 +126,45 @@ namespace HSLSharp
                             nodeNew.Tag = formNode.ModbusTcpNode;
                             node.Nodes.Add( nodeNew );
                             node.Expand( );
+                            isNodeSettingsModify = true;
                         }
                     }
                 }
             }
         }
+
+        #endregion
+        
+        #region DeviceRequestNode Add
+
+
+        private void 新增RequestToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了Modbus-Tcp客户端
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is DeviceNode deviceNode)
+            {
+                // 允许添加设备
+                using (RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        TreeNode nodeNew = new TreeNode( formNode.DeviceRequest.Name );
+                        nodeNew.ImageKey = "usbcontroller";
+                        nodeNew.SelectedImageKey = "usbcontroller";
+                        nodeNew.Tag = formNode.DeviceRequest;
+                        node.Nodes.Add( nodeNew );
+                        node.Expand( );
+                        isNodeSettingsModify = true;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Node Edit
+
 
         private void 编辑类别editClassToolStripMenuItem_Click( object sender, EventArgs e )
         {
@@ -125,6 +187,7 @@ namespace HSLSharp
                         {
                             node.Text = formNode.SelectedNodeClass.Name;
                             node.Tag = formNode.SelectedNodeClass;
+                            isNodeSettingsModify = true;
                         }
                     }
                 }
@@ -139,6 +202,7 @@ namespace HSLSharp
                             {
                                 node.Text = formNode.ModbusTcpNode.Name;
                                 node.Tag = formNode.ModbusTcpNode;
+                                isNodeSettingsModify = true;
                             }
                         }
                     }
@@ -151,12 +215,19 @@ namespace HSLSharp
                             {
                                 node.Text = formRequest.DeviceRequest.Name;
                                 node.Tag = formRequest.DeviceRequest;
+                                isNodeSettingsModify = true;
                             }
                         }
                     }
                 }
             }
         }
+
+
+        #endregion
+
+        #region Node Render
+
 
         private void treeView1_AfterSelect( object sender, TreeViewEventArgs e )
         {
@@ -170,9 +241,7 @@ namespace HSLSharp
         }
 
 
-
-
-
+        
 
 
         private void DataGridSpecifyRowCount( int row )
@@ -207,26 +276,30 @@ namespace HSLSharp
             }
         }
 
+
+        #endregion
+
+        #region ContextMenu Show
         
-
-
         private void treeView1_MouseDown( object sender, MouseEventArgs e )
         {
             if (e.Button == MouseButtons.Right)
             {
+                treeView1.SelectedNode = treeView1.GetNodeAt( e.Location );
                 // 右键了控件
                 TreeNode node = treeView1.SelectedNode;
-                if (node.Tag.GetType() == typeof(NodeClass))
+
+                if (node.Tag.GetType( ) == typeof( NodeClass ))
                 {
                     // 显示第一个菜单框
                     contextMenuStrip1.Show( treeView1, e.Location );
                 }
-                else if (node.Tag is DeviceNode )
+                else if (node.Tag is DeviceNode)
                 {
                     // 显示第二个菜单框
                     contextMenuStrip2.Show( treeView1, e.Location );
                 }
-                else if (node.Tag is DeviceRequest )
+                else if (node.Tag is DeviceRequest)
                 {
                     // 显示第三个菜单框
                     contextMenuStrip3.Show( treeView1, e.Location );
@@ -234,6 +307,10 @@ namespace HSLSharp
             }
         }
 
+        #endregion
+
+        #region Node Delete
+        
         private void 删除deleteToolStripMenuItem_Click( object sender, EventArgs e )
         {
             // 删除节点信息
@@ -257,36 +334,10 @@ namespace HSLSharp
             }
         }
 
-        private void 新增RequestToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            // 新增了Modbus-Tcp客户端
-            TreeNode node = treeView1.SelectedNode;
-            if (node.Tag is DeviceNode deviceNode)
-            {
-                // 允许添加设备
-                using (RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( ))
-                {
-                    if (formNode.ShowDialog( ) == DialogResult.OK)
-                    {
-                        TreeNode nodeNew = new TreeNode( formNode.DeviceRequest.Name );
-                        nodeNew.ImageKey = "usbcontroller";
-                        nodeNew.SelectedImageKey = "usbcontroller";
-                        nodeNew.Tag = formNode.DeviceRequest;
-                        node.Nodes.Add( nodeNew );
-                        node.Expand( );
-                    }
-                }
-            }
-        }
 
+        #endregion
 
-
-        private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
-        {
-            SaveNodes( );
-        }
-
-
+        #region Node Save
 
         private XElement AddTreeNode( TreeNode node )
         {
@@ -304,7 +355,7 @@ namespace HSLSharp
         }
 
 
-        private void SaveNodes()
+        private void SaveNodes(string fileName)
         {
             XElement element = new XElement( "Settings" );
             foreach (TreeNode item in treeView1.Nodes)
@@ -312,8 +363,116 @@ namespace HSLSharp
                 element.Add( AddTreeNode( item ) );
             }
 
-            element.Save( "123.xml" );
+            element.Save( fileName );
         }
+
+
+        private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            SaveNodes( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+        }
+
+
+        #endregion
+
+        #region Node Load
+        
+
+        private void TreeNodeRender( TreeNode treeNode, XElement element )
+        {
+            isNodeSettingsModify = true;
+            foreach (XElement item in element.Elements( ))
+            {
+                if (item.Name == "NodeClass")
+                {
+                    TreeNode node = new TreeNode( item.Attribute( "Name" ).Value );
+                    node.ImageKey = "Class_489";
+                    node.SelectedImageKey = "Class_489";
+
+                    NodeClass nodeClass = new NodeClass( );
+                    nodeClass.LoadByXmlElement( item );
+                    node.Tag = nodeClass;
+                    treeNode.Nodes.Add( node );
+
+                    TreeNodeRender( node, item );
+                }
+                else if (item.Name == "DeviceNode")
+                {
+                    int type = int.Parse( item.Attribute( "DeviceType" ).Value );
+                    if (type == DeviceNode.ModbusTcpClient)
+                    {
+                        TreeNode node = new TreeNode( item.Attribute( "Name" ).Value );
+                        node.ImageKey = "Module_648";
+                        node.SelectedImageKey = "Module_648";
+
+                        ModbusTcpClient modbusNode = new ModbusTcpClient( );
+                        modbusNode.LoadByXmlElement( item );
+                        node.Tag = modbusNode;
+                        treeNode.Nodes.Add( node );
+
+
+                        foreach (XElement request in item.Elements( "DeviceRequest" ))
+                        {
+                            TreeNode nodeRequest = new TreeNode( request.Attribute( "Name" ).Value );
+                            nodeRequest.ImageKey = "usbcontroller";
+                            nodeRequest.SelectedImageKey = "usbcontroller";
+
+                            DeviceRequest deviceRequest = new DeviceRequest( );
+                            deviceRequest.LoadByXmlElement( request );
+                            nodeRequest.Tag = deviceRequest;
+                            node.Nodes.Add( nodeRequest );
+                        }
+                    }
+                }
+            }
+        }
+
+        private void LoadByFile(string fileName)
+        {
+            if (!System.IO.File.Exists( fileName )) return;
+            try
+            {
+                treeView1.Nodes[0].Nodes.Clear( );
+                treeView1.Nodes[1].Nodes.Clear( );
+
+                XElement element = XElement.Load( fileName );
+                if (element.Name != "Settings") return;
+                // 提取Devices节点数据
+                TreeNodeRender( treeView1.Nodes[0], element.Elements( ).ToArray( )[0] );
+
+                TreeNodeRender( treeView1.Nodes[1], element.Elements( ).ToArray( )[1] );
+
+                treeView1.ExpandAll( );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show( "加载文件失败，请确认是否系统生成的标准文件！原因：" + ex.Message );
+            }
+        }
+
+
+        private void 打开文件ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            using(OpenFileDialog fileDialog = new OpenFileDialog())
+            {
+                fileDialog.Filter = "Xml File|*.xml";
+                fileDialog.Multiselect = false;
+                if (fileDialog.ShowDialog( ) == DialogResult.OK)
+                {
+                    LoadByFile( fileDialog.FileName );
+                }
+            }
+
+        }
+
+
+        #endregion
+
+        #region Private Member
+
+        private bool isNodeSettingsModify = false;            // 指示系统的节点是否已经被编辑过
+
+        #endregion
 
     }
 }

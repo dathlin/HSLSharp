@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HSLSharp.SettingsSupport;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace HSLSharp
             }
             // 设置应用程序的线程池数量，防止服务器端卡死状态，根据内存及CPU进行更改
             System.Threading.ThreadPool.SetMaxThreads( 1000, 256 );
+
+            Utils.ServerUtils.SharpSettings = new SharpSettings( );
 
             Application.EnableVisualStyles( );
             Application.SetCompatibleTextRenderingDefault( false );

@@ -56,7 +56,11 @@ namespace HSLSharp.Configuration
 
         public override void LoadByXmlElement( XElement element )
         {
-            throw new NotImplementedException( );
+            base.LoadByXmlElement( element );
+            Address = element.Attribute( "Address" ).Value;
+            Length = ushort.Parse( element.Attribute( "Length" ).Value );
+            CaptureInterval = int.Parse( element.Attribute( "CaptureInterval" ).Value );
+            PraseRegularCode = element.Attribute( "PraseRegularCode" ).Value;
         }
 
         public override XElement ToXmlElement( )

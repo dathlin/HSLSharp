@@ -61,7 +61,12 @@ namespace HSLSharp.Configuration
         
         public override void LoadByXmlElement( XElement element )
         {
-            throw new NotImplementedException( );
+            base.LoadByXmlElement( element );
+            IpAddress = element.Attribute( "IpAddress" ).Value;
+            Port = int.Parse( element.Attribute( "Port" ).Value );
+            Station = int.Parse( element.Attribute( "Station" ).Value );
+            IsAddressStartWithZero = bool.Parse( element.Attribute( "IsAddressStartWithZero" ).Value );
+
         }
 
         public override XElement ToXmlElement( )
