@@ -370,13 +370,26 @@ namespace HSLSharp
         private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
         {
             SaveNodes( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+            isNodeSettingsModify = false;
         }
 
+        private void 另存为ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            using (SaveFileDialog dialog = new SaveFileDialog( ))
+            {
+                dialog.Filter = "xml文件|*.xml";
+                dialog.CheckFileExists = true;
+                if (dialog.ShowDialog( ) == DialogResult.OK)
+                {
+                    SaveNodes( dialog.FileName );
+                }
+            }
+        }
 
         #endregion
 
         #region Node Load
-        
+
 
         private void TreeNodeRender( TreeNode treeNode, XElement element )
         {
@@ -473,6 +486,7 @@ namespace HSLSharp
         private bool isNodeSettingsModify = false;            // 指示系统的节点是否已经被编辑过
 
         #endregion
+
 
     }
 }
