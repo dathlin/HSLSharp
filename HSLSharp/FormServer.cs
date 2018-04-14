@@ -47,6 +47,7 @@ namespace HSLSharp
             Utils.ServerUtils.SharpImageList.Images.Add( "flag_16xLG", Properties.Resources.flag_16xLG );
             Utils.ServerUtils.SharpImageList.Images.Add( "GenericVSEditor_9905", Properties.Resources.GenericVSEditor_9905 );
             Utils.ServerUtils.SharpImageList.Images.Add( "HotSpot_10548", Properties.Resources.HotSpot_10548 );
+            Utils.ServerUtils.SharpImageList.Images.Add( "ExtensionManager_vsix", Properties.Resources.ExtensionManager_vsix );
             Utils.ServerUtils.SharpImageList.Images.Add( "HotSpot_10548_color", Properties.Resources.HotSpot_10548_color );
             Utils.ServerUtils.SharpImageList.Images.Add( "library_16xLG", Properties.Resources.library_16xLG );
             Utils.ServerUtils.SharpImageList.Images.Add( "Method_636", Properties.Resources.Method_636 );
@@ -78,6 +79,14 @@ namespace HSLSharp
         private void 节点配置器ToolStripMenuItem_Click( object sender, EventArgs e )
         {
             using (FormNodeSetting form = new FormNodeSetting( ))
+            {
+                form.ShowDialog( );
+            }
+        }
+
+        private void 解析规则配置器ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            using (NodeSettings.FormRegularCode form = new NodeSettings.FormRegularCode( ))
             {
                 form.ShowDialog( );
             }

@@ -32,6 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.系统配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.节点配置器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.解析规则配置器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +59,8 @@
             // 系统配置ToolStripMenuItem
             // 
             this.系统配置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.节点配置器ToolStripMenuItem});
+            this.节点配置器ToolStripMenuItem,
+            this.解析规则配置器ToolStripMenuItem});
             this.系统配置ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Property_501;
             this.系统配置ToolStripMenuItem.Name = "系统配置ToolStripMenuItem";
             this.系统配置ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
@@ -71,6 +73,14 @@
             this.节点配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.节点配置器ToolStripMenuItem.Text = "节点配置器";
             this.节点配置器ToolStripMenuItem.Click += new System.EventHandler(this.节点配置器ToolStripMenuItem_Click);
+            // 
+            // 解析规则配置器ToolStripMenuItem
+            // 
+            this.解析规则配置器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.ExtensionManager_vsix;
+            this.解析规则配置器ToolStripMenuItem.Name = "解析规则配置器ToolStripMenuItem";
+            this.解析规则配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.解析规则配置器ToolStripMenuItem.Text = "解析规则配置器";
+            this.解析规则配置器ToolStripMenuItem.Click += new System.EventHandler(this.解析规则配置器ToolStripMenuItem_Click);
             // 
             // FormServer
             // 
@@ -96,6 +106,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 系统配置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 节点配置器ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 解析规则配置器ToolStripMenuItem;
     }
 }
 

@@ -688,7 +688,7 @@
             获取一个异常的完整错误信息
             </summary>
             <param name="ex">异常对象</param>
-            <returns></returns>
+            <returns>完整的字符串数据</returns>
             <exception cref="T:System.NullReferenceException"></exception>
         </member>
         <member name="M:HslCommunication.BasicFramework.SoftBasic.GetExceptionMessage(System.String,System.Exception)">
@@ -697,7 +697,7 @@
             </summary>
             <param name="extraMsg">额外的信息</param>
             <param name="ex">异常对象</param>
-            <returns></returns>
+            <returns>完整的字符串数据</returns>
             <exception cref="T:System.NullReferenceException"></exception>
         </member>
         <member name="M:HslCommunication.BasicFramework.SoftBasic.ByteToHexString(System.Byte[])">
@@ -6085,10 +6085,10 @@
             <summary>
             客户端的数据处理中心
             </summary>
-            <param name="session"></param>
-            <param name="protocol"></param>
-            <param name="customer"></param>
-            <param name="content"></param>
+            <param name="session">会话</param>
+            <param name="protocol">消息暗号</param>
+            <param name="customer">用户消息</param>
+            <param name="content">数据内容</param>
         </member>
         <member name="M:HslCommunication.Enthernet.NetComplexClient.ThreadHeartCheck">
             <summary>
@@ -6116,26 +6116,7 @@
             所支持的同时在线客户端的最大数量，商用限制1000个，最小10个
             </summary>
         </member>
-        <member name="P:HslCommunication.Enthernet.NetComplexServer.FormatClientOnline">
-            <summary>
-            客户端在线信息显示的格式化文本，如果自定义，必须#开头，
-            示例："#IP:{0} Name:{1}"
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Enthernet.NetComplexServer.m_AllClients">
-            <summary>
-            客户端在线信息缓存
-            </summary>
-        </member>
-        <member name="P:HslCommunication.Enthernet.NetComplexServer.AsyncCoordinator">
-            <summary>
-            一个计算上线下线的高性能缓存对象
-            </summary>
-        </member>
         <member name="P:HslCommunication.Enthernet.NetComplexServer.IsSaveLogClientLineChange">
-            <summary>
-            计算所有客户端在线的信息
-            </summary>
             <summary>
             获取或设置服务器是否记录客户端上下线信息
             </summary>
@@ -6143,16 +6124,6 @@
         <member name="P:HslCommunication.Enthernet.NetComplexServer.ClientCount">
             <summary>
             所有在线客户端的数量
-            </summary>
-        </member>
-        <member name="P:HslCommunication.Enthernet.NetComplexServer.All_sockets_connect">
-            <summary>
-            所有的客户端连接的核心对象
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Enthernet.NetComplexServer.HybirdLockSockets">
-            <summary>
-            客户端数组操作的线程混合锁
             </summary>
         </member>
         <member name="M:HslCommunication.Enthernet.NetComplexServer.StartInitialization">
@@ -6164,6 +6135,19 @@
             <summary>
             关闭网络时的操作
             </summary>
+        </member>
+        <member name="M:HslCommunication.Enthernet.NetComplexServer.SocketReceiveException(HslCommunication.Core.Net.AppSession,System.Exception)">
+            <summary>
+            异常下线
+            </summary>
+            <param name="session"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:HslCommunication.Enthernet.NetComplexServer.AppSessionRemoteClose(HslCommunication.Core.Net.AppSession)">
+            <summary>
+            正常下线
+            </summary>
+            <param name="session"></param>
         </member>
         <member name="E:HslCommunication.Enthernet.NetComplexServer.AllClientsStatusChange">
             <summary>
@@ -6195,19 +6179,6 @@
             登录后的处理方法
             </summary>
             <param name="obj"></param>
-        </member>
-        <member name="M:HslCommunication.Enthernet.NetComplexServer.SocketReceiveException(HslCommunication.Core.Net.AppSession,System.Exception)">
-            <summary>
-            异常下线
-            </summary>
-            <param name="session"></param>
-            <param name="ex"></param>
-        </member>
-        <member name="M:HslCommunication.Enthernet.NetComplexServer.AppSessionRemoteClose(HslCommunication.Core.Net.AppSession)">
-            <summary>
-            正常下线
-            </summary>
-            <param name="session"></param>
         </member>
         <member name="M:HslCommunication.Enthernet.NetComplexServer.Send(HslCommunication.Core.Net.AppSession,HslCommunication.NetHandle,System.String)">
             <summary>
@@ -6259,10 +6230,10 @@
             <summary>
             数据处理中心
             </summary>
-            <param name="session"></param>
-            <param name="protocol"></param>
-            <param name="customer"></param>
-            <param name="content"></param>
+            <param name="session">会话对象</param>
+            <param name="protocol">消息的代码</param>
+            <param name="customer">用户消息</param>
+            <param name="content">数据内容</param>
         </member>
         <member name="M:HslCommunication.Enthernet.NetComplexServer.ToString">
             <summary>
@@ -6573,12 +6544,13 @@
             存储之前引发的事件，允许额外的操作
             </summary>
         </member>
-        <member name="M:HslCommunication.LogNet.ILogNet.RecordMessage(HslCommunication.LogNet.HslMessageDegree,System.String)">
+        <member name="M:HslCommunication.LogNet.ILogNet.RecordMessage(HslCommunication.LogNet.HslMessageDegree,System.String,System.String)">
             <summary>
             自定义的消息记录
             </summary>
-            <param name="degree"></param>
-            <param name="text"></param>
+            <param name="degree">消息等级</param>
+            <param name="keyWord">关键字</param>
+            <param name="text">日志内容</param>
         </member>
         <member name="M:HslCommunication.LogNet.ILogNet.WriteDebug(System.String)">
             <summary>
@@ -6683,14 +6655,25 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:HslCommunication.LogNet.ILogNet.FiltrateKeyword(System.String)">
+            <summary>
+            过滤掉指定的关键字的日志，该信息不存储，但仍然触发BeforeSaveToFile事件
+            </summary>
+            <param name="keyword"></param>
+        </member>
         <member name="T:HslCommunication.LogNet.LogNetBase">
             <summary>
             日志存储类的基类，提供一些基础的服务
             </summary>    
         </member>
+        <member name="M:HslCommunication.LogNet.LogNetBase.#ctor">
+            <summary>
+            实例化一个日志对象
+            </summary>
+        </member>
         <member name="F:HslCommunication.LogNet.LogNetBase.m_fileSaveLock">
             <summary>
-            文件读写锁
+            文件存储的锁
             </summary>
         </member>
         <member name="E:HslCommunication.LogNet.LogNetBase.BeforeSaveToFile">
@@ -6783,12 +6766,13 @@
             <param name="text">内容</param>
             <param name="ex">异常</param>
         </member>
-        <member name="M:HslCommunication.LogNet.LogNetBase.RecordMessage(HslCommunication.LogNet.HslMessageDegree,System.String)">
+        <member name="M:HslCommunication.LogNet.LogNetBase.RecordMessage(HslCommunication.LogNet.HslMessageDegree,System.String,System.String)">
             <summary>
             记录一条自定义的消息
             </summary>
-            <param name="degree"></param>
-            <param name="text"></param>
+            <param name="degree">消息的等级</param>
+            <param name="keyWord">关键字</param>
+            <param name="text">文本</param>
         </member>
         <member name="M:HslCommunication.LogNet.LogNetBase.WriteDescrition(System.String)">
             <summary>
@@ -6806,6 +6790,12 @@
             设置日志的存储等级，高于该等级的才会被存储
             </summary>
             <param name="degree"></param>
+        </member>
+        <member name="M:HslCommunication.LogNet.LogNetBase.FiltrateKeyword(System.String)">
+            <summary>
+            过滤指定的关键字存储
+            </summary>
+            <param name="keyWord">关键字</param>
         </member>
         <member name="M:HslCommunication.LogNet.LogNetBase.GetFileSaveName">
             <summary>
@@ -6833,12 +6823,12 @@
         </member>
         <member name="T:HslCommunication.LogNet.HslEventArgs">
             <summary>
-            带有存储消息的事件
+            带有日志消息的事件
             </summary>
         </member>
         <member name="P:HslCommunication.LogNet.HslEventArgs.HslMessage">
             <summary>
-            
+            消息信息
             </summary>
         </member>
         <member name="T:HslCommunication.LogNet.GenerateMode">
@@ -6946,9 +6936,20 @@
             消息发生的事件
             </summary>
         </member>
+        <member name="P:HslCommunication.LogNet.HslMessageItem.KeyWord">
+            <summary>
+            消息的关键字
+            </summary>
+        </member>
         <member name="M:HslCommunication.LogNet.HslMessageItem.ToString">
             <summary>
-            获取本日志消息的字符串表示形式
+            返回表示当前对象的字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.LogNet.HslMessageItem.ToStringWithoutKeyword">
+            <summary>
+            返回表示当前对象的字符串，剔除了关键字
             </summary>
             <returns></returns>
         </member>
@@ -8069,6 +8070,11 @@
             <param name="port">服务器的端口号</param>
             <param name="station">客户端自身的站号</param>
         </member>
+        <member name="P:HslCommunication.ModBus.ModbusTcpNet.AddressStartWithZero">
+            <summary>
+            获取或设置起始的地址是否从0开始，默认为True
+            </summary>
+        </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpNet.AnalysisAddress(System.String)">
             <summary>
             解析数据地址，解析出地址类型，起始地址
@@ -9074,6 +9080,13 @@
             <param name="length">读取的长度</param>
             <returns>带成功标志的结果数据对象</returns>
         </member>
+        <member name="M:HslCommunication.Profinet.Melsec.MelsecA1ENet.ReadBool(System.String)">
+            <summary>
+            从三菱PLC中批量读取位软元件，返回读取结果
+            </summary>
+            <param name="address">起始地址</param>
+            <returns>带成功标志的结果数据对象</returns>
+        </member>
         <member name="M:HslCommunication.Profinet.Melsec.MelsecA1ENet.ReadInt16(System.String)">
             <summary>
             读取三菱PLC中字软元件指定地址的short数据
@@ -9411,6 +9424,13 @@
             </summary>
             <param name="address">起始地址</param>
             <param name="length">读取的长度</param>
+            <returns>带成功标志的结果数据对象</returns>
+        </member>
+        <member name="M:HslCommunication.Profinet.Melsec.MelsecMcAsciiNet.ReadBool(System.String)">
+            <summary>
+            从三菱PLC中批量读取位软元件，返回读取结果
+            </summary>
+            <param name="address">起始地址</param>
             <returns>带成功标志的结果数据对象</returns>
         </member>
         <member name="M:HslCommunication.Profinet.Melsec.MelsecMcAsciiNet.ReadInt16(System.String)">
@@ -9845,6 +9865,13 @@
             </summary>
             <param name="address">起始地址</param>
             <param name="length">读取的长度</param>
+            <returns>带成功标志的结果数据对象</returns>
+        </member>
+        <member name="M:HslCommunication.Profinet.Melsec.MelsecMcNet.ReadBool(System.String)">
+            <summary>
+            从三菱PLC中批量读取位软元件，返回读取结果
+            </summary>
+            <param name="address">起始地址</param>
             <returns>带成功标志的结果数据对象</returns>
         </member>
         <member name="M:HslCommunication.Profinet.Melsec.MelsecMcNet.ReadInt16(System.String)">
@@ -11125,6 +11152,13 @@
             </summary>
             <param name="address">起始地址，格式为I100，M100，Q100，DB20.100</param>
             <param name="length">字符串长度</param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.Profinet.Siemens.SiemensS7Net.WriteBase(System.Byte[])">
+            <summary>
+            基础的写入数据的操作支持
+            </summary>
+            <param name="entireValue"></param>
             <returns></returns>
         </member>
         <member name="M:HslCommunication.Profinet.Siemens.SiemensS7Net.Write(System.String,System.Byte[])">

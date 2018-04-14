@@ -321,6 +321,9 @@ namespace HSLSharp
                 return;
             }
 
+
+
+            isNodeSettingsModify = true;
             if (node.Nodes.Count == 0)
             {
                 node.Parent.Nodes.Remove( node );
@@ -393,7 +396,6 @@ namespace HSLSharp
 
         private void TreeNodeRender( TreeNode treeNode, XElement element )
         {
-            isNodeSettingsModify = true;
             foreach (XElement item in element.Elements( ))
             {
                 if (item.Name == "NodeClass")
