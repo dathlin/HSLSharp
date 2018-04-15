@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Core\DataParseItem.cs" />
     <Compile Include="Configuration\Core\DataParseRegular.cs" />
     <Compile Include="Configuration\Node\NodeClassRenderItem.cs" />
     <Compile Include="Configuration\Node\DeviceNode.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Configuration\Node\IXmlConvert.cs" />
     <Compile Include="Configuration\Node\NodeClass.cs" />
     <Compile Include="Configuration\Node\NodeClassInfo.cs" />
+    <Compile Include="Configuration\Regular\RegularNode.cs" />
     <Compile Include="Controls\TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -129,6 +131,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestSettings\FormRegularNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RequestSettings\FormRegularNode.Designer.cs">
+      <DependentUpon>FormRegularNode.cs</DependentUpon>
+    </Compile>
     <Compile Include="RequestSettings\FormRequest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +170,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RequestSettings\FormRegularNode.resx">
+      <DependentUpon>FormRegularNode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RequestSettings\FormRequest.resx">
       <DependentUpon>FormRequest.cs</DependentUpon>
     </EmbeddedResource>

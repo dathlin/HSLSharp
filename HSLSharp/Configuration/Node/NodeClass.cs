@@ -53,8 +53,7 @@ namespace HSLSharp.Configuration
         }
 
         #endregion
-
-
+        
         #region RenderValues
 
         public virtual List<NodeClassRenderItem> GetNodeClassRenders()

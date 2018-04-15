@@ -90,6 +90,8 @@ namespace HSLSharp
                     {
                         if (formNode.ShowDialog( ) == DialogResult.OK)
                         {
+                            formNode.SelectedNodeClass.Name = GetUniqueName( node, formNode.SelectedNodeClass.Name );
+
                             TreeNode nodeNew = new TreeNode( formNode.SelectedNodeClass.Name );
                             nodeNew.ImageKey = "Class_489";
                             nodeNew.SelectedImageKey = "Class_489";
@@ -120,6 +122,8 @@ namespace HSLSharp
                     {
                         if (formNode.ShowDialog( ) == DialogResult.OK)
                         {
+                            formNode.ModbusTcpNode.Name = GetUniqueName( node, formNode.ModbusTcpNode.Name );
+
                             TreeNode nodeNew = new TreeNode( formNode.ModbusTcpNode.Name );
                             nodeNew.ImageKey = "Module_648";
                             nodeNew.SelectedImageKey = "Module_648";
@@ -149,6 +153,8 @@ namespace HSLSharp
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
+                        formNode.DeviceRequest.Name = GetUniqueName( node, formNode.DeviceRequest.Name );
+
                         TreeNode nodeNew = new TreeNode( formNode.DeviceRequest.Name );
                         nodeNew.ImageKey = "usbcontroller";
                         nodeNew.SelectedImageKey = "usbcontroller";
@@ -288,6 +294,7 @@ namespace HSLSharp
                 treeView1.SelectedNode = treeView1.GetNodeAt( e.Location );
                 // 右键了控件
                 TreeNode node = treeView1.SelectedNode;
+                if (node == null) return;
 
                 if (node.Tag.GetType( ) == typeof( NodeClass ))
                 {
@@ -480,6 +487,37 @@ namespace HSLSharp
 
         }
 
+
+        #endregion
+
+        #region NodeName Update
+
+        private bool IsNodeSameNodeExist( TreeNode node, string name )
+        {
+            bool result = false;
+            foreach (TreeNode item in node.Nodes)
+            {
+                if (item.Text == name)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private string GetUniqueName( TreeNode node, string name )
+        {
+            if (!IsNodeSameNodeExist( node, name )) return name;
+
+            int index = 1;
+            while (IsNodeSameNodeExist( node, name + index ))
+            {
+                index++;
+            }
+            return name + index;
+        }
 
         #endregion
 
