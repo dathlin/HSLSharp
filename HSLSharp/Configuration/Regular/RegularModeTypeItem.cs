@@ -9,13 +9,13 @@ namespace HSLSharp.Configuration
 {
     public class RegularModeTypeItem
     {
-        public RegularModeTypeItem()
+        public RegularModeTypeItem( )
         {
 
         }
 
 
-        public RegularModeTypeItem(int code,string text,Brush backColor )
+        public RegularModeTypeItem( int code, string text, Brush backColor )
         {
             Code = code;
             Text = text;
@@ -42,27 +42,27 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// Bool数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Bool = new RegularModeTypeItem( 1, "bool" ,Brushes.PaleGreen );
+        public static readonly RegularModeTypeItem Bool = new RegularModeTypeItem( 1, "bool", Brushes.PaleGreen );
         /// <summary>
         /// Byte数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Byte = new RegularModeTypeItem( 2, "byte" ,Brushes.Aquamarine );
+        public static readonly RegularModeTypeItem Byte = new RegularModeTypeItem( 2, "byte", Brushes.Aquamarine );
         /// <summary>
         /// short数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Int16 = new RegularModeTypeItem( 3, "short" ,Brushes.Pink );
+        public static readonly RegularModeTypeItem Int16 = new RegularModeTypeItem( 3, "short", Brushes.Pink );
         /// <summary>
         /// ushort数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem UInt16 = new RegularModeTypeItem( 4, "ushort" ,Brushes.Gold );
+        public static readonly RegularModeTypeItem UInt16 = new RegularModeTypeItem( 4, "ushort", Brushes.Gold );
         /// <summary>
         /// int数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Int32 = new RegularModeTypeItem( 5, "int" ,Brushes.BlanchedAlmond );
+        public static readonly RegularModeTypeItem Int32 = new RegularModeTypeItem( 5, "int", Brushes.BlanchedAlmond );
         /// <summary>
         /// uint数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem UInt32 = new RegularModeTypeItem( 6, "uint" ,Brushes.DarkKhaki );
+        public static readonly RegularModeTypeItem UInt32 = new RegularModeTypeItem( 6, "uint", Brushes.DarkKhaki );
         /// <summary>
         /// long数据类型
         /// </summary>
@@ -93,24 +93,24 @@ namespace HSLSharp.Configuration
         public static readonly RegularModeTypeItem StringUtf8 = new RegularModeTypeItem( 13, "string[utf8]", Brushes.SandyBrown );
 
 
-        public static RegularModeTypeItem GetDataPraseItemByCode(int code)
+        public static RegularModeTypeItem GetDataPraseItemByCode( int code )
         {
-            switch(code)
+            switch (code)
             {
-                case 1:return Bool;
-                case 2:return Byte;
-                case 3:return Int16;
-                case 4:return UInt16;
-                case 5:return Int32;
-                case 6:return UInt32;
-                case 7:return Int64;
-                case 8:return UInt64;
-                case 9:return Float;
-                case 10:return Double;
-                case 11:return StringAscii;
-                case 12:return StringUnicode;
-                case 13:return StringUtf8;
-                default:return new RegularModeTypeItem( code, "none", Brushes.Black );
+                case 1: return Bool;
+                case 2: return Byte;
+                case 3: return Int16;
+                case 4: return UInt16;
+                case 5: return Int32;
+                case 6: return UInt32;
+                case 7: return Int64;
+                case 8: return UInt64;
+                case 9: return Float;
+                case 10: return Double;
+                case 11: return StringAscii;
+                case 12: return StringUnicode;
+                case 13: return StringUtf8;
+                default: return new RegularModeTypeItem( code, "none", Brushes.Black );
             }
         }
 

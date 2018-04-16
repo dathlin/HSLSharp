@@ -44,7 +44,7 @@ namespace HSLSharp.NodeSettings
             {
                 if (MessageBox.Show( "当前的配置信息已经修改过，但还未保存，是否需要保存？", "保存确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning ) == DialogResult.Yes)
                 {
-                    SaveNodes( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+                    SaveNodes( Utils.ServerUtils.SharpSettings.RegularSettingsFilePath );
                 }
             }
         }
@@ -430,53 +430,149 @@ namespace HSLSharp.NodeSettings
             }
         }
 
+        private int GetNumberByUplimit( int value, int count )
+        {
+            if (value == 0) return 1;
+            if(value % count == 0)
+            {
+                return value / count;
+            }
+            else
+            {
+                return value / count + 1;
+            }
+        }
+
         private Bitmap GetRenderInfo( List<RegularNode> regulars )
         {
             regulars.Sort( );
             int max_byte = regulars.Max( m => m.GetLengthByte( ) );
+            int every_line_count = (pictureBox1.Width - 90) / 20;
+            int line_count = GetNumberByUplimit( max_byte, every_line_count );
 
 
-            Bitmap bitmap = new Bitmap( pictureBox1.Width - 1, regulars.Count * 20 + 5 );
+            Bitmap bitmap = new Bitmap( panel1.Width - 19, line_count * 50 + 5 );
             Graphics g = Graphics.FromImage( bitmap );
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             StringFormat stringFormat = new StringFormat( );
             stringFormat.LineAlignment = StringAlignment.Center;
             stringFormat.Alignment = StringAlignment.Center;
+            Font font_9 = new Font( "宋体", 7f );
 
 
             g.Clear( Color.AliceBlue );
 
-            int paint_x = 2;
+
+            int paint_x = 85;
             int paint_y = 2;
+            int count = 0;
+            g.DrawLine( Pens.Gray, paint_x - 5, 0, paint_x - 5, bitmap.Height );
+
+            for (int i = 0; i < line_count; i++)
+            {
+                g.DrawString( $"[{count.ToString( "D3" )} - {(count + Math.Min( max_byte - count, every_line_count  - 1)).ToString( "D3" )}]", Font, Brushes.DimGray, new Point( 2, paint_y + 16 ) );
+
+                for (int j = 0; j < every_line_count; j++)
+                {
+                    Rectangle rec = new Rectangle( paint_x + j * 20, paint_y + 17, 16, 16 );
+                    g.DrawRectangle( Pens.Gray, rec );
+                    g.DrawString( count.ToString( ), font_9, Brushes.Black, rec, stringFormat );
+                    count++;
+
+                    if (count >= max_byte)
+                        break;
+                }
+
+                paint_y += 50;
+            }
+
+            paint_y = 2;
 
             for (int i = 0; i < regulars.Count; i++)
             {
                 int start = regulars[i].GetStartedByteIndex( );
-                int end = regulars[i].GetLengthByte( ) + start;
+                int length = regulars[i].GetLengthByte( ) - regulars[i].Index;
 
-                g.DrawLine( Pens.Gray, 80, 0, 80, bitmap.Height );
-                g.DrawString( $"[{start.ToString("D3")} - {(end - 1).ToString("D3")}]", Font, Brushes.DimGray, new Point( 2, paint_y +1) );
+                int rowStart = GetNumberByUplimit( start, every_line_count );
+                int rowEnd = GetNumberByUplimit( start + length, every_line_count );
 
-                for (int j = 0; j < (end - start); j++)
+                if(rowEnd == rowStart)
                 {
-                    Rectangle rec = new Rectangle( 85 + j * 20, paint_y + 2, 16, 16 );
-                    g.FillRectangle( RegularModeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode ).BackColor, rec );
-                    g.DrawRectangle( Pens.DimGray, rec );
+                    // 同行的情况
+                    Point first = new Point( paint_x + start % every_line_count * 20 + 8, paint_y + 17 + start / every_line_count * 50 + 20 );
+                    Point second = new Point( paint_x + (start + length - 1) % every_line_count * 20 + 8, paint_y + 17 + (start + length - 1) / every_line_count * 50 + 20 );
+                    g.DrawLine( Pens.DimGray, first, new Point( first.X, first.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, second, new Point( second.X, second.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, first, second );
+
+                    Rectangle rectangle = new Rectangle( first.X - 20, first.Y, second.X - first.X + 40, 20 );
+                    g.DrawString( regulars[i].Name, Font, Brushes.Blue, rectangle, stringFormat ); 
+                }
+                else
+                {
+                    Point first = new Point( paint_x + start % every_line_count * 20 + 8, paint_y + 17 + start / every_line_count * 50 + 20 );
+                    Point first_2 = new Point( paint_x + every_line_count * 20, paint_y + 17 + start / every_line_count * 50 + 20 );
+                    g.DrawLine( Pens.DimGray, first, new Point( first.X, first.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, first, first_2 );
+
+                    Point second = new Point( paint_x + (start + length - 1) % every_line_count * 20 + 8, paint_y + 17 + (start + length - 1) / every_line_count * 50 + 20 );
+                    Point second_2 = new Point( paint_x, paint_y + 17 + (start + length - 1) / every_line_count * 50 + 20 );
+                    g.DrawLine( Pens.DimGray, second, new Point( second.X, second.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, second_2, second );
+
+                    if((first_2.X-first.X)>= (second.X - second_2.X))
+                    {
+                        g.DrawString( regulars[i].Name, Font, Brushes.Blue, first );
+                    }
+                    else
+                    {
+                        g.DrawString( regulars[i].Name, Font, Brushes.Blue, second_2 );
+                    }
                 }
 
 
-                g.DrawLine( Pens.LimeGreen, 90 + 20 * max_byte, paint_y, 90 + 20 * max_byte, paint_y + 20 );
-                g.DrawString( regulars[i].Name, Font, Brushes.Blue, new Point( 95 + 20 * max_byte, paint_y +1 ) );
+                for (int j = 0; j < length; j++)
+                {
+                    int paint_x_tmp = paint_x + (start + j) % every_line_count * 20;
+                    int paint_y_tmp = paint_y + 17 + (start + j) / every_line_count * 50;
 
-
-                paint_y += 20;
+                    Rectangle rec = new Rectangle( paint_x_tmp, paint_y_tmp, 16, 16 );
+                    g.FillRectangle( RegularModeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode ).BackColor, rec );
+                    g.DrawRectangle( Pens.DimGray, rec );
+                    g.DrawString( (regulars[i].Index + j).ToString(), font_9, Brushes.Black, rec, stringFormat );
+                }
             }
 
 
+            //for (int i = 0; i < regulars.Count; i++)
+            //{
+            //    int start = regulars[i].GetStartedByteIndex( );
+            //    int end = regulars[i].GetLengthByte( ) + start;
+
+            //    g.DrawLine( Pens.Gray, 80, 0, 80, bitmap.Height );
+            //    g.DrawString( $"[{start.ToString("D3")} - {(end - 1).ToString("D3")}]", Font, Brushes.DimGray, new Point( 2, paint_y +1) );
+
+            //    for (int j = 0; j < (end - start); j++)
+            //    {
+            //        Rectangle rec = new Rectangle( 85 + j * 20, paint_y + 2, 16, 16 );
+            //        g.FillRectangle( RegularModeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode ).BackColor, rec );
+            //        g.DrawRectangle( Pens.DimGray, rec );
+            //    }
+
+
+            //    g.DrawLine( Pens.LimeGreen, 90 + 20 * max_byte, paint_y, 90 + 20 * max_byte, paint_y + 20 );
+            //    g.DrawString( regulars[i].Name, Font, Brushes.Blue, new Point( 95 + 20 * max_byte, paint_y +1 ) );
+
+
+            //    paint_y += 20;
+            //}
 
 
 
+
+            stringFormat.Dispose( );
+            font_9.Dispose( );
             return bitmap;
         }
 

@@ -67,39 +67,39 @@ namespace HSLSharp.Configuration
             {
                 if ((Index + TypeLength) % 8 == 0)
                 {
-                    return (TypeLength) / 8;
+                    return (TypeLength) / 8 + Index;
                 }
                 else
                 {
-                    return (TypeLength) / 8 + 1;
+                    return (TypeLength) / 8 + 1 + Index;
                 }
             }
             else if (TypeCode == RegularModeTypeItem.StringAscii.Code ||
                 TypeCode == RegularModeTypeItem.StringUnicode.Code ||
                 TypeCode == RegularModeTypeItem.StringUtf8.Code)
             {
-                return TypeLength;
+                return TypeLength + Index;
             }
             else if (TypeCode == RegularModeTypeItem.UInt16.Code ||
                 TypeCode == RegularModeTypeItem.Int16.Code)
             {
-                return TypeLength * 2;
+                return TypeLength * 2 + Index;
             }
             else if (TypeCode == RegularModeTypeItem.Int32.Code ||
                 TypeCode == RegularModeTypeItem.UInt32.Code ||
                 TypeCode == RegularModeTypeItem.Float.Code)
             {
-                return TypeLength * 4;
+                return TypeLength * 4 + Index;
             }
             else if (TypeCode == RegularModeTypeItem.Int64.Code ||
                 TypeCode == RegularModeTypeItem.UInt64.Code ||
                 TypeCode == RegularModeTypeItem.Double.Code)
             {
-                return TypeLength * 8;
+                return TypeLength * 8 + Index;
             }
             else
             {
-                return TypeLength;
+                return TypeLength + Index;
             }
         }
 
