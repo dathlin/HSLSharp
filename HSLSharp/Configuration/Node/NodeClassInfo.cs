@@ -33,6 +33,11 @@ namespace HSLSharp.Configuration
         public const int ModbusServer = 3;
 
         /// <summary>
+        /// 解析规则的节点
+        /// </summary>
+        public const int RegularNode = 4;
+
+        /// <summary>
         /// 设备的请求信息
         /// </summary>
         public const int DeviceRequest = 100;

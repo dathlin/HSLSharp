@@ -7,8 +7,14 @@ using System.Xml.Linq;
 
 namespace HSLSharp.Configuration
 {
-    public class RegularNode : NodeClass
+    public class RegularNode : NodeClass,IComparable<RegularNode>
     {
+        public RegularNode( )
+        {
+            NodeType = NodeClassInfo.RegularNode;
+        }
+
+
         /// <summary>
         /// 类型的代号，详细参见const数据
         /// </summary>
@@ -25,7 +31,80 @@ namespace HSLSharp.Configuration
         public int Index { get; set; }
 
 
+        #region IComparable Interface
+        
+        /// <summary>
+        /// 实现了比较的接口，可以用来方便的排序
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CompareTo( RegularNode other )
+        {
+            return this.GetStartedByteIndex( ).CompareTo( other.GetStartedByteIndex( ) );
+        }
 
+
+        #endregion
+
+        #region Public Method
+
+        public int GetStartedByteIndex()
+        {
+            if(TypeCode == RegularModeTypeItem.Bool.Code)
+            {
+                return Index / 8;
+            }
+            else
+            {
+                return Index;
+            }
+        }
+
+
+        public int GetLengthByte( )
+        {
+            if (TypeCode == RegularModeTypeItem.Bool.Code)
+            {
+                if ((Index + TypeLength) % 8 == 0)
+                {
+                    return (TypeLength) / 8;
+                }
+                else
+                {
+                    return (TypeLength) / 8 + 1;
+                }
+            }
+            else if (TypeCode == RegularModeTypeItem.StringAscii.Code ||
+                TypeCode == RegularModeTypeItem.StringUnicode.Code ||
+                TypeCode == RegularModeTypeItem.StringUtf8.Code)
+            {
+                return TypeLength;
+            }
+            else if (TypeCode == RegularModeTypeItem.UInt16.Code ||
+                TypeCode == RegularModeTypeItem.Int16.Code)
+            {
+                return TypeLength * 2;
+            }
+            else if (TypeCode == RegularModeTypeItem.Int32.Code ||
+                TypeCode == RegularModeTypeItem.UInt32.Code ||
+                TypeCode == RegularModeTypeItem.Float.Code)
+            {
+                return TypeLength * 4;
+            }
+            else if (TypeCode == RegularModeTypeItem.Int64.Code ||
+                TypeCode == RegularModeTypeItem.UInt64.Code ||
+                TypeCode == RegularModeTypeItem.Double.Code)
+            {
+                return TypeLength * 8;
+            }
+            else
+            {
+                return TypeLength;
+            }
+        }
+
+        #endregion
+        
         #region Override
 
         /// <summary>

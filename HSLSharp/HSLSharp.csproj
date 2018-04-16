@@ -82,13 +82,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\Core\DataParseItem.cs" />
-    <Compile Include="Configuration\Core\DataParseRegular.cs" />
+    <Compile Include="Configuration\Regular\RegularModeTypeItem.cs" />
     <Compile Include="Configuration\Node\NodeClassRenderItem.cs" />
     <Compile Include="Configuration\Node\DeviceNode.cs" />
     <Compile Include="Configuration\Node\DeviceRequest.cs" />
-    <Compile Include="Configuration\Core\ByteDataParse.cs" />
-    <Compile Include="Configuration\Core\RegularManagement.cs" />
     <Compile Include="Configuration\ModbusServer\ModbusNode.cs" />
     <Compile Include="Configuration\ModbusServer\ModbusRequest.cs" />
     <Compile Include="Configuration\Device\ModbusTcpClient.cs" />

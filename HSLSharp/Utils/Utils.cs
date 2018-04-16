@@ -29,10 +29,6 @@ namespace HSLSharp.Utils
         /// 系统的所有的配置信息
         /// </summary>
         public static SharpSettings SharpSettings { get; set; }
-
-        /// <summary>
-        /// 系统的规则管理器
-        /// </summary>
-        public static RegularManagement RegularManagement { get; set; }
+        
     }
 }

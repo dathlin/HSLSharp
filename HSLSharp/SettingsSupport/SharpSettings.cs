@@ -19,6 +19,10 @@ namespace HSLSharp.SettingsSupport
         /// </summary>
         public string NodeSettingsFilePath { get; set; } = "NodesSettings.xml";
 
+        /// <summary>
+        /// 规则配置器的文件默认存储路径
+        /// </summary>
+        public string RegularSettingsFilePath { get; set; } = "RegularSettings.xml";
 
 
         /// <summary>

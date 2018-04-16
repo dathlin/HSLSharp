@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HSLSharp.Configuration
 {
-    public class DataParseItem
+    public class RegularModeTypeItem
     {
-        public DataParseItem()
+        public RegularModeTypeItem()
         {
 
         }
 
 
-        public DataParseItem(int code,string text)
+        public RegularModeTypeItem(int code,string text,Brush backColor )
         {
             Code = code;
             Text = text;
+            BackColor = backColor;
         }
 
 
@@ -25,6 +27,7 @@ namespace HSLSharp.Configuration
 
         public string Text { get; set; }
 
+        public Brush BackColor { get; set; }
 
 
         public override string ToString( )
@@ -39,58 +42,58 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// Bool数据类型
         /// </summary>
-        public static readonly DataParseItem Bool = new DataParseItem( 1, "bool" );
+        public static readonly RegularModeTypeItem Bool = new RegularModeTypeItem( 1, "bool" ,Brushes.PaleGreen );
         /// <summary>
         /// Byte数据类型
         /// </summary>
-        public static readonly DataParseItem Byte = new DataParseItem( 2, "byte" );
+        public static readonly RegularModeTypeItem Byte = new RegularModeTypeItem( 2, "byte" ,Brushes.Aquamarine );
         /// <summary>
         /// short数据类型
         /// </summary>
-        public static readonly DataParseItem Int16 = new DataParseItem( 3, "short" );
+        public static readonly RegularModeTypeItem Int16 = new RegularModeTypeItem( 3, "short" ,Brushes.Pink );
         /// <summary>
         /// ushort数据类型
         /// </summary>
-        public static readonly DataParseItem UInt16 = new DataParseItem( 4, "ushort" );
+        public static readonly RegularModeTypeItem UInt16 = new RegularModeTypeItem( 4, "ushort" ,Brushes.Gold );
         /// <summary>
         /// int数据类型
         /// </summary>
-        public static readonly DataParseItem Int32 = new DataParseItem( 5, "int" );
+        public static readonly RegularModeTypeItem Int32 = new RegularModeTypeItem( 5, "int" ,Brushes.BlanchedAlmond );
         /// <summary>
         /// uint数据类型
         /// </summary>
-        public static readonly DataParseItem UInt32 = new DataParseItem( 6, "uint" );
+        public static readonly RegularModeTypeItem UInt32 = new RegularModeTypeItem( 6, "uint" ,Brushes.DarkKhaki );
         /// <summary>
         /// long数据类型
         /// </summary>
-        public static readonly DataParseItem Int64 = new DataParseItem( 7, "long" );
+        public static readonly RegularModeTypeItem Int64 = new RegularModeTypeItem( 7, "long", Brushes.PapayaWhip );
         /// <summary>
         /// ulong数据类型
         /// </summary>
-        public static readonly DataParseItem UInt64 = new DataParseItem( 8, "ulong" );
+        public static readonly RegularModeTypeItem UInt64 = new RegularModeTypeItem( 8, "ulong", Brushes.Thistle );
         /// <summary>
         /// float数据类型
         /// </summary>
-        public static readonly DataParseItem Float = new DataParseItem( 9, "float" );
+        public static readonly RegularModeTypeItem Float = new RegularModeTypeItem( 9, "float", Brushes.Wheat );
         /// <summary>
         /// double数据类型
         /// </summary>
-        public static readonly DataParseItem Double = new DataParseItem( 10, "double" );
+        public static readonly RegularModeTypeItem Double = new RegularModeTypeItem( 10, "double", Brushes.LightGoldenrodYellow );
         /// <summary>
         /// string数据类型，ASCII编码
         /// </summary>
-        public static readonly DataParseItem StringAscii = new DataParseItem( 11, "string[ascii]" );
+        public static readonly RegularModeTypeItem StringAscii = new RegularModeTypeItem( 11, "string[ascii]", Brushes.Yellow );
         /// <summary>
         /// string数据类型，Unicode编码
         /// </summary>
-        public static readonly DataParseItem StringUnicode = new DataParseItem( 12, "string[unicode]" );
+        public static readonly RegularModeTypeItem StringUnicode = new RegularModeTypeItem( 12, "string[unicode]", Brushes.YellowGreen );
         /// <summary>
         /// string数据类型，UTF8编码
         /// </summary>
-        public static readonly DataParseItem StringUtf8 = new DataParseItem( 13, "string[utf8]" );
+        public static readonly RegularModeTypeItem StringUtf8 = new RegularModeTypeItem( 13, "string[utf8]", Brushes.SandyBrown );
 
 
-        public static DataParseItem GetDataPraseItemByCode(int code)
+        public static RegularModeTypeItem GetDataPraseItemByCode(int code)
         {
             switch(code)
             {
@@ -107,7 +110,7 @@ namespace HSLSharp.Configuration
                 case 11:return StringAscii;
                 case 12:return StringUnicode;
                 case 13:return StringUtf8;
-                default:return new DataParseItem( code, "none" );
+                default:return new RegularModeTypeItem( code, "none", Brushes.Black );
             }
         }
 

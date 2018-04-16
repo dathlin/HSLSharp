@@ -367,13 +367,22 @@ namespace HSLSharp
 
         private void SaveNodes(string fileName)
         {
-            XElement element = new XElement( "Settings" );
-            foreach (TreeNode item in treeView1.Nodes)
+            try
             {
-                element.Add( AddTreeNode( item ) );
-            }
+                XElement element = new XElement( "Settings" );
+                foreach (TreeNode item in treeView1.Nodes)
+                {
+                    element.Add( AddTreeNode( item ) );
+                }
 
-            element.Save( fileName );
+                element.Save( fileName );
+
+                MessageBox.Show( "保存成功！" );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show( "保存失败！原因：" + ex.Message );
+            }
         }
 
 
@@ -392,6 +401,7 @@ namespace HSLSharp
                 if (dialog.ShowDialog( ) == DialogResult.OK)
                 {
                     SaveNodes( dialog.FileName );
+                    isNodeSettingsModify = false;
                 }
             }
         }
@@ -482,6 +492,7 @@ namespace HSLSharp
                 if (fileDialog.ShowDialog( ) == DialogResult.OK)
                 {
                     LoadByFile( fileDialog.FileName );
+                    isNodeSettingsModify = true;
                 }
             }
 
