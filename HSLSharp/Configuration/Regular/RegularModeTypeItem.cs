@@ -7,27 +7,49 @@ using System.Threading.Tasks;
 
 namespace HSLSharp.Configuration
 {
-    public class RegularModeTypeItem
+    public class RegularNodeTypeItem
     {
-        public RegularModeTypeItem( )
+        public RegularNodeTypeItem( )
         {
 
         }
 
 
-        public RegularModeTypeItem( int code, string text, Brush backColor )
+        /// <summary>
+        /// 实例化信息
+        /// </summary>
+        /// <param name="code">代号</param>
+        /// <param name="text">文本</param>
+        /// <param name="backColor">背景色</param>
+        /// <param name="length">单位长度</param>
+        public RegularNodeTypeItem( int code, string text, Brush backColor, int length )
         {
             Code = code;
             Text = text;
             BackColor = backColor;
+            Length = length;
         }
 
 
+        /// <summary>
+        /// 类型的代号
+        /// </summary>
         public int Code { get; set; }
 
+        /// <summary>
+        /// 类型的文本描述
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// 类型使用的背景色
+        /// </summary>
         public Brush BackColor { get; set; }
+
+        /// <summary>
+        /// 类型的长度，仅仅是单个数据对象的长度
+        /// </summary>
+        public int Length { get; set; }
 
 
         public override string ToString( )
@@ -42,58 +64,58 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// Bool数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Bool = new RegularModeTypeItem( 1, "bool", Brushes.PaleGreen );
+        public static readonly RegularNodeTypeItem Bool = new RegularNodeTypeItem( 1, "bool", Brushes.PaleGreen, 1 );
         /// <summary>
         /// Byte数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Byte = new RegularModeTypeItem( 2, "byte", Brushes.Aquamarine );
+        public static readonly RegularNodeTypeItem Byte = new RegularNodeTypeItem( 2, "byt", Brushes.Aquamarine, 1 );
         /// <summary>
         /// short数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Int16 = new RegularModeTypeItem( 3, "short", Brushes.Pink );
+        public static readonly RegularNodeTypeItem Int16 = new RegularNodeTypeItem( 3, "short", Brushes.Pink, 2 );
         /// <summary>
         /// ushort数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem UInt16 = new RegularModeTypeItem( 4, "ushort", Brushes.Gold );
+        public static readonly RegularNodeTypeItem UInt16 = new RegularNodeTypeItem( 4, "ushort", Brushes.Gold, 2 );
         /// <summary>
         /// int数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Int32 = new RegularModeTypeItem( 5, "int", Brushes.BlanchedAlmond );
+        public static readonly RegularNodeTypeItem Int32 = new RegularNodeTypeItem( 5, "int", Brushes.BlanchedAlmond, 4 );
         /// <summary>
         /// uint数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem UInt32 = new RegularModeTypeItem( 6, "uint", Brushes.DarkKhaki );
+        public static readonly RegularNodeTypeItem UInt32 = new RegularNodeTypeItem( 6, "uint", Brushes.DarkKhaki, 4 );
         /// <summary>
         /// long数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Int64 = new RegularModeTypeItem( 7, "long", Brushes.PapayaWhip );
+        public static readonly RegularNodeTypeItem Int64 = new RegularNodeTypeItem( 7, "long", Brushes.Khaki, 8 );
         /// <summary>
         /// ulong数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem UInt64 = new RegularModeTypeItem( 8, "ulong", Brushes.Thistle );
+        public static readonly RegularNodeTypeItem UInt64 = new RegularNodeTypeItem( 8, "ulong", Brushes.Thistle, 8 );
         /// <summary>
         /// float数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Float = new RegularModeTypeItem( 9, "float", Brushes.Wheat );
+        public static readonly RegularNodeTypeItem Float = new RegularNodeTypeItem( 9, "float", Brushes.Wheat, 4 );
         /// <summary>
         /// double数据类型
         /// </summary>
-        public static readonly RegularModeTypeItem Double = new RegularModeTypeItem( 10, "double", Brushes.LightGoldenrodYellow );
+        public static readonly RegularNodeTypeItem Double = new RegularNodeTypeItem( 10, "double", Brushes.LightGoldenrodYellow, 8 );
         /// <summary>
         /// string数据类型，ASCII编码
         /// </summary>
-        public static readonly RegularModeTypeItem StringAscii = new RegularModeTypeItem( 11, "string[ascii]", Brushes.Yellow );
+        public static readonly RegularNodeTypeItem StringAscii = new RegularNodeTypeItem( 11, "string[ascii]", Brushes.Yellow, 0 );
         /// <summary>
         /// string数据类型，Unicode编码
         /// </summary>
-        public static readonly RegularModeTypeItem StringUnicode = new RegularModeTypeItem( 12, "string[unicode]", Brushes.YellowGreen );
+        public static readonly RegularNodeTypeItem StringUnicode = new RegularNodeTypeItem( 12, "string[unicode]", Brushes.YellowGreen, 0 );
         /// <summary>
         /// string数据类型，UTF8编码
         /// </summary>
-        public static readonly RegularModeTypeItem StringUtf8 = new RegularModeTypeItem( 13, "string[utf8]", Brushes.SandyBrown );
+        public static readonly RegularNodeTypeItem StringUtf8 = new RegularNodeTypeItem( 13, "string[utf8]", Brushes.SandyBrown, 0 );
 
 
-        public static RegularModeTypeItem GetDataPraseItemByCode( int code )
+        public static RegularNodeTypeItem GetDataPraseItemByCode( int code )
         {
             switch (code)
             {
@@ -110,7 +132,7 @@ namespace HSLSharp.Configuration
                 case 11: return StringAscii;
                 case 12: return StringUnicode;
                 case 13: return StringUtf8;
-                default: return new RegularModeTypeItem( code, "none", Brushes.Black );
+                default: return new RegularNodeTypeItem( code, "none", Brushes.Black, 1 );
             }
         }
 

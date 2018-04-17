@@ -74,11 +74,16 @@ namespace HSLSharp.Configuration
         #region Const Define
 
         /// <summary>
-        /// 
+        /// 三菱的Qna兼容3E帧协议的客户端
         /// </summary>
         public const int MelsecMcQna3EBinary = 1;
 
+        /// <summary>
+        /// 常规的Modbus-Tcp客户端
+        /// </summary>
         public const int ModbusTcpClient = 10;
+
+
 
 
         #endregion

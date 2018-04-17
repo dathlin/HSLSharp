@@ -50,7 +50,7 @@ namespace HSLSharp.Configuration
 
         public int GetStartedByteIndex()
         {
-            if(TypeCode == RegularModeTypeItem.Bool.Code)
+            if(TypeCode == RegularNodeTypeItem.Bool.Code)
             {
                 return Index / 8;
             }
@@ -59,41 +59,42 @@ namespace HSLSharp.Configuration
                 return Index;
             }
         }
+        
 
 
         public int GetLengthByte( )
         {
-            if (TypeCode == RegularModeTypeItem.Bool.Code)
+            if (TypeCode == RegularNodeTypeItem.Bool.Code)
             {
                 if ((Index + TypeLength) % 8 == 0)
                 {
-                    return (TypeLength) / 8 + Index;
+                    return (TypeLength) / 8 + GetStartedByteIndex( );
                 }
                 else
                 {
-                    return (TypeLength) / 8 + 1 + Index;
+                    return (TypeLength) / 8 + 1 + GetStartedByteIndex( );
                 }
             }
-            else if (TypeCode == RegularModeTypeItem.StringAscii.Code ||
-                TypeCode == RegularModeTypeItem.StringUnicode.Code ||
-                TypeCode == RegularModeTypeItem.StringUtf8.Code)
+            else if (TypeCode == RegularNodeTypeItem.StringAscii.Code ||
+                TypeCode == RegularNodeTypeItem.StringUnicode.Code ||
+                TypeCode == RegularNodeTypeItem.StringUtf8.Code)
             {
                 return TypeLength + Index;
             }
-            else if (TypeCode == RegularModeTypeItem.UInt16.Code ||
-                TypeCode == RegularModeTypeItem.Int16.Code)
+            else if (TypeCode == RegularNodeTypeItem.UInt16.Code ||
+                TypeCode == RegularNodeTypeItem.Int16.Code)
             {
                 return TypeLength * 2 + Index;
             }
-            else if (TypeCode == RegularModeTypeItem.Int32.Code ||
-                TypeCode == RegularModeTypeItem.UInt32.Code ||
-                TypeCode == RegularModeTypeItem.Float.Code)
+            else if (TypeCode == RegularNodeTypeItem.Int32.Code ||
+                TypeCode == RegularNodeTypeItem.UInt32.Code ||
+                TypeCode == RegularNodeTypeItem.Float.Code)
             {
                 return TypeLength * 4 + Index;
             }
-            else if (TypeCode == RegularModeTypeItem.Int64.Code ||
-                TypeCode == RegularModeTypeItem.UInt64.Code ||
-                TypeCode == RegularModeTypeItem.Double.Code)
+            else if (TypeCode == RegularNodeTypeItem.Int64.Code ||
+                TypeCode == RegularNodeTypeItem.UInt64.Code ||
+                TypeCode == RegularNodeTypeItem.Double.Code)
             {
                 return TypeLength * 8 + Index;
             }

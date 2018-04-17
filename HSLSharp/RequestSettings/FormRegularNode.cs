@@ -22,21 +22,21 @@ namespace HSLSharp.RequestSettings
 
         private void FormRegularNode_Load( object sender, EventArgs e )
         {
-            comboBox1.DataSource = new RegularModeTypeItem[]
+            comboBox1.DataSource = new RegularNodeTypeItem[]
             {
-                RegularModeTypeItem.Bool,
-                RegularModeTypeItem.Byte,
-                RegularModeTypeItem.Int16,
-                RegularModeTypeItem.UInt16,
-                RegularModeTypeItem.Int32,
-                RegularModeTypeItem.UInt32,
-                RegularModeTypeItem.Int64,
-                RegularModeTypeItem.UInt64,
-                RegularModeTypeItem.Float,
-                RegularModeTypeItem.Double,
-                RegularModeTypeItem.StringAscii,
-                RegularModeTypeItem.StringUnicode,
-                RegularModeTypeItem.StringUtf8,
+                RegularNodeTypeItem.Bool,
+                RegularNodeTypeItem.Byte,
+                RegularNodeTypeItem.Int16,
+                RegularNodeTypeItem.UInt16,
+                RegularNodeTypeItem.Int32,
+                RegularNodeTypeItem.UInt32,
+                RegularNodeTypeItem.Int64,
+                RegularNodeTypeItem.UInt64,
+                RegularNodeTypeItem.Float,
+                RegularNodeTypeItem.Double,
+                RegularNodeTypeItem.StringAscii,
+                RegularNodeTypeItem.StringUnicode,
+                RegularNodeTypeItem.StringUtf8,
             };
 
             if (RegularNode != null)
@@ -44,7 +44,7 @@ namespace HSLSharp.RequestSettings
                 textBox1.Text = RegularNode.Name;
                 textBox2.Text = RegularNode.Description;
                 textBox3.Text = RegularNode.Index.ToString( );
-                comboBox1.SelectedItem = RegularModeTypeItem.GetDataPraseItemByCode(RegularNode.TypeCode);
+                comboBox1.SelectedItem = RegularNodeTypeItem.GetDataPraseItemByCode(RegularNode.TypeCode);
                 textBox5.Text = RegularNode.TypeLength.ToString( );
             }
 
@@ -90,7 +90,7 @@ namespace HSLSharp.RequestSettings
                 Name = textBox1.Text,
                 Description = textBox2.Text,
                 Index = index,
-                TypeCode = ((RegularModeTypeItem)comboBox1.SelectedItem).Code,
+                TypeCode = ((RegularNodeTypeItem)comboBox1.SelectedItem).Code,
                 TypeLength = typeLength,
             };
 

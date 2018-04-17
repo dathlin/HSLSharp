@@ -25,6 +25,13 @@ namespace HSLSharp.NodeSettings
 
         #endregion
 
+        #region Private Member
+
+        private bool isShowText = true;
+
+
+        #endregion
+
         #region Form Load Close Show
 
 
@@ -36,6 +43,22 @@ namespace HSLSharp.NodeSettings
             treeView1.Nodes[0].SelectedImageKey = "ExtensionManager_vsix";
 
             LoadByFile( Utils.ServerUtils.SharpSettings.RegularSettingsFilePath );
+
+            checkBox1.CheckedChanged += CheckBox1_CheckedChanged;
+
+            panel1.SizeChanged += Panel1_SizeChanged;
+        }
+
+        private void Panel1_SizeChanged( object sender, EventArgs e )
+        {
+            UpdateTreeData( );
+        }
+
+        private void CheckBox1_CheckedChanged( object sender, EventArgs e )
+        {
+            //刷新显示
+            isShowText = checkBox1.Checked;
+            UpdateTreeData( );
         }
 
         private void FormRegularCode_FormClosing( object sender, FormClosingEventArgs e )
@@ -112,8 +135,7 @@ namespace HSLSharp.NodeSettings
         private void 编辑RequestToolStripMenuItem_Click( object sender, EventArgs e )
         {
             // 编辑节点
-
-            // 节点被选择的时候
+            
             TreeNode node = treeView1.SelectedNode;
 
             if (node.Tag is NodeClass nodeClass)
@@ -167,14 +189,17 @@ namespace HSLSharp.NodeSettings
             if (node.Nodes.Count == 0)
             {
                 node.Parent.Nodes.Remove( node );
+                UpdateTreeData( );
             }
             else
             {
                 if (MessageBox.Show( "还有子节点数据存在，是否真的删除节点及子节点信息？", "删除确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning ) == DialogResult.Yes)
                 {
                     node.Parent.Nodes.Remove( node );
+                    UpdateTreeData( );
                 }
             }
+
         }
 
 
@@ -236,6 +261,7 @@ namespace HSLSharp.NodeSettings
                     node.Nodes.Add( nodeNew );
                     node.Expand( );
                     isNodeSettingsModify = true;
+                    UpdateTreeData( );
                 }
             }
         }
@@ -261,6 +287,7 @@ namespace HSLSharp.NodeSettings
                         node.Text = formNode.RegularNode.Name;
                         node.Tag = formNode.RegularNode;
                         isNodeSettingsModify = true;
+                        UpdateTreeData( );
                     }
                 }
             }
@@ -409,23 +436,41 @@ namespace HSLSharp.NodeSettings
 
         #region Render Bitmap
 
+        private TreeNode treeNodeSelected = null;
+
         private void treeView1_AfterSelect( object sender, TreeViewEventArgs e )
         {
-            if(e.Node.Tag is NodeClass nodeClass)
+            if (e.Node.Tag is NodeClass nodeClass)
             {
-                if(nodeClass.NodeType == NodeClassInfo.NodeClass)
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
+                    treeNodeSelected = e.Node;
+                    UpdateTreeData( );
+                }
+            }
+        }
+
+        public void UpdateTreeData( )
+        {
+            if (treeNodeSelected == null) return;
+
+            if (treeNodeSelected.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    if (panel1.Width < 10) return;
+
                     List<RegularNode> regularNodes = new List<RegularNode>( );
-                    foreach (TreeNode item in e.Node.Nodes)
+                    foreach (TreeNode item in treeNodeSelected.Nodes)
                     {
-                        if(item.Tag is RegularNode regular)
+                        if (item.Tag is RegularNode regular)
                         {
                             regularNodes.Add( regular );
                         }
                     }
 
                     pictureBox1.Image?.Dispose( );
-                    pictureBox1.Image = GetRenderInfo( regularNodes );
+                    pictureBox1.Image = GetRenderInfo( regularNodes, string.Empty );
                 }
             }
         }
@@ -443,23 +488,150 @@ namespace HSLSharp.NodeSettings
             }
         }
 
-        private Bitmap GetRenderInfo( List<RegularNode> regulars )
+        private Point CalculatePointWithByteIndex( int paint_x, int paint_y, int every_line_count, int index )
+        {
+            return new Point( paint_x + index % every_line_count * 20 + 8, paint_y + 17 + index / every_line_count * 50 + 8 );
+        }
+
+        private void PaintLineAuxiliary( Graphics g, int paint_x, int paint_y, int every_line_count, int index, int byteLength, bool isDowm, string info, Font font, StringFormat stringFormat, RegularNode regularNode )
+        {
+            Point point1 = CalculatePointWithByteIndex( paint_x, paint_y, every_line_count, index );
+            Point point2 = CalculatePointWithByteIndex( paint_x, paint_y, every_line_count, index + byteLength - 1 );
+            if (point1.Y == point2.Y)
+            {
+                // 同一行的情况
+                if (isDowm)
+                {
+                    point1.Offset( 0, 12 );
+                    point2.Offset( 0, 12 );
+
+                    g.DrawLine( Pens.DimGray, point1, new Point( point1.X, point1.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, point2, new Point( point2.X, point2.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, point1, point2 );
+
+                    Rectangle rectangle = new Rectangle( point1.X - 40, point1.Y, point2.X - point1.X + 80, 20 );
+                    if (regularNode.TypeLength == 1)
+                    {
+                        g.DrawString( info, Font, Brushes.Blue, rectangle, stringFormat );
+                    }
+                    else
+                    {
+                        g.DrawString( info + "*" + regularNode.TypeLength, Font, Brushes.Blue, rectangle, stringFormat );
+                    }
+                }
+                else
+                {
+                    point1.Offset( 0, -11 );
+                    point2.Offset( 0, -11 );
+
+                    g.DrawLine( Pens.Chocolate, point1, new Point( point1.X, point1.Y + 3 ) );
+                    g.DrawLine( Pens.Chocolate, point2, new Point( point2.X, point2.Y + 3 ) );
+                    g.DrawLine( Pens.Chocolate, point1, point2 );
+
+                    Rectangle rectangle = new Rectangle( point1.X - 40, point1.Y - 14, point2.X - point1.X + 80, 15 );
+                    if (isShowText) g.DrawString( info, font, Brushes.Green, rectangle, stringFormat );
+                }
+            }
+            else
+            {
+                if (isDowm)
+                {
+                    // 跨行的情况
+                    point1.Offset( 0, 12 );
+                    point2.Offset( 0, 12 );
+
+                    Point point1_1 = CalculatePointWithByteIndex( paint_x, paint_y, every_line_count, every_line_count - 1 );
+                    point1_1.Y = point1.Y;
+                    point1_1.X += 10;
+                    g.DrawLine( Pens.DimGray, point1, new Point( point1.X, point1.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, point1, point1_1 );
+
+
+                    Point point2_2 = CalculatePointWithByteIndex( paint_x, paint_y, every_line_count, 0 );
+                    point2_2.Y = point2.Y;
+                    point2_2.X -= 10;
+                    g.DrawLine( Pens.DimGray, point2, new Point( point2.X, point2.Y - 3 ) );
+                    g.DrawLine( Pens.DimGray, point2, point2_2 );
+
+                    if ((point1_1.X - point1.X) > (point2.X - point2_2.X))
+                    {
+                        Rectangle rectangle = new Rectangle( point1.X - 40, point1.Y, point1_1.X - point1.X + 80, 20 );
+                        if (regularNode.TypeLength == 1)
+                        {
+                            g.DrawString( info, Font, Brushes.Blue, rectangle, stringFormat );
+                        }
+                        else
+                        {
+                            g.DrawString( info + "*" + regularNode.TypeLength, Font, Brushes.Blue, rectangle, stringFormat );
+                        }
+                    }
+                    else
+                    {
+                        Rectangle rectangle = new Rectangle( point2_2.X - 40, point2.Y, point2.X - point2_2.X + 80, 20 );
+                        if (regularNode.TypeLength == 1)
+                        {
+                            g.DrawString( info, Font, Brushes.Blue, rectangle, stringFormat );
+                        }
+                        else
+                        {
+                            g.DrawString( info + "*" + regularNode.TypeLength, Font, Brushes.Blue, rectangle, stringFormat );
+                        }
+                    }
+                }
+                else
+                {
+                    point1.Offset( 0, -11 );
+                    point2.Offset( 0, -11 );
+
+
+                    Point point1_1 = CalculatePointWithByteIndex( paint_x, paint_y, every_line_count, every_line_count - 1 );
+                    point1_1.Y = point1.Y;
+                    point1_1.X += 10;
+                    g.DrawLine( Pens.Chocolate, point1, new Point( point1.X, point1.Y + 3 ) );
+                    g.DrawLine( Pens.Chocolate, point1, point1_1 );
+
+                    Point point2_2 = CalculatePointWithByteIndex( paint_x, paint_y, every_line_count, 0 );
+                    point2_2.Y = point2.Y;
+                    point2_2.X -= 10;
+                    g.DrawLine( Pens.Chocolate, point2, new Point( point2.X, point2.Y + 3 ) );
+                    g.DrawLine( Pens.Chocolate, point2, point2_2 );
+                    
+
+                    if ((point1_1.X - point1.X) > (point2.X - point2_2.X))
+                    {
+                        Rectangle rectangle = new Rectangle( point1.X - 40, point1.Y - 14, point1_1.X - point1.X + 80, 15 );
+                        if (isShowText) g.DrawString( info, Font, Brushes.Green, rectangle, stringFormat );
+                    }
+                    else
+                    {
+                        Rectangle rectangle = new Rectangle( point2_2.X - 40, point2.Y - 14, point2.X - point2_2.X + 80, 15 );
+                        if (isShowText) g.DrawString( info, Font, Brushes.Green, rectangle, stringFormat );
+                    }
+
+                }
+            }
+        }
+
+        private readonly int EveryByteWidth = 16;
+
+        private Bitmap GetRenderInfo( List<RegularNode> regulars, string selectedRegular )
         {
             regulars.Sort( );
-            int max_byte = regulars.Max( m => m.GetLengthByte( ) );
-            int every_line_count = (pictureBox1.Width - 90) / 20;
+            int max_byte = regulars.Count == 0 ? 0 : regulars.Max( m => m.GetLengthByte( ) );
+            int every_byte_occupy = EveryByteWidth + 4;
+            int every_line_count = (panel1.Width - 19 - 90) / every_byte_occupy;
             int line_count = GetNumberByUplimit( max_byte, every_line_count );
 
 
             Bitmap bitmap = new Bitmap( panel1.Width - 19, line_count * 50 + 5 );
+            if (max_byte == 0) return bitmap;
             Graphics g = Graphics.FromImage( bitmap );
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             StringFormat stringFormat = new StringFormat( );
             stringFormat.LineAlignment = StringAlignment.Center;
             stringFormat.Alignment = StringAlignment.Center;
-            Font font_9 = new Font( "宋体", 7f );
-
+            Font font_7 = new Font( "宋体", 7f );
 
             g.Clear( Color.AliceBlue );
 
@@ -471,13 +643,13 @@ namespace HSLSharp.NodeSettings
 
             for (int i = 0; i < line_count; i++)
             {
-                g.DrawString( $"[{count.ToString( "D3" )} - {(count + Math.Min( max_byte - count, every_line_count  - 1)).ToString( "D3" )}]", Font, Brushes.DimGray, new Point( 2, paint_y + 16 ) );
+                g.DrawString( $"[{count.ToString( "D3" )} - {(count + Math.Min( max_byte - count - 1, every_line_count - 1 )).ToString( "D3" )}]", Font, Brushes.DimGray, new Point( 2, paint_y + EveryByteWidth ) );
 
                 for (int j = 0; j < every_line_count; j++)
                 {
-                    Rectangle rec = new Rectangle( paint_x + j * 20, paint_y + 17, 16, 16 );
+                    Rectangle rec = new Rectangle( paint_x + j * (EveryByteWidth + 4), paint_y + 17, EveryByteWidth, EveryByteWidth );
                     g.DrawRectangle( Pens.Gray, rec );
-                    g.DrawString( count.ToString( ), font_9, Brushes.Black, rec, stringFormat );
+                    g.DrawString( count.ToString( ), font_7, Brushes.Black, new Rectangle( paint_x + j * every_byte_occupy - every_byte_occupy, paint_y + 17, 56, EveryByteWidth ), stringFormat );
                     count++;
 
                     if (count >= max_byte)
@@ -491,88 +663,50 @@ namespace HSLSharp.NodeSettings
 
             for (int i = 0; i < regulars.Count; i++)
             {
+                RegularNodeTypeItem regularNodeTypeItem = RegularNodeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode );
+
                 int start = regulars[i].GetStartedByteIndex( );
-                int length = regulars[i].GetLengthByte( ) - regulars[i].Index;
+                int length = regulars[i].GetLengthByte( ) - regulars[i].GetStartedByteIndex( );
 
                 int rowStart = GetNumberByUplimit( start, every_line_count );
                 int rowEnd = GetNumberByUplimit( start + length, every_line_count );
 
-                if(rowEnd == rowStart)
-                {
-                    // 同行的情况
-                    Point first = new Point( paint_x + start % every_line_count * 20 + 8, paint_y + 17 + start / every_line_count * 50 + 20 );
-                    Point second = new Point( paint_x + (start + length - 1) % every_line_count * 20 + 8, paint_y + 17 + (start + length - 1) / every_line_count * 50 + 20 );
-                    g.DrawLine( Pens.DimGray, first, new Point( first.X, first.Y - 3 ) );
-                    g.DrawLine( Pens.DimGray, second, new Point( second.X, second.Y - 3 ) );
-                    g.DrawLine( Pens.DimGray, first, second );
 
-                    Rectangle rectangle = new Rectangle( first.X - 20, first.Y, second.X - first.X + 40, 20 );
-                    g.DrawString( regulars[i].Name, Font, Brushes.Blue, rectangle, stringFormat ); 
+                // 同行的情况
+                PaintLineAuxiliary( g, paint_x, paint_y, every_line_count, start, length, true, regulars[i].Name, Font, stringFormat , regulars[i] );
+
+                // 绘制上面的数据
+                if (regularNodeTypeItem.Length != 0)
+                {
+                    int tmp = start;
+                    for (int j = 0; j < length / regularNodeTypeItem.Length; j++)
+                    {
+                        PaintLineAuxiliary( g, paint_x, paint_y, every_line_count, tmp, regularNodeTypeItem.Length, false, regularNodeTypeItem.Text, Font, stringFormat , regulars[i] );
+                        tmp += regularNodeTypeItem.Length;
+                    }
                 }
                 else
                 {
-                    Point first = new Point( paint_x + start % every_line_count * 20 + 8, paint_y + 17 + start / every_line_count * 50 + 20 );
-                    Point first_2 = new Point( paint_x + every_line_count * 20, paint_y + 17 + start / every_line_count * 50 + 20 );
-                    g.DrawLine( Pens.DimGray, first, new Point( first.X, first.Y - 3 ) );
-                    g.DrawLine( Pens.DimGray, first, first_2 );
-
-                    Point second = new Point( paint_x + (start + length - 1) % every_line_count * 20 + 8, paint_y + 17 + (start + length - 1) / every_line_count * 50 + 20 );
-                    Point second_2 = new Point( paint_x, paint_y + 17 + (start + length - 1) / every_line_count * 50 + 20 );
-                    g.DrawLine( Pens.DimGray, second, new Point( second.X, second.Y - 3 ) );
-                    g.DrawLine( Pens.DimGray, second_2, second );
-
-                    if((first_2.X-first.X)>= (second.X - second_2.X))
-                    {
-                        g.DrawString( regulars[i].Name, Font, Brushes.Blue, first );
-                    }
-                    else
-                    {
-                        g.DrawString( regulars[i].Name, Font, Brushes.Blue, second_2 );
-                    }
+                    PaintLineAuxiliary( g, paint_x, paint_y, every_line_count, start, length, false, regularNodeTypeItem.Text, Font, stringFormat , regulars[i] );
                 }
 
 
                 for (int j = 0; j < length; j++)
                 {
-                    int paint_x_tmp = paint_x + (start + j) % every_line_count * 20;
+                    int paint_x_tmp = paint_x + (start + j) % every_line_count * every_byte_occupy;
                     int paint_y_tmp = paint_y + 17 + (start + j) / every_line_count * 50;
 
                     Rectangle rec = new Rectangle( paint_x_tmp, paint_y_tmp, 16, 16 );
-                    g.FillRectangle( RegularModeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode ).BackColor, rec );
+                    g.FillRectangle( regularNodeTypeItem.BackColor, rec );
                     g.DrawRectangle( Pens.DimGray, rec );
-                    g.DrawString( (regulars[i].Index + j).ToString(), font_9, Brushes.Black, rec, stringFormat );
+                    g.DrawString( (regulars[i].GetStartedByteIndex( ) + j).ToString( ), font_7, Brushes.Black, new Rectangle( paint_x_tmp - 20, paint_y_tmp, 56, 16 ), stringFormat );
                 }
             }
 
 
-            //for (int i = 0; i < regulars.Count; i++)
-            //{
-            //    int start = regulars[i].GetStartedByteIndex( );
-            //    int end = regulars[i].GetLengthByte( ) + start;
-
-            //    g.DrawLine( Pens.Gray, 80, 0, 80, bitmap.Height );
-            //    g.DrawString( $"[{start.ToString("D3")} - {(end - 1).ToString("D3")}]", Font, Brushes.DimGray, new Point( 2, paint_y +1) );
-
-            //    for (int j = 0; j < (end - start); j++)
-            //    {
-            //        Rectangle rec = new Rectangle( 85 + j * 20, paint_y + 2, 16, 16 );
-            //        g.FillRectangle( RegularModeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode ).BackColor, rec );
-            //        g.DrawRectangle( Pens.DimGray, rec );
-            //    }
-
-
-            //    g.DrawLine( Pens.LimeGreen, 90 + 20 * max_byte, paint_y, 90 + 20 * max_byte, paint_y + 20 );
-            //    g.DrawString( regulars[i].Name, Font, Brushes.Blue, new Point( 95 + 20 * max_byte, paint_y +1 ) );
-
-
-            //    paint_y += 20;
-            //}
-
-
-
 
             stringFormat.Dispose( );
-            font_9.Dispose( );
+            font_7.Dispose( );
             return bitmap;
         }
 

@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace HSLSharp.Configuration
 {
     /// <summary>
-    /// 
+    /// 常规的Modbus-Tcp的客户端
     /// </summary>
     public class ModbusTcpClient : DeviceNode, IXmlConvert
     {
