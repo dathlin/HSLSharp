@@ -37,12 +37,12 @@ namespace HSLSharp.NodeSettings
 
         private void FormRegularCode_Load( object sender, EventArgs e )
         {
-            treeView1.ImageList = Utils.ServerUtils.SharpImageList;
+            treeView1.ImageList = Util.SharpImageList;
 
             treeView1.Nodes[0].ImageKey = "ExtensionManager_vsix";
             treeView1.Nodes[0].SelectedImageKey = "ExtensionManager_vsix";
 
-            LoadByFile( Utils.ServerUtils.SharpSettings.RegularSettingsFilePath );
+            LoadByFile( Util.SharpSettings.RegularSettingsFilePath );
 
             checkBox1.CheckedChanged += CheckBox1_CheckedChanged;
 
@@ -67,7 +67,7 @@ namespace HSLSharp.NodeSettings
             {
                 if (MessageBox.Show( "当前的配置信息已经修改过，但还未保存，是否需要保存？", "保存确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning ) == DialogResult.Yes)
                 {
-                    SaveNodes( Utils.ServerUtils.SharpSettings.RegularSettingsFilePath );
+                    SaveNodes( Util.SharpSettings.RegularSettingsFilePath );
                 }
             }
         }
@@ -339,7 +339,7 @@ namespace HSLSharp.NodeSettings
 
         private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            SaveNodes( Utils.ServerUtils.SharpSettings.RegularSettingsFilePath );
+            SaveNodes( Util.SharpSettings.RegularSettingsFilePath );
             isNodeSettingsModify = false;
         }
 

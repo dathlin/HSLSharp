@@ -8,12 +8,12 @@ using HslCommunication.LogNet;
 using HSLSharp.SettingsSupport;
 using HSLSharp.Configuration;
 
-namespace HSLSharp.Utils
+namespace HSLSharp
 {
     /// <summary>
     /// 本系统的静态工具对象
     /// </summary>
-    public class ServerUtils
+    public class Util
     {
         /// <summary>
         /// 系统的日志存储
@@ -29,6 +29,18 @@ namespace HSLSharp.Utils
         /// 系统的所有的配置信息
         /// </summary>
         public static SharpSettings SharpSettings { get; set; }
-        
+
+
+
+
+
+
+
+
+        #region Static Method
+
+
+
+        #endregion
     }
 }

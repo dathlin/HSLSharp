@@ -39,7 +39,7 @@ namespace HSLSharp
         
         private void FormNodeSetting_Load( object sender, EventArgs e )
         {
-            treeView1.ImageList = Utils.ServerUtils.SharpImageList;
+            treeView1.ImageList = Util.SharpImageList;
 
             treeView1.Nodes[0].ImageKey = "VirtualMachine_16xLG";
             treeView1.Nodes[0].SelectedImageKey = "VirtualMachine_16xLG";
@@ -57,7 +57,7 @@ namespace HSLSharp
             };
 
 
-            LoadByFile( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+            LoadByFile( Util.SharpSettings.NodeSettingsFilePath );
         }
 
 
@@ -67,7 +67,7 @@ namespace HSLSharp
             {
                 if(MessageBox.Show("当前的配置信息已经修改过，但还未保存，是否需要保存？","保存确认",MessageBoxButtons.YesNo,MessageBoxIcon.Warning)==DialogResult.Yes)
                 {
-                    SaveNodes( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+                    SaveNodes( Util.SharpSettings.NodeSettingsFilePath );
                 }
             }
         }
@@ -388,7 +388,7 @@ namespace HSLSharp
 
         private void 保存文件ToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            SaveNodes( Utils.ServerUtils.SharpSettings.NodeSettingsFilePath );
+            SaveNodes( Util.SharpSettings.NodeSettingsFilePath );
             isNodeSettingsModify = false;
         }
 
