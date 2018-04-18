@@ -1,11 +1,13 @@
-﻿using Opc.Ua;
+﻿using HslCommunication.LogNet;
+using Opc.Ua;
 using Opc.Ua.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml.Linq;
+using System.IO;
 
 
 namespace HSLSharp.OpcUaSupport
@@ -21,7 +23,7 @@ namespace HSLSharp.OpcUaSupport
         public HSharpNodeManager(IServerInternal server, ApplicationConfiguration configuration)
             : base(server, configuration)
         {
-
+            logNet = Util.LogNet;
         }
         
         #endregion
@@ -77,9 +79,17 @@ namespace HSLSharp.OpcUaSupport
 
 
                 // 从Xml文件进行加载数据
+                logNet?.WriteInfo( "正在从资源加载节点信息..." );
+                if (!File.Exists( Util.SharpSettings.NodeSettingsFilePath ))
+                {
+                    logNet?.WriteWarn( "配置文件不存在。加载结束。" );
+                    return;
+                }
+
+                XElement element = XElement.Load( Util.SharpSettings.NodeSettingsFilePath );
 
 
-                
+
                 // 构建数据
                 FolderState rootMy = CreateFolder(null,  "Modbus");
                 rootMy.AddReference(ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder);
@@ -107,12 +117,17 @@ namespace HSLSharp.OpcUaSupport
 
         #region Dictionary Resources
 
-        
+
 
 
         #endregion
 
+        #region Private Member
 
+        private ILogNet logNet;
+
+
+        #endregion
 
         public void DealWithContent(byte[] data)
         {

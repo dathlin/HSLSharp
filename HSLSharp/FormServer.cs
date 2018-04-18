@@ -91,5 +91,17 @@ namespace HSLSharp
                 form.ShowDialog( );
             }
         }
+
+        private void 测试客户端ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            if(System.IO.File.Exists("OpcUaTest.exe"))
+            {
+                System.Diagnostics.Process.Start( "OpcUaTest.exe" );
+            }
+            else
+            {
+                MessageBox.Show( "文件不存在！" );
+            }
+        }
     }
 }
