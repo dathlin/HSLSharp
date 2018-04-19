@@ -53,8 +53,18 @@ namespace HSLSharp
             treeView1.Nodes[1].Tag = new NodeClass( )
             {
                 Name = "ModbusServer",
-                Description = "所有的设备的集合对象"
+                Description = "所有的Modbus服务器的集合对象"
             };
+
+
+            treeView1.Nodes[2].ImageKey = "VirtualMachine_16xLG";
+            treeView1.Nodes[2].SelectedImageKey = "VirtualMachine_16xLG";
+            treeView1.Nodes[2].Tag = new NodeClass( )
+            {
+                Name = "ModbusAlien",
+                Description = "所有的异形ModbusTcp客户端的集合对象"
+            };
+
 
 
             LoadByFile( Util.SharpSettings.NodeSettingsFilePath );

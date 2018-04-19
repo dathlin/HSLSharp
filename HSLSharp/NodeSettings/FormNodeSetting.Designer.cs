@@ -34,6 +34,7 @@ namespace HSLSharp
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Devices");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("ModbusServer");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("ModbusAlien");
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增类别ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.类别classToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -305,9 +306,12 @@ namespace HSLSharp
             treeNode1.Text = "Devices";
             treeNode2.Name = "node_modbusServer";
             treeNode2.Text = "ModbusServer";
+            treeNode3.Name = "node_modbusAlien";
+            treeNode3.Text = "ModbusAlien";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
-            treeNode2});
+            treeNode2,
+            treeNode3});
             this.treeView1.Size = new System.Drawing.Size(528, 565);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);

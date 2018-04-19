@@ -103,5 +103,13 @@ namespace HSLSharp
                 MessageBox.Show( "文件不存在！" );
             }
         }
+
+        private void oPCUA配置ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            using (FormOpcSettings form = new FormOpcSettings( ))
+            {
+                form.ShowDialog( );
+            }
+        }
     }
 }

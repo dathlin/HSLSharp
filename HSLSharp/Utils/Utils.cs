@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using HslCommunication.LogNet;
 using HSLSharp.SettingsSupport;
 using HSLSharp.Configuration;
+using System.Drawing;
 
 namespace HSLSharp
 {
@@ -29,9 +30,7 @@ namespace HSLSharp
         /// 系统的所有的配置信息
         /// </summary>
         public static SharpSettings SharpSettings { get; set; }
-
-
-
+        
 
 
 
@@ -39,7 +38,14 @@ namespace HSLSharp
 
         #region Static Method
 
-
+        /// <summary>
+        /// 子窗口的图标显示信息
+        /// </summary>
+        /// <returns></returns>
+        public static Icon GetWinformICon( )
+        {
+            return Icon.ExtractAssociatedIcon( Application.ExecutablePath );
+        }
 
         #endregion
     }
