@@ -307,20 +307,36 @@ namespace HSLSharp
                 TreeNode node = treeView1.SelectedNode;
                 if (node == null) return;
 
+                if(node.Text == "ModbusAlien" && node.ImageKey == "VirtualMachine_16xLG")
+                {
+                    cMS_AlienClient.Show( treeView1, e.Location );
+                    return;
+                }
+
+
+                if(node.Text == "ModbusServer" && node.ImageKey == "VirtualMachine_16xLG")
+                {
+                    cMS_ModbusServer.Show( treeView1, e.Location );
+                    return;
+                }
+
+
+
+
                 if (node.Tag.GetType( ) == typeof( NodeClass ))
                 {
                     // 显示第一个菜单框
-                    contextMenuStrip1.Show( treeView1, e.Location );
+                    cMS_Device.Show( treeView1, e.Location );
                 }
                 else if (node.Tag is DeviceNode)
                 {
                     // 显示第二个菜单框
-                    contextMenuStrip2.Show( treeView1, e.Location );
+                    cMS_Request.Show( treeView1, e.Location );
                 }
                 else if (node.Tag is DeviceRequest)
                 {
                     // 显示第三个菜单框
-                    contextMenuStrip3.Show( treeView1, e.Location );
+                    cMs_EditRequest.Show( treeView1, e.Location );
                 }
             }
         }

@@ -12,13 +12,23 @@ namespace HSLSharp.Configuration
     /// </summary>
     public class DeviceNode : NodeClass
     {
+        #region Constructor
+
+        /// <summary>
+        /// 实例化一个构造对象
+        /// </summary>
         public DeviceNode()
         {
             Requests = new List<DeviceRequest>( );
             NodeType = NodeClassInfo.DeviceNode;
+            NodeHead = "DeviceNode";
         }
 
-        
+        #endregion
+
+        #region Public Properties
+
+
         /// <summary>
         /// 设备的类别
         /// </summary>
@@ -39,6 +49,7 @@ namespace HSLSharp.Configuration
         /// </summary>
         public List<DeviceRequest> Requests { get; set; }
 
+        #endregion
 
         #region Override Method
 
@@ -52,12 +63,10 @@ namespace HSLSharp.Configuration
 
         public override XElement ToXmlElement( )
         {
-            XElement element = new XElement( "DeviceNode" );
-            element.SetAttributeValue( "Name", Name );
+            XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "DeviceType", DeviceType );
             element.SetAttributeValue( "ConnectTimeOut", ConnectTimeOut );
             element.SetAttributeValue( "CreateTime", CreateTime.ToString() );
-            element.SetAttributeValue( "Description", Description );
             return element;
         }
 

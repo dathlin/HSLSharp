@@ -12,11 +12,21 @@ namespace HSLSharp.Configuration
     /// </summary>
     public class NodeClass : IXmlConvert
     {
+
+        #region Constructor
+
+
         public NodeClass( )
         {
             NodeType = NodeClassInfo.NodeClass;
+            NodeHead = "NodeClass";
         }
 
+
+        #endregion
+        
+        #region Public Properties
+        
         /// <summary>
         /// 节点的名称，在节点上显示的
         /// </summary>
@@ -34,19 +44,42 @@ namespace HSLSharp.Configuration
         public int NodeType { get; protected set; }
 
 
+        #endregion
 
+        #region Protect Member
+
+
+        /// <summary>
+        /// 节点的描述信息
+        /// </summary>
+        protected string NodeHead { get; set; }
+
+
+
+        #endregion
 
         #region XmlConvert Support
-        
+
+
+
+        /// <summary>
+        /// 从XElement元素加载节点信息
+        /// </summary>
+        /// <param name="element"></param>
         public virtual void LoadByXmlElement( XElement element )
         {
             Name = element.Attribute( "Name" ).Value;
             Description = element.Attribute( "Description" ).Value;
         }
 
+
+        /// <summary>
+        /// 获取节点对象的XElement，方便进行存储
+        /// </summary>
+        /// <returns></returns>
         public virtual XElement ToXmlElement( )
         {
-            XElement element = new XElement( "NodeClass" );
+            XElement element = new XElement( NodeHead );
             element.SetAttributeValue( "Name", Name );
             element.SetAttributeValue( "Description", Description );
             return element;
@@ -56,6 +89,11 @@ namespace HSLSharp.Configuration
         
         #region RenderValues
 
+
+        /// <summary>
+        /// 用于在数据表信息中信息的文件信息
+        /// </summary>
+        /// <returns></returns>
         public virtual List<NodeClassRenderItem> GetNodeClassRenders()
         {
             return new List<NodeClassRenderItem>( )

@@ -82,6 +82,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Device\ModbusTcpAline.cs" />
+    <Compile Include="Configuration\AlienNode\AlienNode.cs" />
     <Compile Include="Configuration\Device\MelsecMc.cs" />
     <Compile Include="Configuration\Regular\RegularModeTypeItem.cs" />
     <Compile Include="Configuration\Node\NodeClassRenderItem.cs" />

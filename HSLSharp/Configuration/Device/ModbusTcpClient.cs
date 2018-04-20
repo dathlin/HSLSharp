@@ -32,7 +32,8 @@ namespace HSLSharp.Configuration
 
         #endregion
 
-
+        #region Public Properties
+        
         /// <summary>
         /// 设备的Ip地址
         /// </summary>
@@ -56,9 +57,12 @@ namespace HSLSharp.Configuration
         /// </summary>
         public bool IsAddressStartWithZero { get; set; } = true;
 
+        
+
+        #endregion
 
         #region Xml Interface
-        
+
         public override void LoadByXmlElement( XElement element )
         {
             base.LoadByXmlElement( element );
