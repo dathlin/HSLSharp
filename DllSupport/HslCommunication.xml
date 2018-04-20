@@ -59,6 +59,16 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:HslCommunication.BasicFramework.FormSupport">
+            <summary>
+            作者的技术支持的窗口界面
+            </summary>
+        </member>
+        <member name="M:HslCommunication.BasicFramework.FormSupport.#ctor">
+            <summary>
+            实例化一个默认的界面
+            </summary>
+        </member>
         <member name="F:HslCommunication.BasicFramework.FormSupport.components">
             <summary>
             Required designer variable.
@@ -2290,6 +2300,50 @@
             使用代码编辑器修改此方法的内容。
             </summary>
         </member>
+        <member name="T:HslCommunication.Core.IMessage.AlienMessage">
+            <summary>
+            异形消息对象，用于异形客户端的注册包接收以及验证使用
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.IMessage.AlienMessage.ProtocolHeadBytesLength">
+            <summary>
+            本协议的消息头长度
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.IMessage.AlienMessage.HeadBytes">
+            <summary>
+            头子节信息
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.IMessage.AlienMessage.ContentBytes">
+            <summary>
+            内容字节信息
+            </summary>
+        </member>
+        <member name="M:HslCommunication.Core.IMessage.AlienMessage.CheckHeadBytesLegal(System.Byte[])">
+            <summary>
+            检查接收的数据是否合法
+            </summary>
+            <param name="token">令牌</param>
+            <returns>是否合法</returns>
+        </member>
+        <member name="M:HslCommunication.Core.IMessage.AlienMessage.GetContentLengthByHeadBytes">
+            <summary>
+            从头子节信息中解析出接下来需要接收的数据长度
+            </summary>
+            <returns>接下来的数据长度</returns>
+        </member>
+        <member name="M:HslCommunication.Core.IMessage.AlienMessage.GetHeadBytesIdentity">
+            <summary>
+            获取头子节里的特殊标识
+            </summary>
+            <returns>标识信息</returns>
+        </member>
+        <member name="P:HslCommunication.Core.IMessage.AlienMessage.SendBytes">
+            <summary>
+            发送的字节信息
+            </summary>
+        </member>
         <member name="T:HslCommunication.Core.IMessage.FetchWriteMessage">
             <summary>
             西门子Fetch/Write消息解析协议
@@ -2860,6 +2914,92 @@
             <param name="value">写入值</param>
             <returns>带有成功标识的结果类对象</returns>
         </member>
+        <member name="T:HslCommunication.Core.Net.NetworkAlienClient">
+            <summary>
+            异形客户端的基类，提供了基础的异形操作
+            </summary>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.#ctor">
+            <summary>
+            默认的无参构造方法
+            </summary>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ThreadPoolLogin(System.Object)">
+            <summary>
+            登录的回调方法
+            </summary>
+            <param name="obj">传入的异步对象</param>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.AlienSessionLoginOut(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            退出异形客户端
+            </summary>
+            <param name="session">异形客户端的会话</param>
+        </member>
+        <member name="E:HslCommunication.Core.Net.NetworkAlienClient.OnClientConnected">
+            <summary>
+            当有服务器连接上来的时候触发
+            </summary>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.GetResponse(System.Byte)">
+            <summary>
+            获取返回的命令信息
+            </summary>
+            <param name="status">状态</param>
+            <returns>回发的指令信息</returns>
+        </member>
+        <member name="F:HslCommunication.Core.Net.NetworkAlienClient.StatusOk">
+            <summary>
+            状态登录成功
+            </summary>
+        </member>
+        <member name="F:HslCommunication.Core.Net.NetworkAlienClient.StatusLoginRepeat">
+            <summary>
+            重复登录
+            </summary>
+        </member>
+        <member name="F:HslCommunication.Core.Net.NetworkAlienClient.StatusLoginForbidden">
+            <summary>
+            禁止登录
+            </summary>
+        </member>
+        <member name="F:HslCommunication.Core.Net.NetworkAlienClient.StatusPasswodWrong">
+            <summary>
+            密码错误
+            </summary>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.IsClientOnline(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            检测当前的DTU是否在线
+            </summary>
+            <param name="session"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.IsClientPermission(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            检测当前的dtu是否允许登录
+            </summary>
+            <param name="session"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.SetPassword(System.Byte[])">
+            <summary>
+            设置密码，长度为6
+            </summary>
+            <param name="password"></param>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.SetTrustClients(System.String[])">
+            <summary>
+            设置可信任的客户端列表
+            </summary>
+            <param name="clients"></param>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ToString">
+            <summary>
+            获取本对象的字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:HslCommunication.Core.Net.NetworkBase">
             <summary>
             本系统所有网络类的基类，该类为抽象类，无法进行实例化
@@ -2905,13 +3045,14 @@
             <param name="length">准备接收的数据长度</param>
             <returns>包含了字节数据的结果类</returns>
         </member>
-        <member name="M:HslCommunication.Core.Net.NetworkBase.Receive(System.Net.Sockets.Socket,System.Byte[])">
+        <member name="M:HslCommunication.Core.Net.NetworkBase.ReceiveMessage``1(System.Net.Sockets.Socket,System.Int32,``0)">
             <summary>
-            接收不定长数据到网络套接字
+            接收一条完整的数据，使用异步接收完成，包含了指令头信息
             </summary>
-            <param name="socket"></param>
-            <param name="buffer"></param>
-            <returns></returns>
+            <param name="socket">已经打开的网络套接字</param>
+            <param name="timeOut">超时时间</param>
+            <param name="netMsg">消息规则</param>
+            <returns>数据的接收结果对象</returns>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkBase.Send(System.Net.Sockets.Socket,System.Byte[])">
             <summary>
@@ -3147,6 +3288,30 @@
             关闭服务器的引擎
             </summary>
         </member>
+        <member name="M:HslCommunication.Core.Net.NetworkServerBase.ConnectHslAlientClient(System.String,System.Int32,System.String)">
+            <summary>
+            创建一个指定的异形客户端连接，使用Hsl协议来发送注册包
+            </summary>
+            <param name="ipAddress">Ip地址</param>
+            <param name="port">端口号</param>
+            <param name="dtuId">设备唯一ID号，最长11</param>
+            <returns>是否成功连接</returns>
+        </member>
+        <member name="T:HslCommunication.Core.Net.AlienSession">
+            <summary>
+            异形客户端的异步对象
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.Net.AlienSession.Socket">
+            <summary>
+            网络套接字
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.Net.AlienSession.DTU">
+            <summary>
+            唯一的标识
+            </summary>
+        </member>
         <member name="T:HslCommunication.Core.Net.AppSession">
             <summary>
             网络会话信息
@@ -3316,26 +3481,36 @@
             服务器的端口号
             </summary>
         </member>
+        <member name="P:HslCommunication.Core.Net.NetworkDoubleBase`2.ConnectionId">
+            <summary>
+            当前连接的唯一ID号，默认为长度20的guid码加随机数组成，也可以自己指定
+            </summary>
+            <remarks>
+            Current Connection ID, conclude guid and random data, also, you can spcified
+            </remarks>
+        </member>
+        <member name="P:HslCommunication.Core.Net.NetworkDoubleBase`2.AlienSession">
+            <summary>
+            当前的异形连接对象，如果设置了异形连接的话
+            </summary>
+        </member>
         <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.ConnectServer">
             <summary>
             切换短连接模式到长连接模式，后面的每次请求都共享一个通道
             </summary>
             <returns>返回连接结果，如果失败的话（也即IsSuccess为False），包含失败信息</returns>
         </member>
+        <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.ConnectServer(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            使用指定的套接字创建异形客户端
+            </summary>
+            <returns>通常都为成功</returns>
+        </member>
         <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.ConnectClose">
             <summary>
             在长连接模式下，断开服务器的连接，并切换到短连接模式
             </summary>
             <returns>关闭连接，不需要查看IsSuccess属性查看</returns>
-        </member>
-        <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.ReceiveMessage(System.Net.Sockets.Socket,System.Int32,`0)">
-            <summary>
-            接收一条完整的数据，使用异步接收完成，包含了指令头信息
-            </summary>
-            <param name="socket">已经打开的网络套接字</param>
-            <param name="timeOut">超时时间</param>
-            <param name="netMsg">消息规则</param>
-            <returns>数据的接收结果对象</returns>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.InitilizationOnConnect(System.Net.Sockets.Socket)">
             <summary>
@@ -3362,6 +3537,14 @@
             连接并初始化网络套接字
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.ReadFromCoreServer(System.Net.Sockets.Socket,System.Byte[])">
+            <summary>
+            在其他指定的套接字上，使用报文来通讯，传入需要发送的消息，返回一条完整的数据指令
+            </summary>
+            <param name="socket">指定的套接字</param>
+            <param name="send">发送的完整的报文信息</param>
+            <returns>接收的完整的报文信息</returns>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkDoubleBase`2.ReadFromCoreServer(System.Byte[])">
             <summary>

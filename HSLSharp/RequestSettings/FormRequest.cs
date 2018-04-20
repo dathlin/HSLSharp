@@ -17,6 +17,7 @@ namespace HSLSharp.RequestSettings
         {
             InitializeComponent( );
             DeviceRequest = deviceRequest;
+            Icon = Util.GetWinformICon( );
         }
 
         private void FormRequest_Load( object sender, EventArgs e )

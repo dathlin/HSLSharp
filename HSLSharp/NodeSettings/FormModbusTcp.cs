@@ -16,6 +16,7 @@ namespace HSLSharp.NodeSettings
         public FormModbusTcp( )
         {
             InitializeComponent( );
+            Icon = Util.GetWinformICon( );
         }
 
         public FormModbusTcp( ModbusTcpClient modbusTcpNode)

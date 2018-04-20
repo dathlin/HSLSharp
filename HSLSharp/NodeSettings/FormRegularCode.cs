@@ -20,7 +20,7 @@ namespace HSLSharp.NodeSettings
         public FormRegularCode( )
         {
             InitializeComponent( );
-
+            Icon = Util.GetWinformICon( );
         }
 
         #endregion

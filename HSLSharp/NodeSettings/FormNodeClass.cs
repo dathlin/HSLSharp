@@ -16,6 +16,7 @@ namespace HSLSharp.NodeSettings
         public FormNodeClass( )
         {
             InitializeComponent( );
+            Icon = Util.GetWinformICon( );
         }
 
 

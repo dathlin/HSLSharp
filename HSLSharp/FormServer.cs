@@ -20,6 +20,8 @@ namespace HSLSharp
         {
             ImageImport( );
             InitializeComponent( );
+
+            Icon = Util.GetWinformICon( );
         }
 
 

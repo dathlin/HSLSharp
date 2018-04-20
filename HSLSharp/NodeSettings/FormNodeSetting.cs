@@ -31,6 +31,7 @@ namespace HSLSharp
         public FormNodeSetting()
         {
             InitializeComponent( );
+            Icon = Util.GetWinformICon( );
         }
 
         #endregion

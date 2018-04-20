@@ -15,7 +15,8 @@ namespace HSLSharp
         public FormOpcSettings( )
         {
             InitializeComponent( );
-            
+
+            Icon = Util.GetWinformICon( );
         }
 
         private void FormOpcSettings_Load( object sender, EventArgs e )

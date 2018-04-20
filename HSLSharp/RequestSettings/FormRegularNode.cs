@@ -18,6 +18,7 @@ namespace HSLSharp.RequestSettings
             InitializeComponent( );
 
             RegularNode = regularNode;
+            Icon = Util.GetWinformICon( );
         }
 
         private void FormRegularNode_Load( object sender, EventArgs e )
