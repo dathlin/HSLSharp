@@ -14,6 +14,30 @@ namespace HSLSharp.Configuration
     /// </summary>
     public class AlienNode : NodeClass
     {
+        #region Constructor
+
+
+        /// <summary>
+        /// 异形服务器的节点
+        /// </summary>
+        public AlienNode( )
+        {
+            NodeType = NodeClassInfo.AlienServer;
+
+            NodeHead = "AlienNode";
+            Name = "异形服务器";
+            Description = "这是一个异形服务器";
+        }
+
+
+        #endregion
+
+        
+        /// <summary>
+        /// 服务器的端口号
+        /// </summary>
+        public int Port { get; set; }
+
 
         /// <summary>
         /// 密码，6位数，为空的话默认都是0x00
@@ -27,23 +51,24 @@ namespace HSLSharp.Configuration
         public override List<NodeClassRenderItem> GetNodeClassRenders( )
         {
             var list = base.GetNodeClassRenders( );
+            list.Add( NodeClassRenderItem.CreateIpPort( Port ) );
             list.Add( NodeClassRenderItem.CreateCustomer( "Password", Password ) );
             return list;
         }
 
         public override XElement ToXmlElement( )
         {
-            XElement element = new XElement( "AlienNode" );
-            element.SetAttributeValue( "Name", Name );
-            element.SetAttributeValue( "Password", Password );;
-            element.SetAttributeValue( "Description", Description );
+            XElement element = base.ToXmlElement( );
+            element.SetAttributeValue( "Password", Password ); ;
+            element.SetAttributeValue( "Port", Port );
             return element;
         }
 
         public override void LoadByXmlElement( XElement element )
         {
             base.LoadByXmlElement( element );
-            Password =  element.Attribute( "Password" ).Value;
+            Port = Convert.ToInt32(element.Attribute( "Port" ).Value);
+            Password = element.Attribute( "Password" ).Value;
         }
 
         #endregion

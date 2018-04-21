@@ -160,7 +160,7 @@ namespace HSLSharp
             if (node.Tag is DeviceNode deviceNode)
             {
                 // 允许添加设备
-                using (RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( ))
+                using (RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( new DeviceRequest( ) ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
@@ -208,6 +208,22 @@ namespace HSLSharp
                         }
                     }
                 }
+                else if (nodeClass.NodeType == NodeClassInfo.AlienServer)
+                {
+                    if (node.Tag is AlienNode alienNode)
+                    {
+                        // 编辑了异形服务器节点信息
+                        using (NodeSettings.FormAlienNode formNode = new NodeSettings.FormAlienNode( alienNode ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.AlienNode.Name;
+                                node.Tag = formNode.AlienNode;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                }
                 else
                 {
                     if (node.Tag is ModbusTcpClient modbusTcpNode)
@@ -219,6 +235,19 @@ namespace HSLSharp
                             {
                                 node.Text = formNode.ModbusTcpNode.Name;
                                 node.Tag = formNode.ModbusTcpNode;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                    else if(node.Tag is ModbusTcpAline modbusTcpAline)
+                    {
+                        // 编辑了Modbus-aline节点
+                        using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( modbusTcpAline ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.ModbusTcpAline.Name;
+                                node.Tag = formNode.ModbusTcpAline;
                                 isNodeSettingsModify = true;
                             }
                         }
@@ -297,7 +326,7 @@ namespace HSLSharp
         #endregion
 
         #region ContextMenu Show
-        
+
         private void treeView1_MouseDown( object sender, MouseEventArgs e )
         {
             if (e.Button == MouseButtons.Right)
@@ -307,14 +336,14 @@ namespace HSLSharp
                 TreeNode node = treeView1.SelectedNode;
                 if (node == null) return;
 
-                if(node.Text == "ModbusAlien" && node.ImageKey == "VirtualMachine_16xLG")
+                if (node.Text == "ModbusAlien" && node.ImageKey == "VirtualMachine_16xLG")
                 {
-                    cMS_AlienClient.Show( treeView1, e.Location );
+                    cMS_AlienNode.Show( treeView1, e.Location );
                     return;
                 }
 
 
-                if(node.Text == "ModbusServer" && node.ImageKey == "VirtualMachine_16xLG")
+                if (node.Text == "ModbusServer" && node.ImageKey == "VirtualMachine_16xLG")
                 {
                     cMS_ModbusServer.Show( treeView1, e.Location );
                     return;
@@ -328,6 +357,11 @@ namespace HSLSharp
                     // 显示第一个菜单框
                     cMS_Device.Show( treeView1, e.Location );
                 }
+                else if(node.Tag.GetType( ) == typeof( AlienNode ))
+                {
+                    // 显示新增异形客户端
+                    cMS_AlienClient.Show( treeView1, e.Location );
+                }
                 else if (node.Tag is DeviceNode)
                 {
                     // 显示第二个菜单框
@@ -337,6 +371,10 @@ namespace HSLSharp
                 {
                     // 显示第三个菜单框
                     cMs_EditRequest.Show( treeView1, e.Location );
+                }
+                else if (node.Tag is AlienNode)
+                {
+
                 }
             }
         }
@@ -458,30 +496,56 @@ namespace HSLSharp
                 else if (item.Name == "DeviceNode")
                 {
                     int type = int.Parse( item.Attribute( "DeviceType" ).Value );
+
+                    TreeNode deviceNode = new TreeNode( item.Attribute( "Name" ).Value );
                     if (type == DeviceNode.ModbusTcpClient)
                     {
-                        TreeNode node = new TreeNode( item.Attribute( "Name" ).Value );
-                        node.ImageKey = "Module_648";
-                        node.SelectedImageKey = "Module_648";
+                        deviceNode.ImageKey = "Module_648";
+                        deviceNode.SelectedImageKey = "Module_648";
 
                         ModbusTcpClient modbusNode = new ModbusTcpClient( );
                         modbusNode.LoadByXmlElement( item );
-                        node.Tag = modbusNode;
-                        treeNode.Nodes.Add( node );
-
-
-                        foreach (XElement request in item.Elements( "DeviceRequest" ))
-                        {
-                            TreeNode nodeRequest = new TreeNode( request.Attribute( "Name" ).Value );
-                            nodeRequest.ImageKey = "usbcontroller";
-                            nodeRequest.SelectedImageKey = "usbcontroller";
-
-                            DeviceRequest deviceRequest = new DeviceRequest( );
-                            deviceRequest.LoadByXmlElement( request );
-                            nodeRequest.Tag = deviceRequest;
-                            node.Nodes.Add( nodeRequest );
-                        }
+                        deviceNode.Tag = modbusNode;
+                        
                     }
+                    else if (type == DeviceNode.ModbusTcpAlien)
+                    {
+                        deviceNode.ImageKey = "Module_648";
+                        deviceNode.SelectedImageKey = "Module_648";
+
+                        ModbusTcpAline modbusAlien = new ModbusTcpAline( );
+                        modbusAlien.LoadByXmlElement( item );
+                        deviceNode.Tag = modbusAlien;
+
+                    }
+
+
+                    treeNode.Nodes.Add( deviceNode );
+                    foreach (XElement request in item.Elements( "DeviceRequest" ))
+                    {
+                        TreeNode nodeRequest = new TreeNode( request.Attribute( "Name" ).Value );
+                        nodeRequest.ImageKey = "usbcontroller";
+                        nodeRequest.SelectedImageKey = "usbcontroller";
+
+                        DeviceRequest deviceRequest = new DeviceRequest( );
+                        deviceRequest.LoadByXmlElement( request );
+                        nodeRequest.Tag = deviceRequest;
+                        deviceNode.Nodes.Add( nodeRequest );
+                    }
+
+                }
+                else if (item.Name == "AlienNode")
+                {
+                    TreeNode node = new TreeNode( item.Attribute( "Name" ).Value );
+                    node.ImageKey = "server_Local_16xLG";
+                    node.SelectedImageKey = "server_Local_16xLG";
+
+                    AlienNode nodeClass = new AlienNode( );
+                    nodeClass.LoadByXmlElement( item );
+                    node.Tag = nodeClass;
+                    treeNode.Nodes.Add( node );
+
+                    TreeNodeRender( node, item );
                 }
             }
         }
@@ -500,6 +564,8 @@ namespace HSLSharp
                 TreeNodeRender( treeView1.Nodes[0], element.Elements( ).ToArray( )[0] );
 
                 TreeNodeRender( treeView1.Nodes[1], element.Elements( ).ToArray( )[1] );
+
+                TreeNodeRender( treeView1.Nodes[2], element.Elements( ).ToArray( )[2] );
 
                 treeView1.ExpandAll( );
             }
@@ -559,6 +625,54 @@ namespace HSLSharp
 
         #endregion
 
+        private void 新增服务器ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                // 允许添加异形服务器
+                using (NodeSettings.FormAlienNode formNode = new NodeSettings.FormAlienNode( new AlienNode( ) ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        formNode.AlienNode.Name = GetUniqueName( node, formNode.AlienNode.Name );
+
+                        TreeNode nodeNew = new TreeNode( formNode.AlienNode.Name );
+                        nodeNew.ImageKey = "server_Local_16xLG";
+                        nodeNew.SelectedImageKey = "server_Local_16xLG";
+                        nodeNew.Tag = formNode.AlienNode;
+                        node.Nodes.Add( nodeNew );
+                        node.Expand( );
+                        isNodeSettingsModify = true;
+                    }
+                }
+            }
+        }
+
+        private void 异形ModbusTcpToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                // 允许添加类别
+                using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( new ModbusTcpAline( ) ))
+                {
+                    if (formNode.ShowDialog( ) == DialogResult.OK)
+                    {
+                        formNode.ModbusTcpAline.Name = GetUniqueName( node, formNode.ModbusTcpAline.Name );
+
+                        TreeNode nodeNew = new TreeNode( formNode.ModbusTcpAline.Name );
+                        nodeNew.ImageKey = "Module_648";
+                        nodeNew.SelectedImageKey = "Module_648";
+                        nodeNew.Tag = formNode.ModbusTcpAline;
+                        node.Nodes.Add( nodeNew );
+                        node.Expand( );
+                        isNodeSettingsModify = true;
+                    }
+                }
+            }
+        }
+
         #region Private Member
 
         private bool isNodeSettingsModify = false;            // 指示系统的节点是否已经被编辑过
@@ -566,5 +680,8 @@ namespace HSLSharp
         #endregion
 
 
+
+
+        
     }
 }

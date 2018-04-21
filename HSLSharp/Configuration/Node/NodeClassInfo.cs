@@ -31,11 +31,16 @@ namespace HSLSharp.Configuration
         /// Modbus Server的节点
         /// </summary>
         public const int ModbusServer = 3;
-
+        
         /// <summary>
         /// 解析规则的节点
         /// </summary>
         public const int RegularNode = 4;
+
+        /// <summary>
+        /// 异形服务器的节点
+        /// </summary>
+        public const int AlienServer = 4;
 
         /// <summary>
         /// 设备的请求信息

@@ -105,11 +105,23 @@
     <Compile Include="FormOpcSettings.designer.cs">
       <DependentUpon>FormOpcSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="NodeSettings\FormAlienNode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormAlienNode.Designer.cs">
+      <DependentUpon>FormAlienNode.cs</DependentUpon>
+    </Compile>
     <Compile Include="NodeSettings\FormModbusTcp.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NodeSettings\FormModbusTcp.Designer.cs">
       <DependentUpon>FormModbusTcp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NodeSettings\FormModbusTcpAlien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormModbusTcpAlien.Designer.cs">
+      <DependentUpon>FormModbusTcpAlien.cs</DependentUpon>
     </Compile>
     <Compile Include="NodeSettings\FormNodeClass.cs">
       <SubType>Form</SubType>
@@ -159,8 +171,14 @@
     <EmbeddedResource Include="FormOpcSettings.resx">
       <DependentUpon>FormOpcSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormAlienNode.resx">
+      <DependentUpon>FormAlienNode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormModbusTcp.resx">
       <DependentUpon>FormModbusTcp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormModbusTcpAlien.resx">
+      <DependentUpon>FormModbusTcpAlien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormNodeClass.resx">
       <DependentUpon>FormNodeClass.cs</DependentUpon>

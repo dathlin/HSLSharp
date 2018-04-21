@@ -60,17 +60,23 @@ namespace HSLSharp
             this.cMs_EditRequest = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.编辑节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1 = new HSLSharp.Controls.TreeViewEx();
             this.cMS_ModbusServer = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增ModbusTcpServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cMS_AlienClient = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cMS_AlienNode = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cMS_AlienClient = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.异形ModbusTcpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.编辑节点ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除节点ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeView1 = new HSLSharp.Controls.TreeViewEx();
             this.cMS_Device.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.cMS_Request.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.cMs_EditRequest.SuspendLayout();
             this.cMS_ModbusServer.SuspendLayout();
+            this.cMS_AlienNode.SuspendLayout();
             this.cMS_AlienClient.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -159,7 +165,7 @@ namespace HSLSharp
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(551, 27);
+            this.label2.Location = new System.Drawing.Point(454, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 17);
             this.label2.TabIndex = 2;
@@ -178,11 +184,11 @@ namespace HSLSharp
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.HslSharpValueName,
             this.HslSharpValue});
-            this.dataGridView1.Location = new System.Drawing.Point(554, 47);
+            this.dataGridView1.Location = new System.Drawing.Point(454, 47);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(454, 564);
+            this.dataGridView1.Size = new System.Drawing.Size(554, 564);
             this.dataGridView1.TabIndex = 3;
             // 
             // HslSharpValueName
@@ -197,7 +203,7 @@ namespace HSLSharp
             this.HslSharpValue.HeaderText = "数据值(Value)";
             this.HslSharpValue.Name = "HslSharpValue";
             this.HslSharpValue.ReadOnly = true;
-            this.HslSharpValue.Width = 180;
+            this.HslSharpValue.Width = 280;
             // 
             // cMS_Request
             // 
@@ -293,6 +299,77 @@ namespace HSLSharp
             this.删除节点ToolStripMenuItem.Text = "删除节点";
             this.删除节点ToolStripMenuItem.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
             // 
+            // cMS_ModbusServer
+            // 
+            this.cMS_ModbusServer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.新增ModbusTcpServerToolStripMenuItem});
+            this.cMS_ModbusServer.Name = "cMS_ModbusServer";
+            this.cMS_ModbusServer.Size = new System.Drawing.Size(208, 26);
+            // 
+            // 新增ModbusTcpServerToolStripMenuItem
+            // 
+            this.新增ModbusTcpServerToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
+            this.新增ModbusTcpServerToolStripMenuItem.Name = "新增ModbusTcpServerToolStripMenuItem";
+            this.新增ModbusTcpServerToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.新增ModbusTcpServerToolStripMenuItem.Text = "新增ModbusTcpServer";
+            // 
+            // cMS_AlienNode
+            // 
+            this.cMS_AlienNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.新增服务器ToolStripMenuItem});
+            this.cMS_AlienNode.Name = "cMS_AlienClient";
+            this.cMS_AlienNode.Size = new System.Drawing.Size(137, 26);
+            // 
+            // 新增服务器ToolStripMenuItem
+            // 
+            this.新增服务器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
+            this.新增服务器ToolStripMenuItem.Name = "新增服务器ToolStripMenuItem";
+            this.新增服务器ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.新增服务器ToolStripMenuItem.Text = "新增服务器";
+            this.新增服务器ToolStripMenuItem.Click += new System.EventHandler(this.新增服务器ToolStripMenuItem_Click);
+            // 
+            // cMS_AlienClient
+            // 
+            this.cMS_AlienClient.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.编辑节点ToolStripMenuItem1,
+            this.删除节点ToolStripMenuItem1});
+            this.cMS_AlienClient.Name = "cMS_AlienClient";
+            this.cMS_AlienClient.Size = new System.Drawing.Size(125, 70);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.异形ModbusTcpToolStripMenuItem});
+            this.toolStripMenuItem1.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.toolStripMenuItem1.Text = "新增设备";
+            // 
+            // 异形ModbusTcpToolStripMenuItem
+            // 
+            this.异形ModbusTcpToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Module_648;
+            this.异形ModbusTcpToolStripMenuItem.Name = "异形ModbusTcpToolStripMenuItem";
+            this.异形ModbusTcpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.异形ModbusTcpToolStripMenuItem.Text = "异形Modbus-Tcp";
+            this.异形ModbusTcpToolStripMenuItem.Click += new System.EventHandler(this.异形ModbusTcpToolStripMenuItem_Click);
+            // 
+            // 编辑节点ToolStripMenuItem1
+            // 
+            this.编辑节点ToolStripMenuItem1.Image = global::HSLSharp.Properties.Resources.PencilAngled_16xLG_color;
+            this.编辑节点ToolStripMenuItem1.Name = "编辑节点ToolStripMenuItem1";
+            this.编辑节点ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.编辑节点ToolStripMenuItem1.Text = "编辑节点";
+            this.编辑节点ToolStripMenuItem1.Click += new System.EventHandler(this.编辑类别editClassToolStripMenuItem_Click);
+            // 
+            // 删除节点ToolStripMenuItem1
+            // 
+            this.删除节点ToolStripMenuItem1.Image = global::HSLSharp.Properties.Resources.action_Cancel_16xLG;
+            this.删除节点ToolStripMenuItem1.Name = "删除节点ToolStripMenuItem1";
+            this.删除节点ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.删除节点ToolStripMenuItem1.Text = "删除节点";
+            this.删除节点ToolStripMenuItem1.Click += new System.EventHandler(this.删除deleteToolStripMenuItem_Click);
+            // 
             // treeView1
             // 
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -310,38 +387,10 @@ namespace HSLSharp
             treeNode1,
             treeNode2,
             treeNode3});
-            this.treeView1.Size = new System.Drawing.Size(528, 565);
+            this.treeView1.Size = new System.Drawing.Size(428, 565);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
-            // 
-            // cMS_ModbusServer
-            // 
-            this.cMS_ModbusServer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.新增ModbusTcpServerToolStripMenuItem});
-            this.cMS_ModbusServer.Name = "cMS_ModbusServer";
-            this.cMS_ModbusServer.Size = new System.Drawing.Size(208, 26);
-            // 
-            // 新增ModbusTcpServerToolStripMenuItem
-            // 
-            this.新增ModbusTcpServerToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
-            this.新增ModbusTcpServerToolStripMenuItem.Name = "新增ModbusTcpServerToolStripMenuItem";
-            this.新增ModbusTcpServerToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
-            this.新增ModbusTcpServerToolStripMenuItem.Text = "新增ModbusTcpServer";
-            // 
-            // cMS_AlienClient
-            // 
-            this.cMS_AlienClient.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.新增服务器ToolStripMenuItem});
-            this.cMS_AlienClient.Name = "cMS_AlienClient";
-            this.cMS_AlienClient.Size = new System.Drawing.Size(137, 26);
-            // 
-            // 新增服务器ToolStripMenuItem
-            // 
-            this.新增服务器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
-            this.新增服务器ToolStripMenuItem.Name = "新增服务器ToolStripMenuItem";
-            this.新增服务器ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.新增服务器ToolStripMenuItem.Text = "新增服务器";
             // 
             // FormNodeSetting
             // 
@@ -369,6 +418,7 @@ namespace HSLSharp
             this.menuStrip1.PerformLayout();
             this.cMs_EditRequest.ResumeLayout(false);
             this.cMS_ModbusServer.ResumeLayout(false);
+            this.cMS_AlienNode.ResumeLayout(false);
             this.cMS_AlienClient.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -381,8 +431,6 @@ namespace HSLSharp
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HslSharpValueName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HslSharpValue;
         private System.Windows.Forms.ContextMenuStrip cMS_Device;
         private System.Windows.Forms.ToolStripMenuItem 新增类别ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 类别classToolStripMenuItem;
@@ -405,7 +453,14 @@ namespace HSLSharp
         private System.Windows.Forms.ToolStripMenuItem 另存为ToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip cMS_ModbusServer;
         private System.Windows.Forms.ToolStripMenuItem 新增ModbusTcpServerToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip cMS_AlienClient;
+        private System.Windows.Forms.ContextMenuStrip cMS_AlienNode;
         private System.Windows.Forms.ToolStripMenuItem 新增服务器ToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HslSharpValueName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HslSharpValue;
+        private System.Windows.Forms.ContextMenuStrip cMS_AlienClient;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 编辑节点ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 删除节点ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 异形ModbusTcpToolStripMenuItem;
     }
 }
