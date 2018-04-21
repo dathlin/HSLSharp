@@ -17,6 +17,12 @@ namespace HSLSharp.Configuration
         public ModbusTcpAline()
         {
             DTU = "12345678901";
+            DeviceType = DeviceNode.ModbusTcpAlien;
+
+            Name = "异形设备";
+            Description = "这是一个异形设备";
+            Station = 0x01;
+
         }
 
 
@@ -29,6 +35,16 @@ namespace HSLSharp.Configuration
         /// </summary>
         public string DTU { get; set; }
 
+        /// <summary>
+        /// 设备的站号
+        /// </summary>
+        public byte Station { get; set; }
+
+
+        /// <summary>
+        /// 起始地址是否从0开始
+        /// </summary>
+        public bool IsAddressStartWithZero { get; set; } = true;
 
         #endregion
 
@@ -38,6 +54,8 @@ namespace HSLSharp.Configuration
         {
             var list = base.GetNodeClassRenders( );
             list.Add( NodeClassRenderItem.CreateCustomer( "唯一标识", DTU ) );
+            list.Add( NodeClassRenderItem.CreateStation( Station ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "是否从0开始", IsAddressStartWithZero.ToString( ) ) );
             return list;
         }
 
@@ -45,6 +63,8 @@ namespace HSLSharp.Configuration
         {
             XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "DTU", DTU );
+            element.SetAttributeValue( "Station", Station );
+            element.SetAttributeValue( "IsAddressStartWithZero", IsAddressStartWithZero );
             return element;
         }
 
@@ -52,6 +72,8 @@ namespace HSLSharp.Configuration
         {
             base.LoadByXmlElement( element );
             DTU = element.Attribute( "DTU" ).Value;
+            Station = byte.Parse( element.Attribute( "Station" ).Value );
+            IsAddressStartWithZero = bool.Parse( element.Attribute( "IsAddressStartWithZero" ).Value );
         }
 
         #endregion

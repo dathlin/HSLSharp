@@ -32,9 +32,11 @@
             this.系统配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.节点配置器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.解析规则配置器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oPCUA配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.测试客户端ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.软件信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,8 +44,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.userButton1 = new HslCommunication.Controls.UserButton();
-            this.oPCUA配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.软件信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -59,7 +59,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(777, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1039, 27);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -78,7 +78,7 @@
             // 
             this.节点配置器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.ClassIcon;
             this.节点配置器ToolStripMenuItem.Name = "节点配置器ToolStripMenuItem";
-            this.节点配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.节点配置器ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.节点配置器ToolStripMenuItem.Text = "节点配置器";
             this.节点配置器ToolStripMenuItem.Click += new System.EventHandler(this.节点配置器ToolStripMenuItem_Click);
             // 
@@ -86,9 +86,17 @@
             // 
             this.解析规则配置器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.ExtensionManager_vsix;
             this.解析规则配置器ToolStripMenuItem.Name = "解析规则配置器ToolStripMenuItem";
-            this.解析规则配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.解析规则配置器ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.解析规则配置器ToolStripMenuItem.Text = "解析规则配置器";
             this.解析规则配置器ToolStripMenuItem.Click += new System.EventHandler(this.解析规则配置器ToolStripMenuItem_Click);
+            // 
+            // oPCUA配置ToolStripMenuItem
+            // 
+            this.oPCUA配置ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.server_Local_16xLG;
+            this.oPCUA配置ToolStripMenuItem.Name = "oPCUA配置ToolStripMenuItem";
+            this.oPCUA配置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.oPCUA配置ToolStripMenuItem.Text = "OPC UA配置";
+            this.oPCUA配置ToolStripMenuItem.Click += new System.EventHandler(this.oPCUA配置ToolStripMenuItem_Click);
             // 
             // 测试客户端ToolStripMenuItem
             // 
@@ -103,10 +111,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton1,
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 519);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 657);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(777, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1039, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -120,6 +128,13 @@
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
             this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // 软件信息ToolStripMenuItem
+            // 
+            this.软件信息ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.WindowsAzure_16xLG;
+            this.软件信息ToolStripMenuItem.Name = "软件信息ToolStripMenuItem";
+            this.软件信息ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.软件信息ToolStripMenuItem.Text = "软件信息";
             // 
             // toolStripStatusLabel1
             // 
@@ -137,7 +152,7 @@
             this.panel1.Location = new System.Drawing.Point(5, 30);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(767, 227);
+            this.panel1.Size = new System.Drawing.Size(1029, 227);
             this.panel1.TabIndex = 3;
             // 
             // label1
@@ -160,7 +175,7 @@
             this.panel2.Location = new System.Drawing.Point(5, 261);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(767, 256);
+            this.panel2.Size = new System.Drawing.Size(1029, 394);
             this.panel2.TabIndex = 4;
             // 
             // textBox1
@@ -173,7 +188,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(756, 232);
+            this.textBox1.Size = new System.Drawing.Size(1018, 370);
             this.textBox1.TabIndex = 2;
             // 
             // label2
@@ -198,27 +213,12 @@
             this.userButton1.TabIndex = 5;
             this.userButton1.UIText = "启动引擎";
             // 
-            // oPCUA配置ToolStripMenuItem
-            // 
-            this.oPCUA配置ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.server_Local_16xLG;
-            this.oPCUA配置ToolStripMenuItem.Name = "oPCUA配置ToolStripMenuItem";
-            this.oPCUA配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.oPCUA配置ToolStripMenuItem.Text = "OPC UA配置";
-            this.oPCUA配置ToolStripMenuItem.Click += new System.EventHandler(this.oPCUA配置ToolStripMenuItem_Click);
-            // 
-            // 软件信息ToolStripMenuItem
-            // 
-            this.软件信息ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.WindowsAzure_16xLG;
-            this.软件信息ToolStripMenuItem.Name = "软件信息ToolStripMenuItem";
-            this.软件信息ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.软件信息ToolStripMenuItem.Text = "软件信息";
-            // 
             // FormServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.AliceBlue;
-            this.ClientSize = new System.Drawing.Size(777, 541);
+            this.ClientSize = new System.Drawing.Size(1039, 679);
             this.Controls.Add(this.userButton1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

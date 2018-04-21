@@ -22,6 +22,7 @@ namespace HSLSharp.Configuration
             Requests = new List<DeviceRequest>( );
             NodeType = NodeClassInfo.DeviceNode;
             NodeHead = "DeviceNode";
+            CreateTime = DateTime.Now;
         }
 
         #endregion
@@ -92,6 +93,11 @@ namespace HSLSharp.Configuration
         /// </summary>
         public const int ModbusTcpClient = 10;
 
+
+        /// <summary>
+        /// 异形的Modbus-Tcp客户端
+        /// </summary>
+        public const int ModbusTcpAlien = 20;
 
 
 
