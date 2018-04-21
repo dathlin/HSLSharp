@@ -2930,12 +2930,6 @@
             </summary>
             <param name="obj">传入的异步对象</param>
         </member>
-        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.AlienSessionLoginOut(HslCommunication.Core.Net.AlienSession)">
-            <summary>
-            退出异形客户端
-            </summary>
-            <param name="session">异形客户端的会话</param>
-        </member>
         <member name="E:HslCommunication.Core.Net.NetworkAlienClient.OnClientConnected">
             <summary>
             当有服务器连接上来的时候触发
@@ -2993,6 +2987,12 @@
             设置可信任的客户端列表
             </summary>
             <param name="clients"></param>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.AlienSessionLoginOut(HslCommunication.Core.Net.AlienSession)">
+            <summary>
+            退出异形客户端
+            </summary>
+            <param name="session">异形客户端的会话</param>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ToString">
             <summary>
@@ -3302,6 +3302,11 @@
             异形客户端的异步对象
             </summary>
         </member>
+        <member name="M:HslCommunication.Core.Net.AlienSession.#ctor">
+            <summary>
+            实例化一个默认的参数
+            </summary>
+        </member>
         <member name="P:HslCommunication.Core.Net.AlienSession.Socket">
             <summary>
             网络套接字
@@ -3310,6 +3315,11 @@
         <member name="P:HslCommunication.Core.Net.AlienSession.DTU">
             <summary>
             唯一的标识
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.Net.AlienSession.IsStatusOk">
+            <summary>
+            指示当前的网络状态
             </summary>
         </member>
         <member name="T:HslCommunication.Core.Net.AppSession">
@@ -4293,6 +4303,15 @@
             <param name="index">索引位置</param>
             <returns>byte对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransByte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取byte数组结果
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransInt16(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取short结果
@@ -4300,6 +4319,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>short对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取short数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数组长度</param>
+            <returns>short数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransUInt16(System.Byte[],System.Int32)">
             <summary>
@@ -4309,6 +4337,15 @@
             <param name="index">索引位置</param>
             <returns>ushort对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransUInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ushort数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数组长度</param>
+            <returns>ushort数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransInt32(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取int结果
@@ -4316,6 +4353,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>int对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取int数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数组的长度</param>
+            <returns>int数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransUInt32(System.Byte[],System.Int32)">
             <summary>
@@ -4325,6 +4371,15 @@
             <param name="index">索引位置</param>
             <returns>uint对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransUInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取uint数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数组的长度</param>
+            <returns>uint数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransInt64(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取long结果
@@ -4332,6 +4387,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>long对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取long数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数组的长度</param>
+            <returns>long数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransUInt64(System.Byte[],System.Int32)">
             <summary>
@@ -4341,6 +4405,15 @@
             <param name="index">索引位置</param>
             <returns>ulong对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransUInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ulong数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数组的长度</param>
+            <returns>ulong数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransSingle(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取float结果
@@ -4349,6 +4422,15 @@
             <param name="index">索引位置</param>
             <returns>float对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransSingle(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取float数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">读取的数据长度</param>
+            <returns></returns>
+        </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransDouble(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取double结果
@@ -4356,6 +4438,15 @@
             <param name="buffer">缓存对象</param>
             <param name="index">索引位置</param>
             <returns>double对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.IByteTransform.TransDouble(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取double数组结果
+            </summary>
+            <param name="buffer"></param>
+            <param name="index"></param>
+            <param name="length"></param>
+            <returns></returns>
         </member>
         <member name="M:HslCommunication.Core.IByteTransform.TransString(System.Byte[])">
             <summary>
@@ -4514,7 +4605,6 @@
             从缓存中提取出bool结果
             </summary>
             <param name="buffer">缓存数据</param>
-            <param name="index">索引位置</param>
             <returns>bool对象</returns>
         </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransByte(System.Byte[],System.Int32)">
@@ -4525,6 +4615,15 @@
             <param name="index">索引位置</param>
             <returns>byte对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransByte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取byte数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组长度</param>
+            <returns>byte对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransInt16(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取short结果
@@ -4533,12 +4632,30 @@
             <param name="index">索引位置</param>
             <returns>short对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取short数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组长度</param>
+            <returns>short数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransUInt16(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取ushort结果
             </summary>
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
+            <returns>ushort对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransUInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ushort数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
             <returns>ushort对象</returns>
         </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransInt32(System.Byte[],System.Int32)">
@@ -4549,6 +4666,15 @@
             <param name="index">索引位置</param>
             <returns>int对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取int数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>int数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransUInt32(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取uint结果
@@ -4556,6 +4682,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>uint对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransUInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取uint数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>uint数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransInt64(System.Byte[],System.Int32)">
             <summary>
@@ -4565,6 +4700,15 @@
             <param name="index">索引位置</param>
             <returns>long对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取long数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>long数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransUInt64(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取ulong结果
@@ -4572,6 +4716,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>ulong对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransUInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ulong数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>ulong数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransSingle(System.Byte[],System.Int32)">
             <summary>
@@ -4581,6 +4734,15 @@
             <param name="index">索引位置</param>
             <returns>float对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransSingle(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取float数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>float数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransDouble(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取double结果
@@ -4588,6 +4750,15 @@
             <param name="buffer">缓存对象</param>
             <param name="index">索引位置</param>
             <returns>double对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.RegularByteTransform.TransDouble(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取double数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>double数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.RegularByteTransform.TransString(System.Byte[])">
             <summary>
@@ -4756,12 +4927,30 @@
             <param name="index">索引位置</param>
             <returns>byte对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransByte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取byte数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>byte数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransInt16(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取short结果
             </summary>
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
+            <returns>short对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取short数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length"></param>
             <returns>short对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransUInt16(System.Byte[],System.Int32)">
@@ -4772,6 +4961,15 @@
             <param name="index">索引位置</param>
             <returns>ushort对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransUInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ushort数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>ushort对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransInt32(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取int结果
@@ -4779,6 +4977,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>int对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取int数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>int数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransUInt32(System.Byte[],System.Int32)">
             <summary>
@@ -4788,6 +4995,15 @@
             <param name="index">索引位置</param>
             <returns>uint对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransUInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取uint数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>uint数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransInt64(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取long结果
@@ -4795,6 +5011,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>long对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取long数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>long数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransUInt64(System.Byte[],System.Int32)">
             <summary>
@@ -4804,6 +5029,15 @@
             <param name="index">索引位置</param>
             <returns>ulong对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransUInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ulong数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>ulong数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransSingle(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取float结果
@@ -4812,6 +5046,15 @@
             <param name="index">索引位置</param>
             <returns>float对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransSingle(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取float数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>float数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransDouble(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取double结果
@@ -4819,6 +5062,15 @@
             <param name="buffer">缓存对象</param>
             <param name="index">索引位置</param>
             <returns>double对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseBytesTransform.TransDouble(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取double数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>double数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseBytesTransform.TransString(System.Byte[])">
             <summary>
@@ -4996,6 +5248,15 @@
             <param name="index">索引位置</param>
             <returns>byte对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransByte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取byte数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组长度</param>
+            <returns>byte对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransInt16(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取short结果
@@ -5004,12 +5265,30 @@
             <param name="index">索引位置</param>
             <returns>short对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取short数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组长度</param>
+            <returns>short数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransUInt16(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取ushort结果
             </summary>
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
+            <returns>ushort对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransUInt16(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ushort数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
             <returns>ushort对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransInt32(System.Byte[],System.Int32)">
@@ -5020,6 +5299,15 @@
             <param name="index">索引位置</param>
             <returns>int对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取int数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>int数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransUInt32(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取uint结果
@@ -5027,6 +5315,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>uint对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransUInt32(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取uint数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>uint数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransInt64(System.Byte[],System.Int32)">
             <summary>
@@ -5036,6 +5333,15 @@
             <param name="index">索引位置</param>
             <returns>long对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取long数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>long数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransUInt64(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取ulong结果
@@ -5043,6 +5349,15 @@
             <param name="buffer">缓存数据</param>
             <param name="index">索引位置</param>
             <returns>ulong对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransUInt64(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取ulong数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>ulong数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransSingle(System.Byte[],System.Int32)">
             <summary>
@@ -5052,6 +5367,15 @@
             <param name="index">索引位置</param>
             <returns>float对象</returns>
         </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransSingle(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取float数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>float数组对象</returns>
+        </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransDouble(System.Byte[],System.Int32)">
             <summary>
             从缓存中提取double结果
@@ -5059,6 +5383,15 @@
             <param name="buffer">缓存对象</param>
             <param name="index">索引位置</param>
             <returns>double对象</returns>
+        </member>
+        <member name="M:HslCommunication.Core.ReverseWordTransform.TransDouble(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            从缓存中提取double数组结果
+            </summary>
+            <param name="buffer">缓存数据</param>
+            <param name="index">索引位置</param>
+            <param name="length">提取的数组的长度</param>
+            <returns>double数组对象</returns>
         </member>
         <member name="M:HslCommunication.Core.ReverseWordTransform.TransString(System.Byte[])">
             <summary>
@@ -9003,18 +9336,11 @@
             </summary>
             <param name="obj"></param>
         </member>
-        <member name="M:HslCommunication.ModBus.ModbusTcpServer.CheckModbusMessageLegal(System.Byte[])">
-            <summary>
-            检测当前的Modbus接收的指定是否是合法的
-            </summary>
-            <param name="buffer"></param>
-            <returns></returns>
-        </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.CreateExceptionBack(System.Byte[],System.Byte)">
             <summary>
             创建特殊的功能标识，然后返回该信息
             </summary>
-            <param name="modbus"></param>
+            <param name="modbusCore"></param>
             <param name="error"></param>
             <returns></returns>
         </member>
@@ -9022,7 +9348,7 @@
             <summary>
             创建返回消息
             </summary>
-            <param name="modbus"></param>
+            <param name="modbusCore"></param>
             <param name="content"></param>
             <returns></returns>
         </member>
@@ -9071,6 +9397,59 @@
             获取受信任的客户端列表
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.CheckModbusMessageLegal(System.Byte[])">
+            <summary>
+            检测当前的Modbus接收的指定是否是合法的
+            </summary>
+            <param name="buffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.ModbusTcpTransModbusCore(System.Byte[])">
+            <summary>
+            将Modbus-Tcp的报文转换成核心的Modbus报文，就是移除报文头
+            </summary>
+            <param name="modbusTcp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.ModbusCoreTransModbusTcp(System.Byte[],System.Byte[])">
+            <summary>
+            根据Modbus数据信息生成Modbus-Tcp数据信息
+            </summary>
+            <param name="modbusData"></param>
+            <param name="modbusOrigin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.ModbusRtuTransModbusCore(System.Byte[])">
+            <summary>
+            将Modbus-Rtu的报文转成核心的Modbus报文，移除了CRC校验
+            </summary>
+            <param name="modbusRtu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.ModbusCoreTransModbusRtu(System.Byte[])">
+            <summary>
+            根据Modbus数据信息生成Modbus-Rtu数据信息
+            </summary>
+            <param name="modbusData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.StartSerialPort(System.String)">
+            <summary>
+            使用默认的
+            </summary>
+            <param name="com">串口信息</param>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.CloseSerialPort">
+            <summary>
+            关闭串口
+            </summary>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.StartSerialPort(System.Action{System.IO.Ports.SerialPort})">
+            <summary>
+            使用自定义的初始化方法初始化串口的参数
+            </summary>
+            <param name="inni"></param>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.ToString">
             <summary>

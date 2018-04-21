@@ -17,9 +17,8 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// 实例化一个构造对象
         /// </summary>
-        public DeviceNode()
+        public DeviceNode( )
         {
-            Requests = new List<DeviceRequest>( );
             NodeType = NodeClassInfo.DeviceNode;
             NodeHead = "DeviceNode";
             CreateTime = DateTime.Now;
@@ -44,11 +43,7 @@ namespace HSLSharp.Configuration
         /// 服务器的创建日期
         /// </summary>
         public DateTime CreateTime { get; set; }
-        
-        /// <summary>
-        /// 设备的所有的数据请求
-        /// </summary>
-        public List<DeviceRequest> Requests { get; set; }
+
 
         #endregion
 
@@ -67,7 +62,7 @@ namespace HSLSharp.Configuration
             XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "DeviceType", DeviceType );
             element.SetAttributeValue( "ConnectTimeOut", ConnectTimeOut );
-            element.SetAttributeValue( "CreateTime", CreateTime.ToString() );
+            element.SetAttributeValue( "CreateTime", CreateTime.ToString( ) );
             return element;
         }
 

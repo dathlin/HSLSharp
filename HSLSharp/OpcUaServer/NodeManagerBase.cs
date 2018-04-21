@@ -249,6 +249,31 @@ namespace HSLSharp.OpcUaSupport
             }
         }
 
+        /// <summary>
+        /// 在服务器端直接更改对应数据节点的值，并通知客户端
+        /// </summary>
+        /// <param name="nodeId">节点的名称</param>
+        /// <param name="value">值，需要类型匹配</param>
+        public void ChangeNodeData( string[] nodeId, object[] value )
+        {
+            lock (Lock)
+            {
+
+                //if (dict_BaseDataVariableState.ContainsKey( nodeId ))
+                //{
+
+                //    dict_BaseDataVariableState[nodeId].Value = value;
+                //    dict_BaseDataVariableState[nodeId].ClearChangeMasks( SystemContext, false );
+
+                //}
+                //else
+                //{
+                //    Console.WriteLine( DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss.fff " ) + "节点不存在，更新失败！" );
+                //}
+            }
+        }
+
+
         #endregion
     }
 }

@@ -26,6 +26,7 @@ namespace HSLSharp.Configuration
             CaptureInterval = 1000;
             PraseRegularCode = "ABCDEFG";
             NodeType = NodeClassInfo.DeviceRequest;
+            NodeHead = "DeviceRequest";
         }
         
 
@@ -65,9 +66,7 @@ namespace HSLSharp.Configuration
 
         public override XElement ToXmlElement( )
         {
-            XElement element = new XElement( "DeviceRequest" );
-            element.SetAttributeValue( "Name", Name );
-            element.SetAttributeValue( "Description", Description );
+            XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "Address", Address );
             element.SetAttributeValue( "Length", Length );
             element.SetAttributeValue( "CaptureInterval", CaptureInterval );

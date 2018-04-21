@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
+using HSLSharp.Configuration;
+using HslCommunication.Core.Net;
 
 
 namespace HSLSharp.OpcUaSupport
@@ -88,6 +90,8 @@ namespace HSLSharp.OpcUaSupport
 
                 XElement element = XElement.Load( Util.SharpSettings.NodeSettingsFilePath );
 
+                // 开始寻找设备信息
+
 
 
                 // 构建数据
@@ -129,10 +133,13 @@ namespace HSLSharp.OpcUaSupport
 
         #endregion
 
-        public void DealWithContent(byte[] data)
-        {
+        #region ModbusAlien
 
-        }
-        
+
+        private List<NetworkAlienClient> networkAliens;            // 所有的异形客户端的列表
+
+
+        #endregion
+
     }
 }

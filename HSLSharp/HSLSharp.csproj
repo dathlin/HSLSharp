@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ModbusAlien\ModbusAlienCore.cs" />
     <Compile Include="Configuration\Device\ModbusTcpAline.cs" />
     <Compile Include="Configuration\AlienNode\AlienNode.cs" />
     <Compile Include="Configuration\Device\MelsecMc.cs" />
@@ -167,6 +168,7 @@
       <DependentUpon>FormRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="SettingsSupport\SharpSettings.cs" />
+    <Compile Include="Utils\DeviceUtil.cs" />
     <Compile Include="Utils\Utils.cs" />
     <EmbeddedResource Include="FormOpcSettings.resx">
       <DependentUpon>FormOpcSettings.cs</DependentUpon>
