@@ -100,6 +100,8 @@
     <Compile Include="Controls\TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Device\DeviceCoreBase\DeviceCoreBase.cs" />
+    <Compile Include="Device\Implementation\DeciveModbusTcpAlien.cs" />
     <Compile Include="Device\Interface\IDeviceCore.cs" />
     <Compile Include="FormOpcSettings.cs">
       <SubType>Form</SubType>
@@ -335,8 +337,6 @@
   <ItemGroup>
     <None Include="Imgs\interface_16xLG.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Device\DeviceCoreBase\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

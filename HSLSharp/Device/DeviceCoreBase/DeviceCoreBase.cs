@@ -1,0 +1,211 @@
+﻿using HslCommunication;
+using HslCommunication.Core;
+using HslCommunication.Core.Net;
+using HslCommunication.LogNet;
+using HSLSharp.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace HSLSharp.Device
+{
+    /// <summary>
+    /// 系统维护运行的所有的客户端的基类，提供了一些共同的基础逻辑实现
+    /// </summary>
+    public abstract class DeviceCoreBase : IDeviceCore
+    {
+
+        #region Constructor
+
+        /// <summary>
+        /// 使用默认的无参构造方法
+        /// </summary>
+        public DeviceCoreBase()
+        {
+            ActiveTime = DateTime.Now;
+            autoResetQuit = new AutoResetEvent( false );
+        }
+
+        #endregion
+
+        #region IDeviceCore
+        
+
+        /// <summary>
+        /// OpcUa对应的节点信息
+        /// </summary>
+        public string OpcUaNode { get; set; }
+
+        /// <summary>
+        /// 读取数据的核心方法，需要在继承类里面进行重新实现
+        /// </summary>
+        /// <param name="address">其实地址</param>
+        /// <param name="length">读取的数据长度</param>
+        /// <returns>字节数据</returns>
+        public virtual OperateResult<byte[]> ReadBytes( string address, ushort length )
+        {
+            return new OperateResult<byte[]>( );
+        }
+
+
+        /// <summary>
+        /// 所有的请求列表
+        /// </summary>
+        public List<DeviceRequest> Requests { get; set; }
+
+        /// <summary>
+        /// 数据转换规则
+        /// </summary>
+        public IByteTransform ByteTransform { get; set; }
+
+        /// <summary>
+        /// 指示如何写入Opc Ua的节点信息
+        /// </summary>
+        public Action<string, byte[], DeviceRequest, IByteTransform> WriteDeviceData { get; set; }
+
+        /// <summary>
+        /// 设备上次激活的时间节点，用来判断失效状态
+        /// </summary>
+        public DateTime ActiveTime { get; set; }
+
+        /// <summary>
+        /// 唯一的识别码，方便异形客户端寻找对应的处理逻辑
+        /// </summary>
+        public string UniqueId { get; set; }
+
+        /// <summary>
+        /// 启动读取数据
+        /// </summary>
+        public void StartRead()
+        {
+            if (Interlocked.CompareExchange( ref isStarted, 1, 0 ) == 0)
+            {
+                thread = new Thread( new ThreadStart( ThreadReadBackground ) );
+                thread.IsBackground = true;
+                thread.Start( );
+            }
+        }
+
+        /// <summary>
+        /// 退出系统
+        /// </summary>
+        public void QuitDevice()
+        {
+            isQuit = 1;
+            autoResetQuit.WaitOne( );
+        }
+
+        /// <summary>
+        /// 设置为异形客户端对象
+        /// </summary>
+        /// <param name="alienSession"></param>
+        public virtual void SetAlineSession( AlienSession alienSession )
+        {
+
+        }
+
+        #endregion
+
+        #region Protect Method
+
+        /// <summary>
+        /// 使用固定的节点加载数据信息
+        /// </summary>
+        /// <param name="element"></param>
+        protected void LoadRequest( XElement element )
+        {
+            Requests = new List<DeviceRequest>( );
+            foreach (var item in element.Elements( "DeviceRequest" ))
+            {
+                DeviceRequest request = new DeviceRequest( );
+                request.LoadByXmlElement( item );
+                Requests.Add( request );
+            }
+        }
+
+        #endregion
+
+        #region Virtual Method
+
+        /// <summary>
+        /// 在启动之前进行的操作信息
+        /// </summary>
+        protected virtual void BeforStart()
+        {
+
+        }
+
+        /// <summary>
+        /// 在关闭的时候需要进行的操作
+        /// </summary>
+        protected virtual void AfterClose()
+        {
+
+        }
+
+        #endregion
+
+        #region Thread Read
+
+
+        private void ThreadReadBackground()
+        {
+            Thread.Sleep( 1000 );           // 默认休息一下下
+            int timeSleep = 100;
+            if (Requests?.Count > 0)
+            {
+                timeSleep = Requests[0].CaptureInterval;
+            }
+
+            BeforStart( );
+            while (isQuit == 0)
+            {
+                Thread.Sleep( timeSleep );
+
+
+                foreach (var Request in Requests)
+                {
+                    OperateResult<byte[]> read = ReadBytes( Request.Address, Request.Length );
+                    if(read.IsSuccess)
+                    {
+                        WriteDeviceData?.Invoke( OpcUaNode, read.Content, Request, ByteTransform );
+                        ActiveTime = DateTime.Now;
+                    }
+                }
+            }
+
+            AfterClose( );
+            // 通知关闭的线程继续
+            autoResetQuit.Set( );
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// 系统的日志组件
+        /// </summary>
+        public ILogNet LogNet
+        {
+            get { return logNet; }
+            set { logNet = value; }
+        }
+
+        #endregion
+
+        #region Private Member
+
+        private Thread thread;                   // 后台读取的线程
+        private int isStarted = 0;               // 是否启动了后台数据读取
+        private AutoResetEvent autoResetQuit;    // 退出系统的时候的同步锁
+        private int isQuit = 0;                  // 是否准备从系统进行退出
+        private ILogNet logNet;                  // 系统的日志
+
+        #endregion
+    }
+}

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HslCommunication;
 using HslCommunication.Core;
+using HslCommunication.Core.Net;
 using HSLSharp.Configuration;
 
 namespace HSLSharp.Device
@@ -28,7 +29,6 @@ namespace HSLSharp.Device
         /// <returns>字节数据</returns>
         OperateResult<byte[]> ReadBytes( string address, ushort length );
 
-
         /// <summary>
         /// 所有的请求列表
         /// </summary>
@@ -39,7 +39,35 @@ namespace HSLSharp.Device
         /// </summary>
         IByteTransform ByteTransform { get; set; }
 
+        /// <summary>
+        /// 指示如何写入Opc Ua的节点信息
+        /// </summary>
+        Action<string, byte[], DeviceRequest, IByteTransform> WriteDeviceData { get; set; }
 
-        
+        /// <summary>
+        /// 设备上次激活的时间节点，用来判断失效状态
+        /// </summary>
+        DateTime ActiveTime { get; set; }
+
+        /// <summary>
+        /// 唯一的识别码，方便异形客户端寻找对应的处理逻辑
+        /// </summary>
+        string UniqueId { get; set; }
+
+        /// <summary>
+        /// 开始读取
+        /// </summary>
+        void StartRead();
+
+        /// <summary>
+        /// 退出系统
+        /// </summary>
+        void QuitDevice();
+
+        /// <summary>
+        /// 当客户端为异形客户端的时候，需要通过这个方法来更新客户端的连接状态
+        /// </summary>
+        /// <param name="alienSession">异形客户端的会话</param>
+        void SetAlineSession( AlienSession alienSession );
     }
 }

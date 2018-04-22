@@ -28,12 +28,14 @@ namespace HSLSharp.RequestSettings
             }
 
 
+            comboBox1.DataSource = Util.SharpRegulars.GetRegularsArray( );
+
             textBox1.Text = DeviceRequest.Name;
             textBox2.Text = DeviceRequest.Description;
             textBox3.Text = DeviceRequest.Address;
             textBox4.Text = DeviceRequest.Length.ToString( );
             textBox6.Text = DeviceRequest.CaptureInterval.ToString( );
-            textBox5.Text = DeviceRequest.PraseRegularCode;
+            comboBox1.SelectedItem = DeviceRequest.PraseRegularCode;
         }
 
 
@@ -44,6 +46,13 @@ namespace HSLSharp.RequestSettings
 
         private void userButton1_Click( object sender, EventArgs e )
         {
+            if(comboBox1.SelectedItem == null)
+            {
+                MessageBox.Show( "需要先配置规则解析器数据！" );
+                return;
+            }
+
+
             try
             {
                 DeviceRequest = new DeviceRequest( )
@@ -53,7 +62,7 @@ namespace HSLSharp.RequestSettings
                     Address = textBox3.Text,
                     Length = ushort.Parse( textBox4.Text ),
                     CaptureInterval = int.Parse( textBox6.Text ),
-                    PraseRegularCode = textBox5.Text,
+                    PraseRegularCode = comboBox1.SelectedItem.ToString(),
                 };
             }
             catch(Exception ex)

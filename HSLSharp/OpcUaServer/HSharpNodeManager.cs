@@ -10,7 +10,7 @@ using System.Xml.Linq;
 using System.IO;
 using HSLSharp.Configuration;
 using HslCommunication.Core.Net;
-
+using HSLSharp.Device;
 
 namespace HSLSharp.OpcUaSupport
 {
@@ -26,6 +26,8 @@ namespace HSLSharp.OpcUaSupport
             : base(server, configuration)
         {
             logNet = Util.LogNet;
+
+            deviceCores = new List<IDeviceCore>( );
         }
         
         #endregion
@@ -90,7 +92,7 @@ namespace HSLSharp.OpcUaSupport
 
                 XElement element = XElement.Load( Util.SharpSettings.NodeSettingsFilePath );
 
-                // 开始寻找设备信息
+                // 开始寻找设备信息，并计算一些节点信息
 
 
 
@@ -124,11 +126,13 @@ namespace HSLSharp.OpcUaSupport
 
 
 
+
         #endregion
 
         #region Private Member
 
         private ILogNet logNet;
+        private List<IDeviceCore> deviceCores;                     // 所有的设备客户端列表
 
 
         #endregion
