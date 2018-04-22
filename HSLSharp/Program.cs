@@ -40,11 +40,20 @@ namespace HSLSharp
             Util.SharpSettings.FileSavePath = "Settings.txt";
             Util.SharpSettings.LoadByFile( );
 
+            // 加载系统的规则配置器
+            Util.SharpRegulars = new SharpRegulars( );
+            Util.SharpRegulars.FilePath = "RegularSettings.xml";
+            Util.SharpRegulars.LoadRegulars( );
+
+            HslCommunication.BasicFramework.SoftMail.MailSystem163.MailSendAddress = "hsl200909@163.com";
+            AppDomain.CurrentDomain.UnhandledException += Util.CurrentDomain_UnhandledException;
+
             Application.EnableVisualStyles( );
             Application.SetCompatibleTextRenderingDefault( false );
             Application.Run( new FormServer( ) );
         }
 
+        
 
         [DllImport( "User32.dll" )]
         private static extern bool ShowWindowAsync( IntPtr hWnd, int cmdShow );

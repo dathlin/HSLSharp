@@ -99,7 +99,7 @@ namespace HSLSharp.Configuration
             result.Add( new NodeClassRenderItem( )
             {
                 ValueName = "解析代号",
-                Value = Address,
+                Value = PraseRegularCode,
             } );
 
             return result;

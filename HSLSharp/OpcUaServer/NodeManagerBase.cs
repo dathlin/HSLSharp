@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
+using HslCommunication.Core;
+using HSLSharp.Configuration;
 
 namespace HSLSharp.OpcUaSupport
 {
@@ -273,6 +273,22 @@ namespace HSLSharp.OpcUaSupport
             }
         }
 
+
+        public void WriteDeviceData( string deviceNode, byte[] data, DeviceRequest request, IByteTransform byteTransform )
+        {
+            List<RegularNode> regularNodes = Util.SharpRegulars.GetRegularNodes( request.PraseRegularCode );
+            if (regularNodes != null)
+            {
+                lock (Lock)
+                {
+                    for (int i = 0; i < regularNodes.Count; i++)
+                    {
+                        dict_BaseDataVariableState[deviceNode + "/" + regularNodes[i].Name].Value = regularNodes[i].GetValue( data, byteTransform );
+                        dict_BaseDataVariableState[deviceNode + "/" + regularNodes[i].Name].ClearChangeMasks( SystemContext, false );
+                    }
+                }
+            }
+        }
 
         #endregion
     }

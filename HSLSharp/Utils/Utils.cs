@@ -31,8 +31,10 @@ namespace HSLSharp
         /// </summary>
         public static SharpSettings SharpSettings { get; set; }
         
-
-
+        /// <summary>
+        /// 系统的所有的解析规则配置器
+        /// </summary>
+        public static SharpRegulars SharpRegulars { get; set; }
 
 
 
@@ -45,6 +47,20 @@ namespace HSLSharp
         public static Icon GetWinformICon( )
         {
             return Icon.ExtractAssociatedIcon( Application.ExecutablePath );
+        }
+
+        /// <summary>
+        /// 日志存储信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                LogNet?.WriteException( "UnhandledException", ex );
+                HslCommunication.BasicFramework.SoftMail.MailSystem163.SendMail( ex );
+            }
         }
 
         #endregion

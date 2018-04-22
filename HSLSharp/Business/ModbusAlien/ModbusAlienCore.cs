@@ -8,6 +8,7 @@ using HslCommunication.ModBus;
 using System.Xml.Linq;
 using HSLSharp.Configuration;
 using HslCommunication;
+using HSLSharp.Device;
 
 namespace HSLSharp.Business
 {
@@ -34,6 +35,7 @@ namespace HSLSharp.Business
             {
                 ModbusTcpAline tcpAline = new ModbusTcpAline( );
                 tcpAline.LoadByXmlElement( item );
+                modbusTcpAlines.Add( tcpAline );
 
 
             }
@@ -62,10 +64,10 @@ namespace HSLSharp.Business
         #endregion
 
         #region Private Member
-
-
+        
         private NetworkAlienClient networkAlienClient;               // 异形客户端的服务器
-        private List<ModbusTcpNet> modbusTcpNets;                    // 当前服务器挂载的所有的客户端
+        private List<IDeviceCore> modbusTcpNets;                    // 当前服务器挂载的所有的客户端
+
 
         #endregion
 
