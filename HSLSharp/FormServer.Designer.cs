@@ -44,6 +44,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.userButton1 = new HslCommunication.Controls.UserButton();
+            this.关于软件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -55,7 +58,8 @@
             this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.系统配置ToolStripMenuItem,
-            this.测试客户端ToolStripMenuItem});
+            this.测试客户端ToolStripMenuItem,
+            this.关于软件ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
@@ -149,10 +153,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(5, 30);
+            this.panel1.Location = new System.Drawing.Point(5, 54);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1029, 227);
+            this.panel1.Size = new System.Drawing.Size(1029, 203);
             this.panel1.TabIndex = 3;
             // 
             // label1
@@ -212,6 +216,30 @@
             this.userButton1.Size = new System.Drawing.Size(78, 25);
             this.userButton1.TabIndex = 5;
             this.userButton1.UIText = "启动引擎";
+            this.userButton1.Click += new System.EventHandler(this.userButton1_Click);
+            // 
+            // 关于软件ToolStripMenuItem
+            // 
+            this.关于软件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.GenericVSEditor_9905;
+            this.关于软件ToolStripMenuItem.Name = "关于软件ToolStripMenuItem";
+            this.关于软件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
+            this.关于软件ToolStripMenuItem.Text = "关于软件";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 30);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(115, 17);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Opc Ua Address : ";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(130, 28);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(904, 23);
+            this.textBox2.TabIndex = 7;
             // 
             // FormServer
             // 
@@ -219,6 +247,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.AliceBlue;
             this.ClientSize = new System.Drawing.Size(1039, 679);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.userButton1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -230,6 +260,7 @@
             this.Name = "FormServer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HSL Sharp Server";
+            this.Load += new System.EventHandler(this.FormServer_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -260,6 +291,9 @@
         private System.Windows.Forms.ToolStripMenuItem 测试客户端ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oPCUA配置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 软件信息ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 关于软件ToolStripMenuItem;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

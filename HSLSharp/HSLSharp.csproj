@@ -228,6 +228,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Opc.Ua.CertificateGenerator.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="OpcUaTest.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

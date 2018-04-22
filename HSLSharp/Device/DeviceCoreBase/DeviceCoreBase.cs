@@ -155,30 +155,31 @@ namespace HSLSharp.Device
         private void ThreadReadBackground()
         {
             Thread.Sleep( 1000 );           // 默认休息一下下
-            int timeSleep = 100;
-            if (Requests?.Count > 0)
-            {
-                timeSleep = Requests[0].CaptureInterval;
-            }
 
             BeforStart( );
             while (isQuit == 0)
             {
-                Thread.Sleep( timeSleep );
+                Thread.Sleep( 100 );
 
 
                 foreach (var Request in Requests)
                 {
-                    OperateResult<byte[]> read = ReadBytes( Request.Address, Request.Length );
-                    if(read.IsSuccess)
+                    if ((DateTime.Now - Request.LastActiveTime).TotalMilliseconds > Request.CaptureInterval)
                     {
-                        WriteDeviceData?.Invoke( OpcUaNode, read.Content, Request, ByteTransform );
-                        ActiveTime = DateTime.Now;
+                        Request.LastActiveTime = DateTime.Now;
+
+                        OperateResult<byte[]> read = ReadBytes( Request.Address, Request.Length );
+                        if (read.IsSuccess)
+                        {
+                            WriteDeviceData?.Invoke( OpcUaNode, read.Content, Request, ByteTransform );
+                            ActiveTime = DateTime.Now;
+                        }
                     }
                 }
             }
 
             AfterClose( );
+
             // 通知关闭的线程继续
             autoResetQuit.Set( );
         }

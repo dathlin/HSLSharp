@@ -94,7 +94,7 @@ namespace HSLSharp.SettingsSupport
         }
 
         /// <summary>
-        /// 获取指定关键字的所有的规则嘻嘻
+        /// 获取指定关键字的所有的规则信息
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>

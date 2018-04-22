@@ -45,7 +45,7 @@ namespace HSLSharp.RequestSettings
                 textBox1.Text = RegularNode.Name;
                 textBox2.Text = RegularNode.Description;
                 textBox3.Text = RegularNode.Index.ToString( );
-                comboBox1.SelectedItem = RegularNodeTypeItem.GetDataPraseItemByCode(RegularNode.TypeCode);
+                comboBox1.SelectedItem = RegularNodeTypeItem.GetDataPraseItemByCode(RegularNode.RegularCode);
                 textBox5.Text = RegularNode.TypeLength.ToString( );
             }
 
@@ -91,7 +91,7 @@ namespace HSLSharp.RequestSettings
                 Name = textBox1.Text,
                 Description = textBox2.Text,
                 Index = index,
-                TypeCode = ((RegularNodeTypeItem)comboBox1.SelectedItem).Code,
+                RegularCode = ((RegularNodeTypeItem)comboBox1.SelectedItem).Code,
                 TypeLength = typeLength,
             };
 

@@ -27,6 +27,7 @@ namespace HSLSharp.Configuration
             PraseRegularCode = "ABCDEFG";
             NodeType = NodeClassInfo.DeviceRequest;
             NodeHead = "DeviceRequest";
+            LastActiveTime = DateTime.Now.AddDays( -1 );           // 自动设置为一天以前
         }
         
 
@@ -44,6 +45,11 @@ namespace HSLSharp.Configuration
         /// 本次请求的时间间隔，单位为毫秒
         /// </summary>
         public int CaptureInterval { get; set; }
+
+        /// <summary>
+        /// 上一次读取数据的时间节点
+        /// </summary>
+        public DateTime LastActiveTime { get; set; }
 
         /// <summary>
         /// 本次请求解析字节数据的规则

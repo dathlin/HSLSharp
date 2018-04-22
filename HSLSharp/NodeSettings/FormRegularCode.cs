@@ -663,7 +663,7 @@ namespace HSLSharp.NodeSettings
 
             for (int i = 0; i < regulars.Count; i++)
             {
-                RegularNodeTypeItem regularNodeTypeItem = RegularNodeTypeItem.GetDataPraseItemByCode( regulars[i].TypeCode );
+                RegularNodeTypeItem regularNodeTypeItem = RegularNodeTypeItem.GetDataPraseItemByCode( regulars[i].RegularCode );
 
                 int start = regulars[i].GetStartedByteIndex( );
                 int length = regulars[i].GetLengthByte( ) - regulars[i].GetStartedByteIndex( );

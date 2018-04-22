@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HSLSharp.OpcUaSupport;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -70,6 +71,21 @@ namespace HSLSharp
 
         #endregion
 
+        #region Opc Ua Server
+
+        private OpcUaServer opcUaServer = null;                 // Opc Ua的服务器实例
+        private bool m_IsOpcStarted = false;                    // opc服务是否启动
+        private void OpcUaServerStart()
+        {
+            if (!m_IsOpcStarted)
+            {
+                m_IsOpcStarted = true;
+                opcUaServer = new OpcUaServer( Util.SharpSettings.OpcUaStringUrl );//"opc.tcp://localhost:34561/DataTransferServer"
+            }
+        }
+
+        #endregion
+
 
         private void button1_Click( object sender, EventArgs e )
         {
@@ -111,7 +127,27 @@ namespace HSLSharp
             using (FormOpcSettings form = new FormOpcSettings( ))
             {
                 form.ShowDialog( );
+                textBox2.Text = Util.SharpSettings.OpcUaStringUrl;
             }
+        }
+
+        private void userButton1_Click( object sender, EventArgs e )
+        {
+            // 启动引擎
+            try
+            {
+                OpcUaServerStart( );
+            }
+            catch(Exception ex)
+            {
+                HslCommunication.BasicFramework.SoftBasic.ShowExceptionMessage( ex );
+            }
+        }
+
+        private void FormServer_Load( object sender, EventArgs e )
+        {
+            textBox2.Text = Util.SharpSettings.OpcUaStringUrl;
+
         }
     }
 }

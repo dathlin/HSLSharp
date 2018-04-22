@@ -95,27 +95,284 @@ namespace HSLSharp.OpcUaSupport
                 // 开始寻找设备信息，并计算一些节点信息
 
 
+                AddNodeClass( null, element, references );
+
+
+
+
+                //FolderState rootModbusAlien = CreateFolder( null, "ModbusAlien" );
+                //rootModbusAlien.AddReference( ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder );
+                //references.Add( new NodeStateReference( ReferenceTypes.Organizes, false, rootModbusAlien.NodeId ) );
+                //rootModbusAlien.EventNotifier = EventNotifiers.SubscribeToEvents;
+                //AddRootNotifier( rootModbusAlien );
+
+                //// 解析异形服务器
+                //foreach (var serverXml in element.Elements( ))
+                //{
+                //    if (serverXml.Attribute( "Name" ).Value == "ModbusAlien")
+                //    {
+                //        foreach (var alien in serverXml.Elements( "AlienNode" ))
+                //        {
+                //            AlienNode alienNode = new AlienNode( );
+                //            alienNode.LoadByXmlElement( alien );
+                //            FolderState rootAlien = CreateFolder( rootModbusAlien, alienNode.Name, alienNode.Description );
+
+
+                //        }
+                //    }
+                //}
+
+
+                //AddPredefinedNode( SystemContext, rootModbusAlien );
 
                 // 构建数据
-                FolderState rootMy = CreateFolder(null,  "Modbus");
-                rootMy.AddReference(ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder);
-                references.Add(new NodeStateReference(ReferenceTypes.Organizes, false, rootMy.NodeId));
-                rootMy.EventNotifier = EventNotifiers.SubscribeToEvents;
-                AddRootNotifier(rootMy);
-                
+                //FolderState rootMy = CreateFolder(null,  "Modbus");
+                //rootMy.AddReference(ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder);
+                //references.Add(new NodeStateReference(ReferenceTypes.Organizes, false, rootMy.NodeId));
+                //rootMy.EventNotifier = EventNotifiers.SubscribeToEvents;
+                //AddRootNotifier(rootMy);
 
-                
+
+
 
                 //foreach (var node in Util.NodeSettings.Nodes)
                 //{
-                    //var dataVariableState = CreateBaseVariable( rootMy, node.NodeName, node.NodeDescription, DataTypeIds.Byte, ValueRanks.OneDimension, new Byte[node.DataLength] );
+                //var dataVariableState = CreateBaseVariable( rootMy, node.NodeName, node.NodeDescription, DataTypeIds.Byte, ValueRanks.OneDimension, new Byte[node.DataLength] );
 
-                    //dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                //dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
                 //}
-                AddPredefinedNode(SystemContext, rootMy);
+                //AddPredefinedNode(SystemContext, rootMy);
             }
         }
 
+        private void AddNodeClass( NodeState parent, XElement nodeClass, IList<IReference> references )
+        {
+            foreach(var xmlNode in nodeClass.Elements())
+            {
+                if (xmlNode.Name == "NodeClass")
+                {
+                    Configuration.NodeClass nClass = new Configuration.NodeClass( );
+                    nClass.LoadByXmlElement( xmlNode );
+
+                    FolderState son;
+                    if (parent == null)
+                    {
+                        son = CreateFolder( null, nClass.Name );
+                        son.Description = nClass.Description;
+                        son.AddReference( ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder );
+                        references.Add( new NodeStateReference( ReferenceTypes.Organizes, false, son.NodeId ) );
+                        son.EventNotifier = EventNotifiers.SubscribeToEvents;
+                        AddRootNotifier( son );
+
+
+                        AddNodeClass( son, xmlNode, references );
+                        AddPredefinedNode( SystemContext, son );
+                    }
+                    else
+                    {
+                        son = CreateFolder( parent, nClass.Name, nClass.Description );
+                        AddNodeClass( son, xmlNode, references );
+                    }
+                }
+                else if (xmlNode.Name == "DeviceNode")
+                {
+                    DeviceNode deviceNode = new DeviceNode( );
+                    deviceNode.LoadByXmlElement( xmlNode );
+
+                    FolderState son = CreateFolder( parent, deviceNode.Name, deviceNode.Description );
+                }
+                else if (xmlNode.Name == "AlienNode")
+                {
+                    AlienNode alienNode = new AlienNode( );
+                    alienNode.LoadByXmlElement( xmlNode );
+
+                    FolderState son = CreateFolder( parent, alienNode.Name, alienNode.Description );
+                    AddNodeClass( son, xmlNode, references );
+                }
+
+            }
+        }
+
+
+
+        private void AddDeviceCore( NodeState parent, XElement device )
+        {
+            if (device.Name == "DeviceNode")
+            {
+                int deviceType = int.Parse(device.Attribute( "DeviceNode" ).Value);
+                if(deviceType == DeviceNode.ModbusTcpAlien)
+                {
+                    ModbusTcpAline modbusTcpAline = new ModbusTcpAline( );
+                    modbusTcpAline.LoadByXmlElement( device );
+
+                    FolderState deviceFolder = CreateFolder( parent, modbusTcpAline.Name, modbusTcpAline.Description );
+
+                    // 添加Request
+                    foreach(var requestXml in device.Elements( "DeviceRequest" ))
+                    {
+                        DeviceRequest deviceRequest = new DeviceRequest( );
+                        deviceRequest.LoadByXmlElement( requestXml );
+
+
+                        AddDeviceRequest( deviceFolder, deviceRequest );
+                    }
+
+                    // 添加真实的设备
+                    DeciveModbusTcpAlien deviceReal = new DeciveModbusTcpAlien( modbusTcpAline.DTU, device );
+                    deviceReal.OpcUaNode = deviceFolder.ToString( );
+                    deviceCores.Add( deviceReal );
+                }
+            }
+        }
+
+
+        private void AddDeviceRequest( NodeState parent , DeviceRequest deviceRequest)
+        {
+            // 提炼真正的数据节点
+            List<RegularNode> regularNodes = Util.SharpRegulars.GetRegularNodes( deviceRequest.PraseRegularCode );
+            foreach (var regularNode in regularNodes)
+            {
+                if (regularNode.RegularCode == RegularNodeTypeItem.Bool.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Boolean, ValueRanks.Scalar, default(bool) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Boolean, ValueRanks.OneDimension, new bool[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if(regularNode.RegularCode == RegularNodeTypeItem.Byte.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Byte, ValueRanks.Scalar, default( byte ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Byte, ValueRanks.OneDimension, new byte[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.Int16.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Int16, ValueRanks.Scalar, default( short ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Int16, ValueRanks.OneDimension, new short[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.UInt16.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.UInt16, ValueRanks.Scalar, default( ushort ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.UInt16, ValueRanks.OneDimension, new ushort[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.Int32.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Int32, ValueRanks.Scalar, default( int ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Int32, ValueRanks.OneDimension, new int[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.UInt32.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.UInt32, ValueRanks.Scalar, default( uint ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.UInt32, ValueRanks.OneDimension, new uint[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.Float.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Float, ValueRanks.Scalar, default( float ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Float, ValueRanks.OneDimension, new float[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.Int64.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Int64, ValueRanks.Scalar, default( long ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Int64, ValueRanks.OneDimension, new long[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.UInt64.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.UInt64, ValueRanks.Scalar, default( ulong ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.UInt64, ValueRanks.OneDimension, new ulong[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.Double.Code)
+                {
+                    if (regularNode.TypeLength == 1)
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Double, ValueRanks.Scalar, default( double ) );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                    else
+                    {
+                        var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.Double, ValueRanks.OneDimension, new double[regularNode.TypeLength] );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                    }
+                }
+                else if (regularNode.RegularCode == RegularNodeTypeItem.StringAscii.Code ||
+                    regularNode.RegularCode == RegularNodeTypeItem.StringUnicode.Code ||
+                    regularNode.RegularCode == RegularNodeTypeItem.StringUtf8.Code)
+                {
+
+                    var dataVariableState = CreateBaseVariable( parent, regularNode.Name, regularNode.Description, DataTypeIds.String, ValueRanks.OneDimension, string.Empty );
+                        dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
+                }
+            }
+            
+        }
 
 
         #endregion

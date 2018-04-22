@@ -68,28 +68,38 @@ namespace HSLSharp.OpcUaSupport
         /// </summary>
         protected FolderState CreateFolder(NodeState parent, string name)
         {
-            FolderState folder = new FolderState(parent);
+            return CreateFolder( parent, name, string.Empty );
+        }
+
+
+        /// <summary>
+        /// 创建一个新的节点，节点名称为字符串
+        /// </summary>
+        protected FolderState CreateFolder( NodeState parent, string name ,string description )
+        {
+            FolderState folder = new FolderState( parent );
 
             folder.SymbolicName = name;
             folder.ReferenceTypeId = ReferenceTypes.Organizes;
             folder.TypeDefinitionId = ObjectTypeIds.FolderType;
+            folder.Description = description;
             if (parent == null)
             {
-                folder.NodeId = new NodeId(name, NamespaceIndex);
+                folder.NodeId = new NodeId( name, NamespaceIndex );
             }
             else
             {
-                folder.NodeId = new NodeId(parent.NodeId.ToString() + "/" + name);
+                folder.NodeId = new NodeId( parent.NodeId.ToString( ) + "/" + name );
             }
-            folder.BrowseName = new QualifiedName(name, NamespaceIndex);
-            folder.DisplayName = new LocalizedText(name);
+            folder.BrowseName = new QualifiedName( name, NamespaceIndex );
+            folder.DisplayName = new LocalizedText( name );
             folder.WriteMask = AttributeWriteMask.None;
             folder.UserWriteMask = AttributeWriteMask.None;
             folder.EventNotifier = EventNotifiers.None;
 
             if (parent != null)
             {
-                parent.AddChild(folder);
+                parent.AddChild( folder );
             }
 
             return folder;

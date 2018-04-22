@@ -19,7 +19,7 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// 类型的代号，详细参见const数据
         /// </summary>
-        public int TypeCode { get; set; }
+        public int RegularCode { get; set; }
 
         /// <summary>
         /// 类型的长度，对于string来说，就是字符串长度，其他的来说，就是数组长度
@@ -37,7 +37,7 @@ namespace HSLSharp.Configuration
 
         public dynamic GetValue( byte[] data, IByteTransform byteTransform )
         {
-            if (TypeCode == RegularNodeTypeItem.Int16.Code)
+            if (RegularCode == RegularNodeTypeItem.Int16.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -48,7 +48,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransInt16( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.UInt16.Code)
+            else if (RegularCode == RegularNodeTypeItem.UInt16.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -59,7 +59,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransUInt16( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.Int32.Code)
+            else if (RegularCode == RegularNodeTypeItem.Int32.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -70,7 +70,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransInt32( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.UInt32.Code)
+            else if (RegularCode == RegularNodeTypeItem.UInt32.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -81,7 +81,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransUInt32( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.Int64.Code)
+            else if (RegularCode == RegularNodeTypeItem.Int64.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -92,7 +92,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransInt64( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.UInt64.Code)
+            else if (RegularCode == RegularNodeTypeItem.UInt64.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -103,7 +103,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransUInt64( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.Float.Code)
+            else if (RegularCode == RegularNodeTypeItem.Float.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -114,7 +114,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransSingle( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.Double.Code)
+            else if (RegularCode == RegularNodeTypeItem.Double.Code)
             {
                 if (TypeLength == 1)
                 {
@@ -125,7 +125,7 @@ namespace HSLSharp.Configuration
                     return byteTransform.TransDouble( data, Index, TypeLength );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.StringAscii.Code)
+            else if (RegularCode == RegularNodeTypeItem.StringAscii.Code)
             {
                 return Encoding.ASCII.GetString( data, Index, TypeLength );
             }
@@ -157,7 +157,7 @@ namespace HSLSharp.Configuration
 
         public int GetStartedByteIndex()
         {
-            if(TypeCode == RegularNodeTypeItem.Bool.Code)
+            if(RegularCode == RegularNodeTypeItem.Bool.Code)
             {
                 return Index / 8;
             }
@@ -171,7 +171,7 @@ namespace HSLSharp.Configuration
 
         public int GetLengthByte( )
         {
-            if (TypeCode == RegularNodeTypeItem.Bool.Code)
+            if (RegularCode == RegularNodeTypeItem.Bool.Code)
             {
                 if ((Index + TypeLength) % 8 == 0)
                 {
@@ -182,26 +182,26 @@ namespace HSLSharp.Configuration
                     return (TypeLength) / 8 + 1 + GetStartedByteIndex( );
                 }
             }
-            else if (TypeCode == RegularNodeTypeItem.StringAscii.Code ||
-                TypeCode == RegularNodeTypeItem.StringUnicode.Code ||
-                TypeCode == RegularNodeTypeItem.StringUtf8.Code)
+            else if (RegularCode == RegularNodeTypeItem.StringAscii.Code ||
+                RegularCode == RegularNodeTypeItem.StringUnicode.Code ||
+                RegularCode == RegularNodeTypeItem.StringUtf8.Code)
             {
                 return TypeLength + Index;
             }
-            else if (TypeCode == RegularNodeTypeItem.UInt16.Code ||
-                TypeCode == RegularNodeTypeItem.Int16.Code)
+            else if (RegularCode == RegularNodeTypeItem.UInt16.Code ||
+                RegularCode == RegularNodeTypeItem.Int16.Code)
             {
                 return TypeLength * 2 + Index;
             }
-            else if (TypeCode == RegularNodeTypeItem.Int32.Code ||
-                TypeCode == RegularNodeTypeItem.UInt32.Code ||
-                TypeCode == RegularNodeTypeItem.Float.Code)
+            else if (RegularCode == RegularNodeTypeItem.Int32.Code ||
+                RegularCode == RegularNodeTypeItem.UInt32.Code ||
+                RegularCode == RegularNodeTypeItem.Float.Code)
             {
                 return TypeLength * 4 + Index;
             }
-            else if (TypeCode == RegularNodeTypeItem.Int64.Code ||
-                TypeCode == RegularNodeTypeItem.UInt64.Code ||
-                TypeCode == RegularNodeTypeItem.Double.Code)
+            else if (RegularCode == RegularNodeTypeItem.Int64.Code ||
+                RegularCode == RegularNodeTypeItem.UInt64.Code ||
+                RegularCode == RegularNodeTypeItem.Double.Code)
             {
                 return TypeLength * 8 + Index;
             }
@@ -222,7 +222,7 @@ namespace HSLSharp.Configuration
         public override void LoadByXmlElement( XElement element )
         {
             base.LoadByXmlElement( element );
-            TypeCode = int.Parse( element.Attribute( "TypeCode" ).Value );
+            RegularCode = int.Parse( element.Attribute( "TypeCode" ).Value );
             TypeLength = int.Parse( element.Attribute( "TypeLength" ).Value );
             Index = int.Parse( element.Attribute( "Index" ).Value );
         }
@@ -237,7 +237,7 @@ namespace HSLSharp.Configuration
             element.SetAttributeValue( "Name", Name );
             element.SetAttributeValue( "Description", Description );
             element.SetAttributeValue( "Index", Index );
-            element.SetAttributeValue( "TypeCode", TypeCode );
+            element.SetAttributeValue( "TypeCode", RegularCode );
             element.SetAttributeValue( "TypeLength", TypeLength );
             return element;
         }
