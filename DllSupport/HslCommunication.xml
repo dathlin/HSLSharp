@@ -7045,6 +7045,11 @@
             用于超时执行的方法
             </summary>
         </member>
+        <member name="P:HslCommunication.HslTimeOut.HybirdLock">
+            <summary>
+            当前对象判断的同步锁
+            </summary>
+        </member>
         <member name="T:HslCommunication.LogNet.ILogNet">
             <summary>
             一个通用的日志接口
@@ -8635,8 +8640,15 @@
             <summary>
             通过错误码来获取到对应的文本消息
             </summary>
-            <param name="code"></param>
-            <returns></returns>
+            <param name="code">错误码</param>
+            <returns>错误的文本描述</returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpNet.CheckModbusTcpResponse(System.Byte[])">
+            <summary>
+            检查当前的Modbus-Tcp响应是否是正确的
+            </summary>
+            <param name="send">发送的数据信息</param>
+            <returns>带是否成功的结果数据</returns>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpNet.ReadCustomer``1(System.String)">
             <summary>
@@ -8679,9 +8691,16 @@
             <param name="length">读取长度</param>
             <returns>带有成功标志的bool数组对象</returns>
         </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpNet.ReadDiscrete(System.String)">
+            <summary>
+            读取输入线圈，需要指定起始地址
+            </summary>
+            <param name="address">起始地址，格式为"1234"</param>
+            <returns>带有成功标志的bool对象</returns>
+        </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpNet.ReadDiscrete(System.String,System.UInt16)">
             <summary>
-            批量的离散变量，需要指定起始地址，读取长度
+            批量的读取输入点，需要指定起始地址，读取长度
             </summary>
             <param name="address">起始地址，格式为"1234"</param>
             <param name="length">读取长度</param>
@@ -8986,7 +9005,7 @@
         </member>
         <member name="T:HslCommunication.ModBus.ModbusTcpServer">
             <summary>
-            Modbus-tcp的虚拟服务器，支持线圈和寄存器的读写操作
+            Modbus的虚拟服务器，同时支持Tcp和Rtu的机制，支持线圈和寄存器的读写操作
             </summary>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.#ctor">
@@ -9402,8 +9421,15 @@
             <summary>
             检测当前的Modbus接收的指定是否是合法的
             </summary>
-            <param name="buffer"></param>
-            <returns></returns>
+            <param name="buffer">缓存数据</param>
+            <returns>是否合格</returns>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.ReadFromModbusCore(System.Byte[])">
+            <summary>
+            Modbus核心数据交互方法
+            </summary>
+            <param name="modbusCore">核心的Modbus报文</param>
+            <returns>进行数据交互之后的结果</returns>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.ModbusTcpTransModbusCore(System.Byte[])">
             <summary>
@@ -9436,20 +9462,34 @@
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.StartSerialPort(System.String)">
             <summary>
-            使用默认的
+            使用默认的参数进行初始化串口，9600波特率，8位数据位，无奇偶校验，1位停止位
             </summary>
             <param name="com">串口信息</param>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.StartSerialPort(System.String,System.Int32)">
+            <summary>
+            使用默认的参数进行初始化串口，8位数据位，无奇偶校验，1位停止位
+            </summary>
+            <param name="com">串口信息</param>
+            <param name="baudRate">波特率</param>
+        </member>
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.StartSerialPort(System.Action{System.IO.Ports.SerialPort})">
+            <summary>
+            使用自定义的初始化方法初始化串口的参数
+            </summary>
+            <param name="inni">初始化信息的委托</param>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.CloseSerialPort">
             <summary>
             关闭串口
             </summary>
         </member>
-        <member name="M:HslCommunication.ModBus.ModbusTcpServer.StartSerialPort(System.Action{System.IO.Ports.SerialPort})">
+        <member name="M:HslCommunication.ModBus.ModbusTcpServer.SerialPort_DataReceived(System.Object,System.IO.Ports.SerialDataReceivedEventArgs)">
             <summary>
-            使用自定义的初始化方法初始化串口的参数
+            接收到串口数据的时候触发
             </summary>
-            <param name="inni"></param>
+            <param name="sender">串口对象</param>
+            <param name="e">消息</param>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.ToString">
             <summary>

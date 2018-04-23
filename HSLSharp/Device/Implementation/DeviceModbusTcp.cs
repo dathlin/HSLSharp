@@ -9,12 +9,11 @@ using HslCommunication.Core.Net;
 using HslCommunication.ModBus;
 using HSLSharp.Configuration;
 
+
+
 namespace HSLSharp.Device
 {
-    /// <summary>
-    /// 异形ModbusTcp的客户端
-    /// </summary>
-    public class DeciveModbusTcpAlien : DeviceCoreBase
+    public class DeviceModbusTcp : DeviceCoreBase
     {
         #region Constructor
 
@@ -23,17 +22,16 @@ namespace HSLSharp.Device
         /// </summary>
         /// <param name="dtu"></param>
         /// <param name="element"></param>
-        public DeciveModbusTcpAlien(string dtu, XElement element)
+        public DeviceModbusTcp( XElement element )
         {
-            ModbusTcpAline modbusTcpAline = new ModbusTcpAline( );
-            modbusTcpAline.LoadByXmlElement( element );
+            ModbusTcpClient modbusTcpClient = new ModbusTcpClient( );
+            modbusTcpClient.LoadByXmlElement( element );
 
             LoadRequest( element );
 
-            modbusTcp = new ModbusTcpNet( string.Empty, 502, modbusTcpAline.Station );
-            modbusTcp.AddressStartWithZero = modbusTcpAline.IsAddressStartWithZero;
-            modbusTcp.ConnectionId = modbusTcpAline.DTU;
-
+            modbusTcp = new ModbusTcpNet( modbusTcpClient.IpAddress, modbusTcpClient.Port, modbusTcpClient.Station );
+            modbusTcp.AddressStartWithZero = modbusTcpClient.IsAddressStartWithZero;
+            modbusTcp.ConnectTimeOut = modbusTcpClient.ConnectTimeOut;
 
             ByteTransform = modbusTcp.ByteTransform;
             UniqueId = modbusTcp.ConnectionId;
@@ -51,24 +49,19 @@ namespace HSLSharp.Device
             return modbusTcp.Read( address, length );
         }
 
-
-        public override void SetAlineSession( AlienSession alienSession )
-        {
-            modbusTcp.ConnectServer( alienSession );
-        }
-
+        
 
         #endregion
 
         #region Protect Override
 
-        protected override void BeforStart()
+        protected override void BeforStart( )
         {
-            modbusTcp.ConnectServer( null );
+            modbusTcp.ConnectServer( );
         }
 
 
-        protected override void AfterClose()
+        protected override void AfterClose( )
         {
             modbusTcp.ConnectClose( );
         }
@@ -83,8 +76,5 @@ namespace HSLSharp.Device
 
 
         #endregion
-
     }
-
-
 }

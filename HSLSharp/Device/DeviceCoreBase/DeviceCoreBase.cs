@@ -28,6 +28,7 @@ namespace HSLSharp.Device
         {
             ActiveTime = DateTime.Now;
             autoResetQuit = new AutoResetEvent( false );
+            logNet = Util.LogNet;
         }
 
         #endregion
@@ -95,8 +96,11 @@ namespace HSLSharp.Device
         /// </summary>
         public void QuitDevice()
         {
-            isQuit = 1;
-            autoResetQuit.WaitOne( );
+            if (isStarted == 1)
+            {
+                isQuit = 1;
+                autoResetQuit.WaitOne( );
+            }
         }
 
         /// <summary>
@@ -107,6 +111,11 @@ namespace HSLSharp.Device
         {
 
         }
+
+        /// <summary>
+        /// 指示设备是否正常的状态
+        /// </summary>
+        public bool IsError { get; set; }
 
         #endregion
 
@@ -171,8 +180,13 @@ namespace HSLSharp.Device
                         OperateResult<byte[]> read = ReadBytes( Request.Address, Request.Length );
                         if (read.IsSuccess)
                         {
+                            IsError = false;
                             WriteDeviceData?.Invoke( OpcUaNode, read.Content, Request, ByteTransform );
                             ActiveTime = DateTime.Now;
+                        }
+                        else
+                        {
+                            IsError = true;
                         }
                     }
                 }
@@ -182,19 +196,7 @@ namespace HSLSharp.Device
 
             // 通知关闭的线程继续
             autoResetQuit.Set( );
-        }
 
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        /// 系统的日志组件
-        /// </summary>
-        public ILogNet LogNet
-        {
-            get { return logNet; }
-            set { logNet = value; }
         }
 
         #endregion

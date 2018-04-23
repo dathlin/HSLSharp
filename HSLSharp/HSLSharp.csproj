@@ -102,12 +102,19 @@
     </Compile>
     <Compile Include="Device\DeviceCoreBase\DeviceCoreBase.cs" />
     <Compile Include="Device\Implementation\DeciveModbusTcpAlien.cs" />
+    <Compile Include="Device\Implementation\DeviceModbusTcp.cs" />
     <Compile Include="Device\Interface\IDeviceCore.cs" />
     <Compile Include="FormOpcSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormOpcSettings.designer.cs">
       <DependentUpon>FormOpcSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormQuitWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormQuitWait.Designer.cs">
+      <DependentUpon>FormQuitWait.cs</DependentUpon>
     </Compile>
     <Compile Include="NodeSettings\FormAlienNode.cs">
       <SubType>Form</SubType>
@@ -176,6 +183,9 @@
     <Compile Include="Utils\Utils.cs" />
     <EmbeddedResource Include="FormOpcSettings.resx">
       <DependentUpon>FormOpcSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormQuitWait.resx">
+      <DependentUpon>FormQuitWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormAlienNode.resx">
       <DependentUpon>FormAlienNode.cs</DependentUpon>

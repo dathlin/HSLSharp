@@ -34,6 +34,7 @@
             this.解析规则配置器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oPCUA配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.测试客户端ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关于软件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.软件信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +45,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.userButton1 = new HslCommunication.Controls.UserButton();
-            this.关于软件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
@@ -109,6 +109,13 @@
             this.测试客户端ToolStripMenuItem.Size = new System.Drawing.Size(96, 21);
             this.测试客户端ToolStripMenuItem.Text = "测试客户端";
             this.测试客户端ToolStripMenuItem.Click += new System.EventHandler(this.测试客户端ToolStripMenuItem_Click);
+            // 
+            // 关于软件ToolStripMenuItem
+            // 
+            this.关于软件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.GenericVSEditor_9905;
+            this.关于软件ToolStripMenuItem.Name = "关于软件ToolStripMenuItem";
+            this.关于软件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
+            this.关于软件ToolStripMenuItem.Text = "关于软件";
             // 
             // statusStrip1
             // 
@@ -206,24 +213,18 @@
             // 
             // userButton1
             // 
+            this.userButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.userButton1.BackColor = System.Drawing.Color.Transparent;
             this.userButton1.CustomerInformation = "";
             this.userButton1.EnableColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
             this.userButton1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.userButton1.Location = new System.Drawing.Point(403, 2);
+            this.userButton1.Location = new System.Drawing.Point(945, 26);
             this.userButton1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.userButton1.Name = "userButton1";
-            this.userButton1.Size = new System.Drawing.Size(78, 25);
+            this.userButton1.Size = new System.Drawing.Size(89, 25);
             this.userButton1.TabIndex = 5;
             this.userButton1.UIText = "启动引擎";
             this.userButton1.Click += new System.EventHandler(this.userButton1_Click);
-            // 
-            // 关于软件ToolStripMenuItem
-            // 
-            this.关于软件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.GenericVSEditor_9905;
-            this.关于软件ToolStripMenuItem.Name = "关于软件ToolStripMenuItem";
-            this.关于软件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
-            this.关于软件ToolStripMenuItem.Text = "关于软件";
             // 
             // label3
             // 
@@ -236,9 +237,11 @@
             // 
             // textBox2
             // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(130, 28);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(904, 23);
+            this.textBox2.Size = new System.Drawing.Size(809, 23);
             this.textBox2.TabIndex = 7;
             // 
             // FormServer
@@ -260,6 +263,7 @@
             this.Name = "FormServer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HSL Sharp Server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormServer_FormClosing);
             this.Load += new System.EventHandler(this.FormServer_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

@@ -50,6 +50,11 @@ namespace HSLSharp.Device
         DateTime ActiveTime { get; set; }
 
         /// <summary>
+        /// 指示设备是否正常的状态
+        /// </summary>
+        bool IsError { get; set; }
+
+        /// <summary>
         /// 唯一的识别码，方便异形客户端寻找对应的处理逻辑
         /// </summary>
         string UniqueId { get; set; }

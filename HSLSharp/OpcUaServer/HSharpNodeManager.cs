@@ -11,6 +11,7 @@ using System.IO;
 using HSLSharp.Configuration;
 using HslCommunication.Core.Net;
 using HSLSharp.Device;
+using System.Threading;
 
 namespace HSLSharp.OpcUaSupport
 {
@@ -22,12 +23,15 @@ namespace HSLSharp.OpcUaSupport
 
         #region Constructor
         
+
+
         public HSharpNodeManager(IServerInternal server, ApplicationConfiguration configuration)
             : base(server, configuration)
         {
-            logNet = Util.LogNet;
-
-            deviceCores = new List<IDeviceCore>( );
+            logNet = Util.LogNet;                                        // 日志存储支持
+            autoResetQuit = new AutoResetEvent( false );                 // 退出时候的同步锁
+            deviceCores = new List<IDeviceCore>( );                      // 所有的设备的管理核心
+            networkAliens = new List<NetworkAlienClient>( );             // 所有的异形服务器列表
         }
         
         #endregion
@@ -93,8 +97,7 @@ namespace HSLSharp.OpcUaSupport
                 XElement element = XElement.Load( Util.SharpSettings.NodeSettingsFilePath );
 
                 // 开始寻找设备信息，并计算一些节点信息
-
-
+                
                 AddNodeClass( null, element, references );
 
 
@@ -176,10 +179,7 @@ namespace HSLSharp.OpcUaSupport
                 }
                 else if (xmlNode.Name == "DeviceNode")
                 {
-                    DeviceNode deviceNode = new DeviceNode( );
-                    deviceNode.LoadByXmlElement( xmlNode );
-
-                    FolderState son = CreateFolder( parent, deviceNode.Name, deviceNode.Description );
+                    AddDeviceCore( parent, xmlNode ); 
                 }
                 else if (xmlNode.Name == "AlienNode")
                 {
@@ -199,37 +199,61 @@ namespace HSLSharp.OpcUaSupport
         {
             if (device.Name == "DeviceNode")
             {
-                int deviceType = int.Parse(device.Attribute( "DeviceNode" ).Value);
-                if(deviceType == DeviceNode.ModbusTcpAlien)
+                int deviceType = int.Parse(device.Attribute( "DeviceType" ).Value);
+                FolderState deviceFolder = CreateFolder( parent, device.Attribute( "Name" ).Value, device.Attribute( "Description" ).Value );
+                // 添加Request
+                foreach (var requestXml in device.Elements( "DeviceRequest" ))
+                {
+                    DeviceRequest deviceRequest = new DeviceRequest( );
+                    deviceRequest.LoadByXmlElement( requestXml );
+
+
+                    AddDeviceRequest( deviceFolder, deviceRequest );
+                }
+
+
+                if (deviceType == DeviceNode.ModbusTcpAlien)
                 {
                     ModbusTcpAline modbusTcpAline = new ModbusTcpAline( );
                     modbusTcpAline.LoadByXmlElement( device );
-
-                    FolderState deviceFolder = CreateFolder( parent, modbusTcpAline.Name, modbusTcpAline.Description );
-
-                    // 添加Request
-                    foreach(var requestXml in device.Elements( "DeviceRequest" ))
-                    {
-                        DeviceRequest deviceRequest = new DeviceRequest( );
-                        deviceRequest.LoadByXmlElement( requestXml );
-
-
-                        AddDeviceRequest( deviceFolder, deviceRequest );
-                    }
-
-                    // 添加真实的设备
                     DeciveModbusTcpAlien deviceReal = new DeciveModbusTcpAlien( modbusTcpAline.DTU, device );
                     deviceReal.OpcUaNode = deviceFolder.ToString( );
-                    deviceCores.Add( deviceReal );
+                    this.deviceCores.Add( deviceReal );
+                    deviceReal.StartRead( );
+
+                    Interlocked.Increment( ref deviceCount );
+                    this.logNet?.WriteInfo( $"已发现 {deviceCount} 台设备，类型为modbus-alien" );
                 }
+                else if(deviceType == DeviceNode.ModbusTcpClient)
+                {
+                    ModbusTcpClient modbusTcpClient = new ModbusTcpClient( );
+                    modbusTcpClient.LoadByXmlElement( device );
+                    DeviceModbusTcp deviceReal = new DeviceModbusTcp( device );
+                    deviceReal.OpcUaNode = deviceFolder.ToString( );
+                    this.deviceCores.Add( deviceReal );
+                    deviceReal.StartRead( );
+
+                    Interlocked.Increment( ref deviceCount );
+                    this.logNet?.WriteInfo( $"已发现 {deviceCount} 台设备，类型为modbus-tcp" );
+                }
+
+
+
             }
         }
+
 
 
         private void AddDeviceRequest( NodeState parent , DeviceRequest deviceRequest)
         {
             // 提炼真正的数据节点
             List<RegularNode> regularNodes = Util.SharpRegulars.GetRegularNodes( deviceRequest.PraseRegularCode );
+            if (regularNodes == null)
+            {
+                this.logNet?.WriteWarn( ToString( ), $"Not find regular : { deviceRequest.PraseRegularCode}" );
+                return;
+            }
+
             foreach (var regularNode in regularNodes)
             {
                 if (regularNode.RegularCode == RegularNodeTypeItem.Bool.Code)
@@ -375,9 +399,50 @@ namespace HSLSharp.OpcUaSupport
         }
 
 
-        #endregion
-        
+        private void AddNetworkAlien()
+        {
 
+        }
+
+        #endregion
+
+        #region Server Close
+
+        // close all device
+        public void CloseDevices()
+        {
+            for (int i = 0; i < deviceCores.Count; i++)
+            {
+                ThreadPool.QueueUserWorkItem( new WaitCallback( ThreadPoolCloseDevice ), deviceCores[i] );
+            }
+
+            this.autoResetQuit.WaitOne( );
+            this.logNet?.WriteInfo( "所有设备完成下线操作。" );
+        }
+
+        private void ThreadPoolCloseDevice( object obj )
+        {
+            if(obj is IDeviceCore deviceCore)
+            {
+                deviceCore.QuitDevice( );
+                this.logNet?.WriteInfo( $"设备({deviceCore.UniqueId}) 下线。" );
+                if (Interlocked.Decrement( ref deviceCount ) == 0)
+                {
+                    autoResetQuit.Set( );
+                }
+            }
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// 获取所有的设备信息
+        /// </summary>
+        public List<IDeviceCore> DeviceCores => deviceCores;
+
+        #endregion
 
         #region Dictionary Resources
 
@@ -388,9 +453,10 @@ namespace HSLSharp.OpcUaSupport
 
         #region Private Member
 
-        private ILogNet logNet;
+        private ILogNet logNet;                                    // 日志存储对象
         private List<IDeviceCore> deviceCores;                     // 所有的设备客户端列表
-
+        private int deviceCount = 0;                               // 已经加载的设备总数
+        private AutoResetEvent autoResetQuit;                      // 退出系统的时候的同步锁
 
         #endregion
 
@@ -399,6 +465,19 @@ namespace HSLSharp.OpcUaSupport
 
         private List<NetworkAlienClient> networkAliens;            // 所有的异形客户端的列表
 
+
+        #endregion
+
+        #region Object Override
+
+        /// <summary>
+        /// 返回表示当前对象的字符串
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString( )
+        {
+            return "HSharpNodeManager";
+        }
 
         #endregion
 

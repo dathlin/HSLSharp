@@ -17,6 +17,9 @@ namespace HSLSharp
         [STAThread]
         static void Main()
         {
+            // 日志实例化
+            Util.LogNet = new HslCommunication.LogNet.LogNetDateTime( Application.StartupPath + "\\Logs",HslCommunication.LogNet.GenerateMode.ByEveryDay );
+
             Process process = Process.GetCurrentProcess( );
             // 遍历应用程序的同名进程组
             foreach (Process p in Process.GetProcessesByName( process.ProcessName ))

@@ -49,7 +49,7 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// 客户端的站号
         /// </summary>
-        public int Station { get; set; }
+        public byte Station { get; set; }
 
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace HSLSharp.Configuration
             base.LoadByXmlElement( element );
             IpAddress = element.Attribute( "IpAddress" ).Value;
             Port = int.Parse( element.Attribute( "Port" ).Value );
-            Station = int.Parse( element.Attribute( "Station" ).Value );
+            Station = byte.Parse( element.Attribute( "Station" ).Value );
             IsAddressStartWithZero = bool.Parse( element.Attribute( "IsAddressStartWithZero" ).Value );
 
         }

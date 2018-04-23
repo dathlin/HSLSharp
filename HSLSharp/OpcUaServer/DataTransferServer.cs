@@ -51,8 +51,8 @@ namespace HSLSharp.OpcUaSupport
 
             List<INodeManager> nodeManagers = new List<INodeManager>();
             
-            ModTcpNodeManager = new HSharpNodeManager(server, configuration);
-            nodeManagers.Add(ModTcpNodeManager);
+            DevicesNodeManager = new HSharpNodeManager(server, configuration);
+            nodeManagers.Add(DevicesNodeManager);
 
             // create master node manager.
             return new MasterNodeManager(server, configuration, null, nodeManagers.ToArray());
@@ -302,7 +302,7 @@ namespace HSLSharp.OpcUaSupport
         /// <summary>
         /// Modbus TCP相关的节点管理器
         /// </summary>
-        public HSharpNodeManager ModTcpNodeManager { get; set; }
+        public HSharpNodeManager DevicesNodeManager { get; set; }
 
         #endregion
 

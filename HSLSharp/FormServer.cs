@@ -137,6 +137,7 @@ namespace HSLSharp
             try
             {
                 OpcUaServerStart( );
+                userButton1.Enabled = false;
             }
             catch(Exception ex)
             {
@@ -147,7 +148,44 @@ namespace HSLSharp
         private void FormServer_Load( object sender, EventArgs e )
         {
             textBox2.Text = Util.SharpSettings.OpcUaStringUrl;
+            actionShowMsg = new Action<string>( m =>
+             {
+                 textBox1.AppendText( m  + Environment.NewLine );
+             } );
+            Util.LogNet.BeforeSaveToFile += LogNet_BeforeSaveToFile;
+        }
 
+
+        private Action<string> actionShowMsg;
+
+        private void LogNet_BeforeSaveToFile( object sender, HslCommunication.LogNet.HslEventArgs e )
+        {
+            if(InvokeRequired && IsHandleCreated)
+            {
+                try
+                {
+                    Invoke( actionShowMsg, e.HslMessage.ToString( ) );
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private void FormServer_FormClosing( object sender, FormClosingEventArgs e )
+        {
+            // 退出系统的时候触发
+            using (FormQuitWait form = new FormQuitWait( ( ) =>
+             {
+                 opcUaServer?.DataTransferServer.DevicesNodeManager.CloseDevices( );
+             } ))
+            {
+                form.ShowDialog( );
+            }
+
+  
+            
         }
     }
 }
