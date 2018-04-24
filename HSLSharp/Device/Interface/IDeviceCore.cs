@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace HSLSharp.Device
         /// <summary>
         /// 指示如何写入Opc Ua的节点信息
         /// </summary>
-        Action<string, byte[], DeviceRequest, IByteTransform> WriteDeviceData { get; set; }
+        Action<IDeviceCore, string, byte[], DeviceRequest> WriteDeviceData { get; set; }
 
         /// <summary>
         /// 设备上次激活的时间节点，用来判断失效状态
@@ -74,5 +75,22 @@ namespace HSLSharp.Device
         /// </summary>
         /// <param name="alienSession">异形客户端的会话</param>
         void SetAlineSession( AlienSession alienSession );
+
+
+
+        #region Server Paint
+
+        /// <summary>
+        /// 绘制呈现的范围
+        /// </summary>
+        Rectangle PaintRegion { get; set; }
+
+        /// <summary>
+        /// 设备的名称
+        /// </summary>
+        string Name { get; set; }
+
+        #endregion
+
     }
 }

@@ -5,6 +5,7 @@ using HslCommunication.LogNet;
 using HSLSharp.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -66,7 +67,7 @@ namespace HSLSharp.Device
         /// <summary>
         /// 指示如何写入Opc Ua的节点信息
         /// </summary>
-        public Action<string, byte[], DeviceRequest, IByteTransform> WriteDeviceData { get; set; }
+        public Action<IDeviceCore, string, byte[], DeviceRequest> WriteDeviceData { get; set; }
 
         /// <summary>
         /// 设备上次激活的时间节点，用来判断失效状态
@@ -77,6 +78,11 @@ namespace HSLSharp.Device
         /// 唯一的识别码，方便异形客户端寻找对应的处理逻辑
         /// </summary>
         public string UniqueId { get; set; }
+
+        /// <summary>
+        /// 设备的名称
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// 启动读取数据
@@ -116,6 +122,12 @@ namespace HSLSharp.Device
         /// 指示设备是否正常的状态
         /// </summary>
         public bool IsError { get; set; }
+
+        /// <summary>
+        /// 绘制呈现的范围
+        /// </summary>
+        public Rectangle PaintRegion { get; set; }
+
 
         #endregion
 
@@ -161,7 +173,7 @@ namespace HSLSharp.Device
         #region Thread Read
 
 
-        private void ThreadReadBackground()
+        private void ThreadReadBackground( )
         {
             Thread.Sleep( 1000 );           // 默认休息一下下
 
@@ -181,7 +193,7 @@ namespace HSLSharp.Device
                         if (read.IsSuccess)
                         {
                             IsError = false;
-                            WriteDeviceData?.Invoke( OpcUaNode, read.Content, Request, ByteTransform );
+                            WriteDeviceData?.Invoke( this, OpcUaNode, read.Content, Request );
                             ActiveTime = DateTime.Now;
                         }
                         else

@@ -12,6 +12,7 @@ using HSLSharp.Configuration;
 using HslCommunication.Core.Net;
 using HSLSharp.Device;
 using System.Threading;
+using HslCommunication.Core;
 
 namespace HSLSharp.OpcUaSupport
 {
@@ -101,7 +102,7 @@ namespace HSLSharp.OpcUaSupport
                 AddNodeClass( null, element, references );
 
 
-
+                StartAllNetworkAliens( );                   // 启动所有的异形服务器
 
                 //FolderState rootModbusAlien = CreateFolder( null, "ModbusAlien" );
                 //rootModbusAlien.AddReference( ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder );
@@ -185,6 +186,7 @@ namespace HSLSharp.OpcUaSupport
                 {
                     AlienNode alienNode = new AlienNode( );
                     alienNode.LoadByXmlElement( xmlNode );
+                    AddNetworkAlien( alienNode );
 
                     FolderState son = CreateFolder( parent, alienNode.Name, alienNode.Description );
                     AddNodeClass( son, xmlNode, references );
@@ -217,8 +219,10 @@ namespace HSLSharp.OpcUaSupport
                     ModbusTcpAline modbusTcpAline = new ModbusTcpAline( );
                     modbusTcpAline.LoadByXmlElement( device );
                     DeciveModbusTcpAlien deviceReal = new DeciveModbusTcpAlien( modbusTcpAline.DTU, device );
-                    deviceReal.OpcUaNode = deviceFolder.ToString( );
+                    deviceReal.OpcUaNode = deviceFolder.NodeId.ToString( );
                     this.deviceCores.Add( deviceReal );
+                    deviceReal.WriteDeviceData = WriteDeviceData;
+                    deviceReal.Name = modbusTcpAline.Name;
                     deviceReal.StartRead( );
 
                     Interlocked.Increment( ref deviceCount );
@@ -229,8 +233,10 @@ namespace HSLSharp.OpcUaSupport
                     ModbusTcpClient modbusTcpClient = new ModbusTcpClient( );
                     modbusTcpClient.LoadByXmlElement( device );
                     DeviceModbusTcp deviceReal = new DeviceModbusTcp( device );
-                    deviceReal.OpcUaNode = deviceFolder.ToString( );
+                    deviceReal.OpcUaNode = deviceFolder.NodeId.ToString( );
                     this.deviceCores.Add( deviceReal );
+                    deviceReal.WriteDeviceData = WriteDeviceData;
+                    deviceReal.Name = modbusTcpClient.Name;
                     deviceReal.StartRead( );
 
                     Interlocked.Increment( ref deviceCount );
@@ -243,6 +249,33 @@ namespace HSLSharp.OpcUaSupport
         }
 
 
+
+        private void WriteDeviceData( IDeviceCore deviceCore, string node, byte[] data, DeviceRequest request)
+        {
+            WriteDeviceData( node, data, request, deviceCore.ByteTransform );
+        }
+
+
+
+        public void WriteDeviceData( string deviceNode, byte[] data, DeviceRequest request, IByteTransform byteTransform )
+        {
+            List<RegularNode> regularNodes = Util.SharpRegulars.GetRegularNodes( request.PraseRegularCode );
+            if (regularNodes != null)
+            {
+                lock (Lock)
+                {
+                    for (int i = 0; i < regularNodes.Count; i++)
+                    {
+                        dict_BaseDataVariableState[deviceNode + "/" + regularNodes[i].Name].Value = regularNodes[i].GetValue( data, byteTransform );
+                        dict_BaseDataVariableState[deviceNode + "/" + regularNodes[i].Name].ClearChangeMasks( SystemContext, false );
+                    }
+                }
+            }
+            else
+            {
+                this.logNet?.WriteWarn( ToString( ), $"Not find regular : { request.PraseRegularCode}" );
+            }
+        }
 
         private void AddDeviceRequest( NodeState parent , DeviceRequest deviceRequest)
         {
@@ -399,10 +432,20 @@ namespace HSLSharp.OpcUaSupport
         }
 
 
-        private void AddNetworkAlien()
+        private void AddNetworkAlien( AlienNode alienNode )
         {
-
+            NetworkAlienClient networkAlien = new NetworkAlienClient( );
+            networkAlien.LogNet = Util.LogNet;
+            if(!string.IsNullOrEmpty(alienNode.Password))
+            {
+                networkAlien.SetPassword( Encoding.ASCII.GetBytes( alienNode.Password ) );
+            }
+            networkAlien.Port = alienNode.Port;
+            networkAlien.OnClientConnected += NetworkAlien_OnClientConnected ;
+            networkAliens.Add( networkAlien );
         }
+
+
 
         #endregion
 
@@ -464,7 +507,38 @@ namespace HSLSharp.OpcUaSupport
 
 
         private List<NetworkAlienClient> networkAliens;            // 所有的异形客户端的列表
+        
 
+
+        private void NetworkAlien_OnClientConnected( NetworkAlienClient  networkAlien, AlienSession session )
+        {
+            bool isExist = false;
+            for (int i = 0; i < deviceCores.Count; i++)
+            {
+                if (deviceCores[i].UniqueId == session.DTU)
+                {
+                    deviceCores[i].SetAlineSession( session );
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if (!isExist)
+            {
+                // 退出
+                session.Socket?.Close( );
+                networkAlien.AlienSessionLoginOut( session );
+            }
+        }
+
+
+        private void StartAllNetworkAliens()
+        {
+            for (int i = 0; i < networkAliens.Count; i++)
+            {
+                networkAliens[i].ServerStart( );
+            }
+        }
 
         #endregion
 

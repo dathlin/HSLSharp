@@ -138,6 +138,8 @@ namespace HSLSharp
             {
                 OpcUaServerStart( );
                 userButton1.Enabled = false;
+                textBox2.ReadOnly = true;
+                monitorControl1.UpdateList( opcUaServer.DataTransferServer.DevicesNodeManager.DeviceCores );
             }
             catch(Exception ex)
             {

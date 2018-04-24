@@ -2976,6 +2976,11 @@
             <param name="session"></param>
             <returns></returns>
         </member>
+        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ServerStart">
+            <summary>
+            使用配置的端口初始化数据信息
+            </summary>
+        </member>
         <member name="M:HslCommunication.Core.Net.NetworkAlienClient.SetPassword(System.Byte[])">
             <summary>
             设置密码，长度为6
@@ -2993,6 +2998,11 @@
             退出异形客户端
             </summary>
             <param name="session">异形客户端的会话</param>
+        </member>
+        <member name="P:HslCommunication.Core.Net.NetworkAlienClient.Port">
+            <summary>
+            端口号
+            </summary>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ToString">
             <summary>

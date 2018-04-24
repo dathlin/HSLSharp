@@ -97,6 +97,12 @@
     <Compile Include="Configuration\Node\NodeClass.cs" />
     <Compile Include="Configuration\Node\NodeClassInfo.cs" />
     <Compile Include="Configuration\Regular\RegularNode.cs" />
+    <Compile Include="Controls\MonitorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MonitorControl.Designer.cs">
+      <DependentUpon>MonitorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TreeViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -179,8 +185,10 @@
     </Compile>
     <Compile Include="SettingsSupport\SharpRegulars.cs" />
     <Compile Include="SettingsSupport\SharpSettings.cs" />
-    <Compile Include="Utils\DeviceUtil.cs" />
     <Compile Include="Utils\Utils.cs" />
+    <EmbeddedResource Include="Controls\MonitorControl.resx">
+      <DependentUpon>MonitorControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormOpcSettings.resx">
       <DependentUpon>FormOpcSettings.cs</DependentUpon>
     </EmbeddedResource>

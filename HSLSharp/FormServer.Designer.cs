@@ -47,6 +47,7 @@
             this.userButton1 = new HslCommunication.Controls.UserButton();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.monitorControl1 = new HSLSharp.Controls.MonitorControl();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -159,6 +160,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.monitorControl1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(5, 54);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -244,6 +246,18 @@
             this.textBox2.Size = new System.Drawing.Size(809, 23);
             this.textBox2.TabIndex = 7;
             // 
+            // monitorControl1
+            // 
+            this.monitorControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.monitorControl1.BackColor = System.Drawing.Color.Transparent;
+            this.monitorControl1.Location = new System.Drawing.Point(6, 23);
+            this.monitorControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.monitorControl1.Name = "monitorControl1";
+            this.monitorControl1.Size = new System.Drawing.Size(1015, 174);
+            this.monitorControl1.TabIndex = 1;
+            // 
             // FormServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -298,6 +312,7 @@
         private System.Windows.Forms.ToolStripMenuItem 关于软件ToolStripMenuItem;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox2;
+        private Controls.MonitorControl monitorControl1;
     }
 }
 
