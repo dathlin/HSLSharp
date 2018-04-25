@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using HslCommunication;
 using HslCommunication.Core.Net;
-using HslCommunication.ModBus;
+using HslCommunication.Profinet.Melsec;
 using HSLSharp.Configuration;
-
-
 
 namespace HSLSharp.Device
 {
-    public class DeviceModbusTcp : DeviceCoreBase
+    public class DeviceMelsecBinary : DeviceCoreBase
     {
         #region Constructor
 
@@ -22,21 +20,22 @@ namespace HSLSharp.Device
         /// </summary>
         /// <param name="dtu"></param>
         /// <param name="element"></param>
-        public DeviceModbusTcp( XElement element )
+        public DeviceMelsecBinary( XElement element )
         {
-            NodeModbusTcpClient modbusTcpClient = new NodeModbusTcpClient( );
-            modbusTcpClient.LoadByXmlElement( element );
+            NodeMelsecMc nodeMelsecMc = new NodeMelsecMc( );
+            nodeMelsecMc.LoadByXmlElement( element );
 
             LoadRequest( element );
 
-            modbusTcp = new ModbusTcpNet( modbusTcpClient.IpAddress, modbusTcpClient.Port, modbusTcpClient.Station );
-            modbusTcp.AddressStartWithZero = modbusTcpClient.IsAddressStartWithZero;
-            modbusTcp.ConnectTimeOut = modbusTcpClient.ConnectTimeOut;
+            melsecMcNet = new MelsecMcNet( nodeMelsecMc.IpAddress, nodeMelsecMc.Port );
+            melsecMcNet.NetworkNumber = nodeMelsecMc.NetworkNumber;
+            melsecMcNet.NetworkStationNumber = nodeMelsecMc.NetworkStationNumber;
+            melsecMcNet.ConnectTimeOut = nodeMelsecMc.ConnectTimeOut;
 
-            ByteTransform = modbusTcp.ByteTransform;
-            UniqueId = modbusTcp.ConnectionId;
+            ByteTransform = melsecMcNet.ByteTransform;
+            UniqueId = melsecMcNet.ConnectionId;
 
-            TypeName = "Modbus-Tcp设备";
+            TypeName = "三菱PLC设备";
         }
 
 
@@ -48,10 +47,10 @@ namespace HSLSharp.Device
 
         public override OperateResult<byte[]> ReadBytes( string address, ushort length )
         {
-            return modbusTcp.Read( address, length );
+            return melsecMcNet.Read( address, length );
         }
 
-        
+
 
         #endregion
 
@@ -59,13 +58,13 @@ namespace HSLSharp.Device
 
         protected override void BeforStart( )
         {
-            modbusTcp.ConnectServer( );
+            melsecMcNet.ConnectServer( );
         }
 
 
         protected override void AfterClose( )
         {
-            modbusTcp.ConnectClose( );
+            melsecMcNet.ConnectClose( );
         }
 
         #endregion
@@ -73,10 +72,12 @@ namespace HSLSharp.Device
         #region Private
 
 
-        private ModbusTcpNet modbusTcp;               // 核心交互对象
+        private MelsecMcNet melsecMcNet;               // 核心交互对象
 
 
 
         #endregion
+
+
     }
 }

@@ -157,7 +157,7 @@ namespace HSLSharp.NodeSettings
                 }
                 else
                 {
-                    if (node.Tag is ModbusTcpClient modbusTcpNode)
+                    if (node.Tag is NodeModbusTcpClient modbusTcpNode)
                     {
                         // 编辑了Modbus-tcp节点
                         using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( modbusTcpNode ))

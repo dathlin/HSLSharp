@@ -90,6 +90,11 @@ namespace HSLSharp.Device
         /// </summary>
         string Name { get; set; }
 
+        /// <summary>
+        /// 类型名称，显示使用
+        /// </summary>
+        string TypeName { get; set; }
+
         #endregion
 
     }

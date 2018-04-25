@@ -10,11 +10,11 @@ namespace HSLSharp.Configuration
     /// <summary>
     /// 异形ModbusTcp的客户端节点，只能挂在Alien节点下，下面只能挂载异形modbus客户端
     /// </summary>
-    public class ModbusTcpAline : DeviceNode
+    public class NodeModbusTcpAline : DeviceNode
     {
         #region Constructor
 
-        public ModbusTcpAline()
+        public NodeModbusTcpAline()
         {
             DTU = "12345678901";
             DeviceType = DeviceNode.ModbusTcpAlien;

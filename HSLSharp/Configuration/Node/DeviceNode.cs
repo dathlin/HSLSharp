@@ -22,6 +22,7 @@ namespace HSLSharp.Configuration
             NodeType = NodeClassInfo.DeviceNode;
             NodeHead = "DeviceNode";
             CreateTime = DateTime.Now;
+            ConnectTimeOut = 2000;
         }
 
         #endregion
@@ -81,7 +82,7 @@ namespace HSLSharp.Configuration
         /// <summary>
         /// 三菱的Qna兼容3E帧协议的客户端
         /// </summary>
-        public const int MelsecMcQna3EBinary = 1;
+        public const int MelsecMcQna3E = 1;
 
         /// <summary>
         /// 常规的Modbus-Tcp客户端

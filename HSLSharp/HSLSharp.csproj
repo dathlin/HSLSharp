@@ -83,16 +83,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ModbusAlien\ModbusAlienCore.cs" />
-    <Compile Include="Configuration\Device\ModbusTcpAline.cs" />
+    <Compile Include="Configuration\Device\NodeModbusTcpAline.cs" />
     <Compile Include="Configuration\AlienNode\AlienNode.cs" />
-    <Compile Include="Configuration\Device\MelsecMc.cs" />
+    <Compile Include="Configuration\Device\NodeMelsecMc.cs" />
     <Compile Include="Configuration\Regular\RegularModeTypeItem.cs" />
     <Compile Include="Configuration\Node\NodeClassRenderItem.cs" />
     <Compile Include="Configuration\Node\DeviceNode.cs" />
     <Compile Include="Configuration\Node\DeviceRequest.cs" />
     <Compile Include="Configuration\ModbusServer\ModbusNode.cs" />
     <Compile Include="Configuration\ModbusServer\ModbusRequest.cs" />
-    <Compile Include="Configuration\Device\ModbusTcpClient.cs" />
+    <Compile Include="Configuration\Device\NodeModbusTcpClient.cs" />
     <Compile Include="Configuration\Node\IXmlConvert.cs" />
     <Compile Include="Configuration\Node\NodeClass.cs" />
     <Compile Include="Configuration\Node\NodeClassInfo.cs" />
@@ -107,6 +107,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Device\DeviceCoreBase\DeviceCoreBase.cs" />
+    <Compile Include="Device\Implementation\DeciveMelsecAscii.cs" />
+    <Compile Include="Device\Implementation\DeciveMelsecBinary.cs" />
     <Compile Include="Device\Implementation\DeciveModbusTcpAlien.cs" />
     <Compile Include="Device\Implementation\DeviceModbusTcp.cs" />
     <Compile Include="Device\Interface\IDeviceCore.cs" />
@@ -133,6 +135,12 @@
     </Compile>
     <Compile Include="NodeSettings\FormAlienNode.Designer.cs">
       <DependentUpon>FormAlienNode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NodeSettings\FormMelsec3E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormMelsec3E.Designer.cs">
+      <DependentUpon>FormMelsec3E.cs</DependentUpon>
     </Compile>
     <Compile Include="NodeSettings\FormModbusTcp.cs">
       <SubType>Form</SubType>
@@ -206,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormAlienNode.resx">
       <DependentUpon>FormAlienNode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormMelsec3E.resx">
+      <DependentUpon>FormMelsec3E.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormModbusTcp.resx">
       <DependentUpon>FormModbusTcp.cs</DependentUpon>

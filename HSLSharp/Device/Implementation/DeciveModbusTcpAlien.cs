@@ -14,18 +14,17 @@ namespace HSLSharp.Device
     /// <summary>
     /// 异形ModbusTcp的客户端
     /// </summary>
-    public class DeciveModbusTcpAlien : DeviceCoreBase
+    public class DeviceModbusTcpAlien : DeviceCoreBase
     {
         #region Constructor
 
         /// <summary>
         /// 默认的构造方法
         /// </summary>
-        /// <param name="dtu"></param>
         /// <param name="element"></param>
-        public DeciveModbusTcpAlien(string dtu, XElement element)
+        public DeviceModbusTcpAlien( XElement element)
         {
-            ModbusTcpAline modbusTcpAline = new ModbusTcpAline( );
+            NodeModbusTcpAline modbusTcpAline = new NodeModbusTcpAline( );
             modbusTcpAline.LoadByXmlElement( element );
 
             LoadRequest( element );
@@ -37,6 +36,8 @@ namespace HSLSharp.Device
 
             ByteTransform = modbusTcp.ByteTransform;
             UniqueId = modbusTcp.ConnectionId;
+
+            TypeName = "Modbus-Tcp异形设备";
         }
 
 

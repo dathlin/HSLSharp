@@ -85,6 +85,11 @@ namespace HSLSharp.Device
         public string Name { get; set; }
 
         /// <summary>
+        /// 类型名称
+        /// </summary>
+        public string TypeName { get; set; }
+
+        /// <summary>
         /// 启动读取数据
         /// </summary>
         public void StartRead()

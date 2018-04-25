@@ -129,7 +129,7 @@ namespace HSLSharp
                 if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
                     // 允许添加设备
-                    using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new ModbusTcpClient( ) ))
+                    using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( new NodeModbusTcpClient( ) ))
                     {
                         if (formNode.ShowDialog( ) == DialogResult.OK)
                         {
@@ -226,7 +226,7 @@ namespace HSLSharp
                 }
                 else
                 {
-                    if (node.Tag is ModbusTcpClient modbusTcpNode)
+                    if (node.Tag is NodeModbusTcpClient modbusTcpNode)
                     {
                         // 编辑了Modbus-tcp节点
                         using (NodeSettings.FormModbusTcp formNode = new NodeSettings.FormModbusTcp( modbusTcpNode ))
@@ -239,7 +239,7 @@ namespace HSLSharp
                             }
                         }
                     }
-                    else if(node.Tag is ModbusTcpAline modbusTcpAline)
+                    else if(node.Tag is NodeModbusTcpAline modbusTcpAline)
                     {
                         // 编辑了Modbus-aline节点
                         using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( modbusTcpAline ))
@@ -261,6 +261,19 @@ namespace HSLSharp
                             {
                                 node.Text = formRequest.DeviceRequest.Name;
                                 node.Tag = formRequest.DeviceRequest;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                    else if(node.Tag is NodeMelsecMc nodeMelsecMc)
+                    {
+                        // 编辑了三菱的节点数据
+                        using (NodeSettings.FormMelsec3E formNode = new NodeSettings.FormMelsec3E( nodeMelsecMc ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.MelsecMc.Name;
+                                node.Tag = formNode.MelsecMc;
                                 isNodeSettingsModify = true;
                             }
                         }
@@ -503,7 +516,7 @@ namespace HSLSharp
                         deviceNode.ImageKey = "Module_648";
                         deviceNode.SelectedImageKey = "Module_648";
 
-                        ModbusTcpClient modbusNode = new ModbusTcpClient( );
+                        NodeModbusTcpClient modbusNode = new NodeModbusTcpClient( );
                         modbusNode.LoadByXmlElement( item );
                         deviceNode.Tag = modbusNode;
                         
@@ -513,7 +526,7 @@ namespace HSLSharp
                         deviceNode.ImageKey = "Module_648";
                         deviceNode.SelectedImageKey = "Module_648";
 
-                        ModbusTcpAline modbusAlien = new ModbusTcpAline( );
+                        NodeModbusTcpAline modbusAlien = new NodeModbusTcpAline( );
                         modbusAlien.LoadByXmlElement( item );
                         deviceNode.Tag = modbusAlien;
 
@@ -655,7 +668,7 @@ namespace HSLSharp
             if (node.Tag is NodeClass nodeClass)
             {
                 // 允许添加类别
-                using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( new ModbusTcpAline( ) ))
+                using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( new NodeModbusTcpAline( ) ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
@@ -686,13 +699,42 @@ namespace HSLSharp
             List<string> dtus = new List<string>( );
             foreach (TreeNode item in treeNode.Nodes)
             {
-                if(item.Tag is ModbusTcpAline modbusTcp)
+                if(item.Tag is NodeModbusTcpAline modbusTcp)
                 {
                     dtus.Add( modbusTcp.DTU );
                 }
             }
 
             return dtus.Contains( dtu );
+        }
+
+
+        private void 三菱plcmelsecToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了Modbus-Tcp客户端
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    // 允许添加设备
+                    using (NodeSettings.FormMelsec3E formNode = new NodeSettings.FormMelsec3E( null ))
+                    {
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            formNode.MelsecMc.Name = GetUniqueName( node, formNode.MelsecMc.Name );
+
+                            TreeNode nodeNew = new TreeNode( formNode.MelsecMc.Name );
+                            nodeNew.ImageKey = "Enum_582";
+                            nodeNew.SelectedImageKey = "Enum_582";
+                            nodeNew.Tag = formNode.MelsecMc;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                            isNodeSettingsModify = true;
+                        }
+                    }
+                }
+            }
         }
 
         #region Private Member
@@ -704,6 +746,6 @@ namespace HSLSharp
 
 
 
-        
+
     }
 }

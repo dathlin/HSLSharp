@@ -13,7 +13,7 @@ namespace HSLSharp.NodeSettings
 {
     public partial class FormModbusTcpAlien : Form
     {
-        public FormModbusTcpAlien( ModbusTcpAline modbusTcpAline )
+        public FormModbusTcpAlien( NodeModbusTcpAline modbusTcpAline )
         {
             InitializeComponent( );
 
@@ -37,7 +37,7 @@ namespace HSLSharp.NodeSettings
 
 
 
-        public ModbusTcpAline ModbusTcpAline { get; set; }
+        public NodeModbusTcpAline ModbusTcpAline { get; set; }
 
         private void userButton1_Click( object sender, EventArgs e )
         {
@@ -47,7 +47,7 @@ namespace HSLSharp.NodeSettings
                 return;
             }
 
-            ModbusTcpAline = new ModbusTcpAline( )
+            ModbusTcpAline = new NodeModbusTcpAline( )
             {
                 Name = textBox1.Text,
                 Description = textBox2.Text,

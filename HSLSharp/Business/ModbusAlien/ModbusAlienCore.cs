@@ -30,10 +30,10 @@ namespace HSLSharp.Business
             alienNode.LoadByXmlElement( element );
 
             // 解析所有的客户端
-            List<ModbusTcpAline> modbusTcpAlines = new List<ModbusTcpAline>( );
+            List<NodeModbusTcpAline> modbusTcpAlines = new List<NodeModbusTcpAline>( );
             foreach (var item in element.Elements())
             {
-                ModbusTcpAline tcpAline = new ModbusTcpAline( );
+                NodeModbusTcpAline tcpAline = new NodeModbusTcpAline( );
                 tcpAline.LoadByXmlElement( item );
                 modbusTcpAlines.Add( tcpAline );
 

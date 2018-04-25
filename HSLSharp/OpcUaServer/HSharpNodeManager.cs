@@ -201,7 +201,11 @@ namespace HSLSharp.OpcUaSupport
         {
             if (device.Name == "DeviceNode")
             {
-                int deviceType = int.Parse(device.Attribute( "DeviceType" ).Value);
+                // 提取名称和描述信息
+                string name = device.Attribute( "Name" ).Value;
+                string description = device.Attribute( "Description" ).Value;
+
+                // 创建OPC节点
                 FolderState deviceFolder = CreateFolder( parent, device.Attribute( "Name" ).Value, device.Attribute( "Description" ).Value );
                 // 添加Request
                 foreach (var requestXml in device.Elements( "DeviceRequest" ))
@@ -214,41 +218,57 @@ namespace HSLSharp.OpcUaSupport
                 }
 
 
-                if (deviceType == DeviceNode.ModbusTcpAlien)
+                IDeviceCore deviceReal = CreateNewByXml( device );
+                if (deviceReal != null)
                 {
-                    ModbusTcpAline modbusTcpAline = new ModbusTcpAline( );
-                    modbusTcpAline.LoadByXmlElement( device );
-                    DeciveModbusTcpAlien deviceReal = new DeciveModbusTcpAlien( modbusTcpAline.DTU, device );
                     deviceReal.OpcUaNode = deviceFolder.NodeId.ToString( );
                     this.deviceCores.Add( deviceReal );
                     deviceReal.WriteDeviceData = WriteDeviceData;
-                    deviceReal.Name = modbusTcpAline.Name;
+                    deviceReal.Name = name;
                     deviceReal.StartRead( );
 
+                    // 显示系统所有的设备数量
                     Interlocked.Increment( ref deviceCount );
-                    this.logNet?.WriteInfo( $"已发现 {deviceCount} 台设备，类型为modbus-alien" );
+                    this.logNet?.WriteInfo( $"已发现 {deviceCount} 台设备，类型为{deviceReal.TypeName}" );
                 }
-                else if(deviceType == DeviceNode.ModbusTcpClient)
-                {
-                    ModbusTcpClient modbusTcpClient = new ModbusTcpClient( );
-                    modbusTcpClient.LoadByXmlElement( device );
-                    DeviceModbusTcp deviceReal = new DeviceModbusTcp( device );
-                    deviceReal.OpcUaNode = deviceFolder.NodeId.ToString( );
-                    this.deviceCores.Add( deviceReal );
-                    deviceReal.WriteDeviceData = WriteDeviceData;
-                    deviceReal.Name = modbusTcpClient.Name;
-                    deviceReal.StartRead( );
-
-                    Interlocked.Increment( ref deviceCount );
-                    this.logNet?.WriteInfo( $"已发现 {deviceCount} 台设备，类型为modbus-tcp" );
-                }
-
-
-
             }
         }
+        
 
+        private IDeviceCore CreateNewByXml(XElement device )
+        {
+            int deviceType = int.Parse( device.Attribute( "DeviceType" ).Value );
 
+            if (deviceType == DeviceNode.ModbusTcpAlien)
+            {
+                return new DeviceModbusTcpAlien( device );
+            }
+            else if (deviceType == DeviceNode.ModbusTcpClient)
+            {
+                return new DeviceModbusTcp( device );
+            }
+            else if (deviceType == DeviceNode.MelsecMcQna3E)
+            {
+                NodeMelsecMc nodeMelsecMc = new NodeMelsecMc( );
+                nodeMelsecMc.LoadByXmlElement( device );
+
+                if (nodeMelsecMc.IsBinary)
+                {
+                    // 二进制通信
+                    return new DeviceMelsecBinary( device );
+                }
+                else
+                {
+                    // ASCII通讯
+                    return new DeviceMelsecAscii( device );
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
 
         private void WriteDeviceData( IDeviceCore deviceCore, string node, byte[] data, DeviceRequest request)
         {
@@ -448,6 +468,8 @@ namespace HSLSharp.OpcUaSupport
 
 
         #endregion
+
+
 
         #region Server Close
 

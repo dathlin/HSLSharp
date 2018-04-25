@@ -19,7 +19,7 @@ namespace HSLSharp.NodeSettings
             Icon = Util.GetWinformICon( );
         }
 
-        public FormModbusTcp( ModbusTcpClient modbusTcpNode)
+        public FormModbusTcp( NodeModbusTcpClient modbusTcpNode)
         {
             InitializeComponent( );
             ModbusTcpNode = modbusTcpNode;
@@ -49,7 +49,7 @@ namespace HSLSharp.NodeSettings
             }
             try
             {
-                ModbusTcpNode = new ModbusTcpClient( )
+                ModbusTcpNode = new NodeModbusTcpClient( )
                 {
                     Name = textBox1.Text,
                     Description = textBox2.Text,
@@ -72,7 +72,7 @@ namespace HSLSharp.NodeSettings
 
 
 
-        public ModbusTcpClient ModbusTcpNode { get; set; }
+        public NodeModbusTcpClient ModbusTcpNode { get; set; }
 
 
     }

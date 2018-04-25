@@ -10,21 +10,21 @@ namespace HSLSharp.Configuration
     /// <summary>
     /// 常规的Modbus-Tcp的客户端
     /// </summary>
-    public class ModbusTcpClient : DeviceNode, IXmlConvert
+    public class NodeModbusTcpClient : DeviceNode, IXmlConvert
     {
         #region Constructor
 
         /// <summary>
         /// 实例化一个默认参数的对象
         /// </summary>
-        public ModbusTcpClient()
+        public NodeModbusTcpClient()
         {
             CreateTime = DateTime.Now;
             DeviceType = DeviceNode.ModbusTcpClient;
 
             Name = "ModbusTcp客户端";
             Description = "这是描述";
-            ConnectTimeOut = 1000;
+            IpAddress = "127.0.0.1";
             Port = 502;
             Station = 1;
         }
