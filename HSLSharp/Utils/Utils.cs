@@ -36,7 +36,10 @@ namespace HSLSharp
         /// </summary>
         public static SharpRegulars SharpRegulars { get; set; }
 
-
+        /// <summary>
+        /// 系统的版本号
+        /// </summary>
+        public static Version SharpVersion { get; } = new Version( "0.0.1" );
 
         #region Static Method
 

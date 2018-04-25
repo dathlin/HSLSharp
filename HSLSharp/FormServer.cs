@@ -86,12 +86,7 @@ namespace HSLSharp
 
         #endregion
 
-
-        private void button1_Click( object sender, EventArgs e )
-        {
-
-        }
-
+        
 
 
         private void 节点配置器ToolStripMenuItem_Click( object sender, EventArgs e )
@@ -155,6 +150,8 @@ namespace HSLSharp
                  textBox1.AppendText( m  + Environment.NewLine );
              } );
             Util.LogNet.BeforeSaveToFile += LogNet_BeforeSaveToFile;
+
+            TimerStart( );
         }
 
 
@@ -175,6 +172,14 @@ namespace HSLSharp
             }
         }
 
+        private void 关于本软件ToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            using (FormAbout form = new FormAbout( ))
+            {
+                form.ShowDialog( );
+            }
+        }
+
         private void FormServer_FormClosing( object sender, FormClosingEventArgs e )
         {
             // 退出系统的时候触发
@@ -185,9 +190,37 @@ namespace HSLSharp
             {
                 form.ShowDialog( );
             }
-
-  
             
         }
+
+        private void TimerStart()
+        {
+            timerTick = new Timer( );
+            timerTick.Interval = 1000;
+            timerTick.Tick += TimerTick_Tick;
+            timerTick.Start( );
+        }
+
+        private void TimerTick_Tick( object sender, EventArgs e )
+        {
+            if (timeRunTick > 0)
+            {
+                toolStripStatusLabel3.Text = "试用版本，剩余" + timeRunTick-- + "秒";
+            }
+            else
+            {
+                MessageBox.Show( "试用时间已到，本程序将无限弹框。" );
+            }
+        }
+
+
+        #region Private Member
+
+        private int timeRunTick = 3600 * 8;
+        private Timer timerTick = null;
+
+        #endregion
+
+        
     }
 }

@@ -58,7 +58,8 @@ namespace HSLSharp.NodeSettings
             {
                 Name = textBox1.Text,
                 Description = textBox2.Text,
-                Password = textBox3.Text
+                Password = textBox3.Text,
+                Port = port
             };
 
             DialogResult = DialogResult.OK;

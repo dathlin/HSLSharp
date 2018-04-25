@@ -659,6 +659,14 @@ namespace HSLSharp
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
                     {
+                        // 需要先进行判断DTU是否冲突
+                        if (IsDTUExistModbusAlien( formNode.ModbusTcpAline.DTU, node ))
+                        {
+                            MessageBox.Show( "设备添加失败，DTU码重复！" );
+                            return;
+                        }
+
+
                         formNode.ModbusTcpAline.Name = GetUniqueName( node, formNode.ModbusTcpAline.Name );
 
                         TreeNode nodeNew = new TreeNode( formNode.ModbusTcpAline.Name );
@@ -671,6 +679,20 @@ namespace HSLSharp
                     }
                 }
             }
+        }
+
+        private bool IsDTUExistModbusAlien( string dtu, TreeNode treeNode )
+        {
+            List<string> dtus = new List<string>( );
+            foreach (TreeNode item in treeNode.Nodes)
+            {
+                if(item.Tag is ModbusTcpAline modbusTcp)
+                {
+                    dtus.Add( modbusTcp.DTU );
+                }
+            }
+
+            return dtus.Contains( dtu );
         }
 
         #region Private Member

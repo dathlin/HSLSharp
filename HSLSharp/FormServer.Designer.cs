@@ -39,7 +39,10 @@
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.软件信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.monitorControl1 = new HSLSharp.Controls.MonitorControl();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -47,7 +50,7 @@
             this.userButton1 = new HslCommunication.Controls.UserButton();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.monitorControl1 = new HSLSharp.Controls.MonitorControl();
+            this.关于本软件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -83,7 +86,7 @@
             // 
             this.节点配置器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.ClassIcon;
             this.节点配置器ToolStripMenuItem.Name = "节点配置器ToolStripMenuItem";
-            this.节点配置器ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.节点配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.节点配置器ToolStripMenuItem.Text = "节点配置器";
             this.节点配置器ToolStripMenuItem.Click += new System.EventHandler(this.节点配置器ToolStripMenuItem_Click);
             // 
@@ -91,7 +94,7 @@
             // 
             this.解析规则配置器ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.ExtensionManager_vsix;
             this.解析规则配置器ToolStripMenuItem.Name = "解析规则配置器ToolStripMenuItem";
-            this.解析规则配置器ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.解析规则配置器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.解析规则配置器ToolStripMenuItem.Text = "解析规则配置器";
             this.解析规则配置器ToolStripMenuItem.Click += new System.EventHandler(this.解析规则配置器ToolStripMenuItem_Click);
             // 
@@ -99,7 +102,7 @@
             // 
             this.oPCUA配置ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.server_Local_16xLG;
             this.oPCUA配置ToolStripMenuItem.Name = "oPCUA配置ToolStripMenuItem";
-            this.oPCUA配置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.oPCUA配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.oPCUA配置ToolStripMenuItem.Text = "OPC UA配置";
             this.oPCUA配置ToolStripMenuItem.Click += new System.EventHandler(this.oPCUA配置ToolStripMenuItem_Click);
             // 
@@ -113,6 +116,8 @@
             // 
             // 关于软件ToolStripMenuItem
             // 
+            this.关于软件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.关于本软件ToolStripMenuItem});
             this.关于软件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.GenericVSEditor_9905;
             this.关于软件ToolStripMenuItem.Name = "关于软件ToolStripMenuItem";
             this.关于软件ToolStripMenuItem.Size = new System.Drawing.Size(84, 21);
@@ -122,7 +127,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButton1,
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2,
+            this.toolStripStatusLabel3});
             this.statusStrip1.Location = new System.Drawing.Point(0, 657);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
@@ -155,6 +162,20 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(269, 17);
             this.toolStripStatusLabel1.Text = "Copyright By Richard Hu. All Rright Reserved";
             // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(64, 17);
+            this.toolStripStatusLabel2.Text = "     状态：";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(56, 17);
+            this.toolStripStatusLabel3.Text = "试用版本";
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -167,6 +188,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1029, 203);
             this.panel1.TabIndex = 3;
+            // 
+            // monitorControl1
+            // 
+            this.monitorControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.monitorControl1.BackColor = System.Drawing.Color.Transparent;
+            this.monitorControl1.Location = new System.Drawing.Point(6, 23);
+            this.monitorControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.monitorControl1.Name = "monitorControl1";
+            this.monitorControl1.Size = new System.Drawing.Size(1015, 174);
+            this.monitorControl1.TabIndex = 1;
             // 
             // label1
             // 
@@ -246,17 +279,13 @@
             this.textBox2.Size = new System.Drawing.Size(809, 23);
             this.textBox2.TabIndex = 7;
             // 
-            // monitorControl1
+            // 关于本软件ToolStripMenuItem
             // 
-            this.monitorControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.monitorControl1.BackColor = System.Drawing.Color.Transparent;
-            this.monitorControl1.Location = new System.Drawing.Point(6, 23);
-            this.monitorControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.monitorControl1.Name = "monitorControl1";
-            this.monitorControl1.Size = new System.Drawing.Size(1015, 174);
-            this.monitorControl1.TabIndex = 1;
+            this.关于本软件ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Method_636;
+            this.关于本软件ToolStripMenuItem.Name = "关于本软件ToolStripMenuItem";
+            this.关于本软件ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.关于本软件ToolStripMenuItem.Text = "关于本软件";
+            this.关于本软件ToolStripMenuItem.Click += new System.EventHandler(this.关于本软件ToolStripMenuItem_Click);
             // 
             // FormServer
             // 
@@ -313,6 +342,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox2;
         private Controls.MonitorControl monitorControl1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripMenuItem 关于本软件ToolStripMenuItem;
     }
 }
 
