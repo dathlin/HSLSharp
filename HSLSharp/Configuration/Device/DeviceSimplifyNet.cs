@@ -7,23 +7,26 @@ using System.Xml.Linq;
 
 namespace HSLSharp.Configuration
 {
-    public class NodeMelsecMc : DeviceNode, IXmlConvert
+    /// <summary>
+    /// SimplifyNet的设备信息
+    /// </summary>
+    public class DeviceSimplifyNet : DeviceNode
     {
         #region Constructor
 
         /// <summary>
         /// 使用默认的参数实例化一个设备信息
         /// </summary>
-        public NodeMelsecMc()
+        public DeviceSimplifyNet( )
         {
-            Name = "三菱设备";
-            Description = "此设备安装在角度，编号0001";
-            DeviceType = DeviceNode.MelsecMcQna3E;
+            Name = "SimplifyNet客户端";
+            Description = "设备用途的数据";
+            DeviceType = DeviceNode.SimplifyNet;
 
-            IpAddress = "192.168.0.3";
+            IpAddress = "127.0.0.1";
             Port = 6000;
 
-            IsBinary = true;
+            Token = Guid.Empty;
         }
 
 
@@ -45,23 +48,13 @@ namespace HSLSharp.Configuration
 
 
         /// <summary>
-        /// 网络号
+        /// Token网络令牌
         /// </summary>
-        public byte NetworkNumber { get; set; } = 0x00;
-
-        /// <summary>
-        /// 网络站号
-        /// </summary>
-        public byte NetworkStationNumber { get; set; } = 0x00;
-
-        /// <summary>
-        /// 是否是二进制通讯
-        /// </summary>
-        public bool IsBinary { get; set; }
+        public Guid Token { get; set; } 
 
 
         #endregion
-        
+
         #region Xml Interface
 
         public override void LoadByXmlElement( XElement element )
@@ -69,9 +62,7 @@ namespace HSLSharp.Configuration
             base.LoadByXmlElement( element );
             IpAddress = element.Attribute( "IpAddress" ).Value;
             Port = int.Parse( element.Attribute( "Port" ).Value );
-            NetworkNumber = byte.Parse( element.Attribute( "NetworkNumber" ).Value );
-            NetworkStationNumber = byte.Parse( element.Attribute( "NetworkStationNumber" ).Value );
-            IsBinary = bool.Parse( element.Attribute( "IsBinary" ).Value );
+            Token = new Guid( element.Attribute( "Token" ).Value );
         }
 
         public override XElement ToXmlElement( )
@@ -79,9 +70,7 @@ namespace HSLSharp.Configuration
             XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "IpAddress", IpAddress );
             element.SetAttributeValue( "Port", Port );
-            element.SetAttributeValue( "NetworkNumber", NetworkNumber );
-            element.SetAttributeValue( "NetworkStationNumber", NetworkStationNumber );
-            element.SetAttributeValue( "IsBinary", IsBinary.ToString( ) );
+            element.SetAttributeValue( "Token", Token.ToString( "N" ) );
             return element;
         }
 
@@ -94,15 +83,14 @@ namespace HSLSharp.Configuration
             var list = base.GetNodeClassRenders( );
             list.Add( NodeClassRenderItem.CreateIpAddress( IpAddress ) );
             list.Add( NodeClassRenderItem.CreateIpPort( Port ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "网络号", NetworkNumber.ToString() ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "网络站号", NetworkStationNumber.ToString( ) ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "是否二进制", IsBinary.ToString( ) ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "令牌", Token.ToString( "N" ) ) );
 
             return list;
         }
 
 
         #endregion
+
 
     }
 }

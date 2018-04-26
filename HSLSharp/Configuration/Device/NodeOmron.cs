@@ -7,23 +7,23 @@ using System.Xml.Linq;
 
 namespace HSLSharp.Configuration
 {
-    public class NodeMelsecMc : DeviceNode, IXmlConvert
+    public class NodeOmron : DeviceNode, IXmlConvert
     {
+
         #region Constructor
 
         /// <summary>
         /// 使用默认的参数实例化一个设备信息
         /// </summary>
-        public NodeMelsecMc()
+        public NodeOmron( )
         {
-            Name = "三菱设备";
-            Description = "此设备安装在角度，编号0001";
-            DeviceType = DeviceNode.MelsecMcQna3E;
+            Name = "欧姆龙设备";
+            Description = "此设备安装在角落，编号0001";
+            DeviceType = DeviceNode.Omron;
 
             IpAddress = "192.168.0.3";
-            Port = 6000;
-
-            IsBinary = true;
+            Port = 9600;
+            
         }
 
 
@@ -45,23 +45,25 @@ namespace HSLSharp.Configuration
 
 
         /// <summary>
-        /// 网络号
+        /// PLC单元号
         /// </summary>
-        public byte NetworkNumber { get; set; } = 0x00;
+        public byte DA2 { get; set; } = 0x00;
 
         /// <summary>
-        /// 网络站号
+        /// PLC的节点地址
         /// </summary>
-        public byte NetworkStationNumber { get; set; } = 0x00;
+        public byte DA1 { get; set; } = 0x0B;
 
         /// <summary>
-        /// 是否是二进制通讯
+        /// 上位机的节点地址
         /// </summary>
-        public bool IsBinary { get; set; }
+        public byte SA1 { get; set; } = 0x0C;
+        
 
 
         #endregion
-        
+
+
         #region Xml Interface
 
         public override void LoadByXmlElement( XElement element )
@@ -69,19 +71,19 @@ namespace HSLSharp.Configuration
             base.LoadByXmlElement( element );
             IpAddress = element.Attribute( "IpAddress" ).Value;
             Port = int.Parse( element.Attribute( "Port" ).Value );
-            NetworkNumber = byte.Parse( element.Attribute( "NetworkNumber" ).Value );
-            NetworkStationNumber = byte.Parse( element.Attribute( "NetworkStationNumber" ).Value );
-            IsBinary = bool.Parse( element.Attribute( "IsBinary" ).Value );
+            SA1 = byte.Parse( element.Attribute( "SA1" ).Value );
+            DA1 = byte.Parse( element.Attribute( "DA1" ).Value );
+            DA2 = byte.Parse( element.Attribute( "DA2" ).Value );
         }
 
         public override XElement ToXmlElement( )
         {
             XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "IpAddress", IpAddress );
-            element.SetAttributeValue( "Port", Port );
-            element.SetAttributeValue( "NetworkNumber", NetworkNumber );
-            element.SetAttributeValue( "NetworkStationNumber", NetworkStationNumber );
-            element.SetAttributeValue( "IsBinary", IsBinary.ToString( ) );
+            element.SetAttributeValue( "Port", Port.ToString( ) );
+            element.SetAttributeValue( "SA1", SA1.ToString( ) );
+            element.SetAttributeValue( "DA1", DA1.ToString( ) );
+            element.SetAttributeValue( "DA2", DA2.ToString() );
             return element;
         }
 
@@ -94,15 +96,16 @@ namespace HSLSharp.Configuration
             var list = base.GetNodeClassRenders( );
             list.Add( NodeClassRenderItem.CreateIpAddress( IpAddress ) );
             list.Add( NodeClassRenderItem.CreateIpPort( Port ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "网络号", NetworkNumber.ToString() ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "网络站号", NetworkStationNumber.ToString( ) ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "是否二进制", IsBinary.ToString( ) ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "上位机节点号", SA1.ToString( ) ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "PLC节点号", DA1.ToString( ) ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "PLC单元号", DA2.ToString( ) ) );
 
             return list;
         }
 
-
         #endregion
+
+
 
     }
 }

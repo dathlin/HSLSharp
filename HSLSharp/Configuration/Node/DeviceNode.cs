@@ -80,6 +80,11 @@ namespace HSLSharp.Configuration
         #region Const Define
 
         /// <summary>
+        /// 空设备的节点
+        /// </summary>
+        public const int DeviceNone = 0;
+
+        /// <summary>
         /// 三菱的Qna兼容3E帧协议的客户端
         /// </summary>
         public const int MelsecMcQna3E = 1;
@@ -95,7 +100,20 @@ namespace HSLSharp.Configuration
         /// </summary>
         public const int ModbusTcpAlien = 20;
 
+        /// <summary>
+        /// 西门子的PLC设备
+        /// </summary>
+        public const int Siemens = 30;
 
+        /// <summary>
+        /// 欧姆龙的PLC设备
+        /// </summary>
+        public const int Omron = 40;
+
+        /// <summary>
+        /// 其他电脑的SimplifyNet服务器
+        /// </summary>
+        public const int SimplifyNet = 50;
 
         #endregion
 

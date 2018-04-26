@@ -83,9 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ModbusAlien\ModbusAlienCore.cs" />
+    <Compile Include="Configuration\Device\DeviceSimplifyNet.cs" />
+    <Compile Include="Configuration\Device\NodeEmpty.cs" />
     <Compile Include="Configuration\Device\NodeModbusTcpAline.cs" />
     <Compile Include="Configuration\AlienNode\AlienNode.cs" />
     <Compile Include="Configuration\Device\NodeMelsecMc.cs" />
+    <Compile Include="Configuration\Device\NodeOmron.cs" />
+    <Compile Include="Configuration\Device\NodeSiemens.cs" />
     <Compile Include="Configuration\Regular\RegularModeTypeItem.cs" />
     <Compile Include="Configuration\Node\NodeClassRenderItem.cs" />
     <Compile Include="Configuration\Node\DeviceNode.cs" />
@@ -136,6 +140,12 @@
     <Compile Include="NodeSettings\FormAlienNode.Designer.cs">
       <DependentUpon>FormAlienNode.cs</DependentUpon>
     </Compile>
+    <Compile Include="NodeSettings\FormEmpty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormEmpty.Designer.cs">
+      <DependentUpon>FormEmpty.cs</DependentUpon>
+    </Compile>
     <Compile Include="NodeSettings\FormMelsec3E.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +181,12 @@
     </Compile>
     <Compile Include="FormServer.Designer.cs">
       <DependentUpon>FormServer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NodeSettings\FormOmron.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormOmron.Designer.cs">
+      <DependentUpon>FormOmron.cs</DependentUpon>
     </Compile>
     <Compile Include="NodeSettings\FormRegularCode.cs">
       <SubType>Form</SubType>
@@ -215,6 +231,9 @@
     <EmbeddedResource Include="NodeSettings\FormAlienNode.resx">
       <DependentUpon>FormAlienNode.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormEmpty.resx">
+      <DependentUpon>FormEmpty.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormMelsec3E.resx">
       <DependentUpon>FormMelsec3E.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormServer.resx">
       <DependentUpon>FormServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormOmron.resx">
+      <DependentUpon>FormOmron.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormRegularCode.resx">
       <DependentUpon>FormRegularCode.cs</DependentUpon>
