@@ -13,16 +13,11 @@ namespace HSLSharp.NodeSettings
 {
     public partial class FormModbusTcp : Form
     {
-        public FormModbusTcp( )
-        {
-            InitializeComponent( );
-            Icon = Util.GetWinformICon( );
-        }
 
-        public FormModbusTcp( NodeModbusTcpClient modbusTcpNode)
+        public FormModbusTcp( NodeModbusTcpClient modbusTcpNode = null)
         {
             InitializeComponent( );
-            ModbusTcpNode = modbusTcpNode;
+            ModbusTcpNode = modbusTcpNode ?? new NodeModbusTcpClient();
             Icon = Util.GetWinformICon( );
         }
 
@@ -47,6 +42,7 @@ namespace HSLSharp.NodeSettings
                 MessageBox.Show( "节点名称不能为空" );
                 return;
             }
+
             try
             {
                 ModbusTcpNode = new NodeModbusTcpClient( )

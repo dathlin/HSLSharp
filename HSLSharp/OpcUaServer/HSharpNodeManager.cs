@@ -263,6 +263,18 @@ namespace HSLSharp.OpcUaSupport
                     return new DeviceMelsecAscii( device );
                 }
             }
+            else if(deviceType == DeviceNode.Omron)
+            {
+                return new DeviceOmron( device );
+            }
+            else if(deviceType == DeviceNode.SimplifyNet)
+            {
+                return new DeviceSimplifyNet( device );
+            }
+            else if(deviceType == DeviceNode.Siemens)
+            {
+                return new DeviceSiemens( device );
+            }
             else
             {
                 return null;

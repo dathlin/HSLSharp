@@ -20,12 +20,11 @@ namespace HSLSharp.NodeSettings
             Icon = Util.GetWinformICon( );
 
 
-            MelsecMc = melsecMc;
+            MelsecMc = melsecMc ?? new NodeMelsecMc( );
         }
 
         private void FormMelsecBinary_Load( object sender, EventArgs e )
         {
-            if (MelsecMc == null) MelsecMc = new NodeMelsecMc( );
 
             if (MelsecMc != null)
             {

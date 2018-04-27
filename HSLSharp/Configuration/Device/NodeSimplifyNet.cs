@@ -10,14 +10,14 @@ namespace HSLSharp.Configuration
     /// <summary>
     /// SimplifyNet的设备信息
     /// </summary>
-    public class DeviceSimplifyNet : DeviceNode
+    public class NodeSimplifyNet : DeviceNode
     {
         #region Constructor
 
         /// <summary>
         /// 使用默认的参数实例化一个设备信息
         /// </summary>
-        public DeviceSimplifyNet( )
+        public NodeSimplifyNet( )
         {
             Name = "SimplifyNet客户端";
             Description = "设备用途的数据";
@@ -70,7 +70,7 @@ namespace HSLSharp.Configuration
             XElement element = base.ToXmlElement( );
             element.SetAttributeValue( "IpAddress", IpAddress );
             element.SetAttributeValue( "Port", Port );
-            element.SetAttributeValue( "Token", Token.ToString( "N" ) );
+            element.SetAttributeValue( "Token", Token.ToString( ) );
             return element;
         }
 
@@ -83,7 +83,7 @@ namespace HSLSharp.Configuration
             var list = base.GetNodeClassRenders( );
             list.Add( NodeClassRenderItem.CreateIpAddress( IpAddress ) );
             list.Add( NodeClassRenderItem.CreateIpPort( Port ) );
-            list.Add( NodeClassRenderItem.CreateCustomer( "令牌", Token.ToString( "N" ) ) );
+            list.Add( NodeClassRenderItem.CreateCustomer( "令牌", Token.ToString( ) ) );
 
             return list;
         }

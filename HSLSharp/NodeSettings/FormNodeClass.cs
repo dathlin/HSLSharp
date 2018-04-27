@@ -13,17 +13,12 @@ namespace HSLSharp.NodeSettings
 {
     public partial class FormNodeClass : Form
     {
-        public FormNodeClass( )
+
+        public FormNodeClass( NodeClass nodeClass = null)
         {
             InitializeComponent( );
             Icon = Util.GetWinformICon( );
-        }
-
-
-        public FormNodeClass( NodeClass nodeClass )
-        {
-            InitializeComponent( );
-            SelectedNodeClass = nodeClass;
+            SelectedNodeClass = nodeClass ?? new NodeClass( ); ;
         }
 
         private void FormNodeClass_Load( object sender, EventArgs e )

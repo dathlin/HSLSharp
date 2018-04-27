@@ -24,7 +24,7 @@ namespace HSLSharp.Configuration
             DeviceType = DeviceNode.Siemens;
 
             IpAddress = "192.168.0.3";
-            Port = 6000;
+            Port = 102;
 
             PlcType = PLC1200;
         }
@@ -63,7 +63,7 @@ namespace HSLSharp.Configuration
             base.LoadByXmlElement( element );
             IpAddress = element.Attribute( "IpAddress" ).Value;
             Port = int.Parse( element.Attribute( "Port" ).Value );
-            PlcType = element.Attribute( "IsBinary" ).Value;
+            PlcType = element.Attribute( "PlcType" ).Value;
         }
 
         public override XElement ToXmlElement( )
@@ -95,9 +95,7 @@ namespace HSLSharp.Configuration
 
 
         public const string PLC300 = "S7-300";
-
-        public const string PLC400 = "S7-400";
-
+        
         public const string PLC1200 = "S7-1200";
 
         public const string PLC1500 = "S7-1500";

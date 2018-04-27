@@ -16,11 +16,7 @@ namespace HSLSharp.NodeSettings
         public FormEmpty( NodeEmpty nodeEmpty = null)
         {
             InitializeComponent( );
-            NodeEmpty = nodeEmpty;
-            if(NodeEmpty != null)
-            {
-                NodeEmpty = new NodeEmpty( );
-            }
+            NodeEmpty = nodeEmpty ?? new NodeEmpty( );
         }
 
         private void FormEmpty_Load( object sender, EventArgs e )

@@ -17,7 +17,7 @@ namespace HSLSharp.Configuration
 
         public NodeEmpty()
         {
-            Name = "欧姆龙设备";
+            Name = "空设备";
             Description = "此设备安装在角落，编号0001";
             DeviceType = DeviceNode.DeviceNone;
         }

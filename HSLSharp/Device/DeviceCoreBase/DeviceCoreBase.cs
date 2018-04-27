@@ -27,7 +27,7 @@ namespace HSLSharp.Device
         /// </summary>
         public DeviceCoreBase()
         {
-            ActiveTime = DateTime.Now;
+            ActiveTime = DateTime.Now.AddDays( -1 );
             autoResetQuit = new AutoResetEvent( false );
             logNet = Util.LogNet;
         }

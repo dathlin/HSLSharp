@@ -43,7 +43,8 @@ namespace HSLSharp.Controls
 
                     if (lists[i].IsError)
                     {
-                        e.Graphics.FillRectangle( Brushes.DimGray, rectangle );
+                        e.Graphics.FillRectangle( Brushes.Pink, rectangle );
+                        if (ActiveTick == 1) e.Graphics.DrawRectangle( Pens.Red, rectangle );
                     }
                     else
                     {
@@ -62,7 +63,8 @@ namespace HSLSharp.Controls
                         }
                         else
                         {
-                            e.Graphics.FillRectangle( Brushes.LightGray, rectangle );
+                            e.Graphics.FillRectangle( Brushes.WhiteSmoke, rectangle );
+                            e.Graphics.DrawRectangle( Pens.Gray, rectangle );
                         }
                     }
 
@@ -96,10 +98,11 @@ namespace HSLSharp.Controls
 
         #region Private Member
 
-        private List<IDeviceCore> lists = null;             // 所有的监视对象
+        private List<IDeviceCore> lists = null;                          // 所有的监视对象
         private int ActiveIndex = -1;                                    // 活跃的索引信息
         private Timer timerRefresh = null;                               // 每秒更新界面的定时器 
         private HslCommunication.Core.SimpleHybirdLock hybirdLock;       // 数据同步锁
+        private int ActiveTick = 0;
 
         #endregion
 
@@ -145,6 +148,9 @@ namespace HSLSharp.Controls
 
         private void TimerRefresh_Tick( object sender, EventArgs e )
         {
+            if (ActiveTick == 0) ActiveTick = 1;
+            else ActiveTick = 0;
+
             Invalidate( );
         }
 

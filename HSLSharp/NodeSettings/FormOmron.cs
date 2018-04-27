@@ -18,11 +18,7 @@ namespace HSLSharp.NodeSettings
         {
             InitializeComponent( );
 
-            NodeOmron = nodeOmron;
-            if(NodeOmron == null)
-            {
-                NodeOmron = new NodeOmron( );
-            }
+            NodeOmron = nodeOmron ?? new NodeOmron( );
         }
 
         private void FormOmron_Load( object sender, EventArgs e )
@@ -44,6 +40,12 @@ namespace HSLSharp.NodeSettings
 
         private void userButton1_Click( object sender, EventArgs e )
         {
+            if(string.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show( "名称不能为空！" );
+                return;
+            }
+
             if(!IPAddress.TryParse(textBox3.Text,out IPAddress address))
             {
                 MessageBox.Show( "Ip地址输入失败！" );

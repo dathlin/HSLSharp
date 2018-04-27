@@ -97,7 +97,7 @@ namespace HSLSharp
                 if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
                     // 允许添加类别
-                    using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( ))
+                    using (NodeSettings.FormNodeClass formNode = new NodeSettings.FormNodeClass( null ))
                     {
                         if (formNode.ShowDialog( ) == DialogResult.OK)
                         {
@@ -274,6 +274,58 @@ namespace HSLSharp
                             {
                                 node.Text = formNode.MelsecMc.Name;
                                 node.Tag = formNode.MelsecMc;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                    else if (node.Tag is NodeOmron nodeOmron)
+                    {
+                        // 编辑了欧姆龙的节点数据
+                        using (NodeSettings.FormOmron formNode = new NodeSettings.FormOmron( nodeOmron ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.NodeOmron.Name;
+                                node.Tag = formNode.NodeOmron;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                    else if (node.Tag is NodeSiemens nodeSiemens)
+                    {
+                        // 编辑了欧姆龙的节点数据
+                        using (NodeSettings.FormSiemens formNode = new NodeSettings.FormSiemens( nodeSiemens ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.NodeSiemens.Name;
+                                node.Tag = formNode.NodeSiemens;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                    else if (node.Tag is NodeEmpty nodeEmpty)
+                    {
+                        // 编辑了欧姆龙的节点数据
+                        using (NodeSettings.FormEmpty formNode = new NodeSettings.FormEmpty( nodeEmpty ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.NodeEmpty.Name;
+                                node.Tag = formNode.NodeEmpty;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                    else if (node.Tag is NodeSimplifyNet nodeSimplify)
+                    {
+                        // 编辑了欧姆龙的节点数据
+                        using (NodeSettings.FormSimplifyNet formNode = new NodeSettings.FormSimplifyNet( nodeSimplify ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.NodeSimplifyNet.Name;
+                                node.Tag = formNode.NodeSimplifyNet;
                                 isNodeSettingsModify = true;
                             }
                         }
@@ -529,7 +581,51 @@ namespace HSLSharp
                         NodeModbusTcpAline modbusAlien = new NodeModbusTcpAline( );
                         modbusAlien.LoadByXmlElement( item );
                         deviceNode.Tag = modbusAlien;
+                    }
+                    else if (type == DeviceNode.MelsecMcQna3E)
+                    {
+                        deviceNode.ImageKey = "Enum_582";
+                        deviceNode.SelectedImageKey = "Enum_582";
 
+                        NodeMelsecMc node = new NodeMelsecMc( );
+                        node.LoadByXmlElement( item );
+                        deviceNode.Tag = node;
+                    }
+                    else if (type == DeviceNode.Siemens)
+                    {
+                        deviceNode.ImageKey = "Event_594";
+                        deviceNode.SelectedImageKey = "Event_594";
+
+                        NodeSiemens node = new NodeSiemens( );
+                        node.LoadByXmlElement( item );
+                        deviceNode.Tag = node;
+                    }
+                    else if (type == DeviceNode.DeviceNone)
+                    {
+                        deviceNode.ImageKey = "Method_636";
+                        deviceNode.SelectedImageKey = "Method_636";
+
+                        NodeEmpty node = new NodeEmpty( );
+                        node.LoadByXmlElement( item );
+                        deviceNode.Tag = node;
+                    }
+                    else if (type == DeviceNode.Omron)
+                    {
+                        deviceNode.ImageKey = "HotSpot_10548_color";
+                        deviceNode.SelectedImageKey = "HotSpot_10548_color";
+
+                        NodeOmron node = new NodeOmron( );
+                        node.LoadByXmlElement( item );
+                        deviceNode.Tag = node;
+                    }
+                    else if (type == DeviceNode.SimplifyNet)
+                    {
+                        deviceNode.ImageKey = "FlagRed_16x";
+                        deviceNode.SelectedImageKey = "FlagRed_16x";
+
+                        NodeSimplifyNet node = new NodeSimplifyNet( );
+                        node.LoadByXmlElement( item );
+                        deviceNode.Tag = node;
                     }
 
 
@@ -563,7 +659,7 @@ namespace HSLSharp
             }
         }
 
-        private void LoadByFile(string fileName)
+        private void LoadByFile( string fileName )
         {
             if (!System.IO.File.Exists( fileName )) return;
             try
@@ -747,5 +843,116 @@ namespace HSLSharp
 
 
 
+        private void 西门子PlcsiemensToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了西门子客户端的设备
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    // 允许添加设备
+                    using (NodeSettings.FormSiemens formNode = new NodeSettings.FormSiemens( null ))
+                    {
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            formNode.NodeSiemens.Name = GetUniqueName( node, formNode.NodeSiemens.Name );
+
+                            TreeNode nodeNew = new TreeNode( formNode.NodeSiemens.Name );
+                            nodeNew.ImageKey = "Event_594";
+                            nodeNew.SelectedImageKey = "Event_594";
+                            nodeNew.Tag = formNode.NodeSiemens;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                            isNodeSettingsModify = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void 欧姆龙plcomronToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了欧姆龙客户端的设备
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    // 允许添加设备
+                    using (NodeSettings.FormOmron formNode = new NodeSettings.FormOmron( null ))
+                    {
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            formNode.NodeOmron.Name = GetUniqueName( node, formNode.NodeOmron.Name );
+
+                            TreeNode nodeNew = new TreeNode( formNode.NodeOmron.Name );
+                            nodeNew.ImageKey = "HotSpot_10548_color";
+                            nodeNew.SelectedImageKey = "HotSpot_10548_color";
+                            nodeNew.Tag = formNode.NodeOmron;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                            isNodeSettingsModify = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void 空设备toolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            // 新增了空设备的客户端，用作纯节点使用
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    // 允许添加设备
+                    using (NodeSettings.FormEmpty formNode = new NodeSettings.FormEmpty( null ))
+                    {
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            formNode.NodeEmpty.Name = GetUniqueName( node, formNode.NodeEmpty.Name );
+
+                            TreeNode nodeNew = new TreeNode( formNode.NodeEmpty.Name );
+                            nodeNew.ImageKey = "Method_636";
+                            nodeNew.SelectedImageKey = "Method_636";
+                            nodeNew.Tag = formNode.NodeEmpty;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                            isNodeSettingsModify = true;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void simplifyNetToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    // 允许添加设备
+                    using (NodeSettings.FormSimplifyNet formNode = new NodeSettings.FormSimplifyNet( null ))
+                    {
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            formNode.NodeSimplifyNet.Name = GetUniqueName( node, formNode.NodeSimplifyNet.Name );
+
+                            TreeNode nodeNew = new TreeNode( formNode.NodeSimplifyNet.Name );
+                            nodeNew.ImageKey = "FlagRed_16x";
+                            nodeNew.SelectedImageKey = "FlagRed_16x";
+                            nodeNew.Tag = formNode.NodeSimplifyNet;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                            isNodeSettingsModify = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

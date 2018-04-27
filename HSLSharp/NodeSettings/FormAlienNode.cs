@@ -16,7 +16,7 @@ namespace HSLSharp.NodeSettings
         public FormAlienNode( AlienNode alienNode = null )
         {
             InitializeComponent( );
-            AlienNode = alienNode;
+            AlienNode = alienNode ?? new AlienNode();
             Icon = Util.GetWinformICon( ); 
         }
 

@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ModbusAlien\ModbusAlienCore.cs" />
-    <Compile Include="Configuration\Device\DeviceSimplifyNet.cs" />
+    <Compile Include="Configuration\Device\NodeSimplifyNet.cs" />
     <Compile Include="Configuration\Device\NodeEmpty.cs" />
     <Compile Include="Configuration\Device\NodeModbusTcpAline.cs" />
     <Compile Include="Configuration\AlienNode\AlienNode.cs" />
@@ -115,6 +115,9 @@
     <Compile Include="Device\Implementation\DeciveMelsecBinary.cs" />
     <Compile Include="Device\Implementation\DeciveModbusTcpAlien.cs" />
     <Compile Include="Device\Implementation\DeviceModbusTcp.cs" />
+    <Compile Include="Device\Implementation\DeviceOmron.cs" />
+    <Compile Include="Device\Implementation\DeviceSiemens.cs" />
+    <Compile Include="Device\Implementation\DeviceSimplifyNet.cs" />
     <Compile Include="Device\Interface\IDeviceCore.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
@@ -194,6 +197,18 @@
     <Compile Include="NodeSettings\FormRegularCode.Designer.cs">
       <DependentUpon>FormRegularCode.cs</DependentUpon>
     </Compile>
+    <Compile Include="NodeSettings\FormSiemens.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormSiemens.Designer.cs">
+      <DependentUpon>FormSiemens.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NodeSettings\FormSimplifyNet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormSimplifyNet.Designer.cs">
+      <DependentUpon>FormSimplifyNet.cs</DependentUpon>
+    </Compile>
     <Compile Include="OpcUaServer\DataTransferServer.cs" />
     <Compile Include="OpcUaServer\HSharpNodeManager.cs" />
     <Compile Include="OpcUaServer\NodeManagerBase.cs" />
@@ -257,6 +272,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormRegularCode.resx">
       <DependentUpon>FormRegularCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormSiemens.resx">
+      <DependentUpon>FormSiemens.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormSimplifyNet.resx">
+      <DependentUpon>FormSimplifyNet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -111,7 +111,7 @@ namespace HSLSharp.NodeSettings
         {
             // 新增节点
             TreeNode node = treeView1.SelectedNode;
-            using (FormNodeClass formNode = new FormNodeClass( ))
+            using (FormNodeClass formNode = new FormNodeClass( null ))
             {
                 if (formNode.ShowDialog( ) == DialogResult.OK)
                 {

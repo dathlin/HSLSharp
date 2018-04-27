@@ -13,11 +13,11 @@ namespace HSLSharp.NodeSettings
 {
     public partial class FormModbusTcpAlien : Form
     {
-        public FormModbusTcpAlien( NodeModbusTcpAline modbusTcpAline )
+        public FormModbusTcpAlien( NodeModbusTcpAline modbusTcpAline = null)
         {
             InitializeComponent( );
 
-            ModbusTcpAline = modbusTcpAline;
+            ModbusTcpAline = modbusTcpAline ?? new NodeModbusTcpAline();
             Icon = Util.GetWinformICon( );
         }
 
