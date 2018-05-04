@@ -39,7 +39,7 @@ namespace HSLSharp
         /// <summary>
         /// 系统的版本号
         /// </summary>
-        public static Version SharpVersion { get; } = new Version( "0.0.1" );
+        public static Version SharpVersion { get; } = new Version( "0.0.2" );
 
         #region Static Method
 

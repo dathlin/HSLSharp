@@ -102,6 +102,9 @@ namespace HSLSharp
             using (NodeSettings.FormRegularCode form = new NodeSettings.FormRegularCode( ))
             {
                 form.ShowDialog( );
+
+                // 重新加载规则配置器
+                Util.SharpRegulars.LoadRegulars( );
             }
         }
 
@@ -145,6 +148,8 @@ namespace HSLSharp
         private void FormServer_Load( object sender, EventArgs e )
         {
             textBox2.Text = Util.SharpSettings.OpcUaStringUrl;
+            toolStripStatusLabel4.Text = Util.SharpVersion.ToString( );
+
             actionShowMsg = new Action<string>( m =>
              {
                  textBox1.AppendText( m  + Environment.NewLine );

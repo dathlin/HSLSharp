@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HSLSharp.Device;
+using HslCommunication.Core;
 
 namespace HSLSharp.Controls
 {
@@ -101,7 +102,7 @@ namespace HSLSharp.Controls
         private List<IDeviceCore> lists = null;                          // 所有的监视对象
         private int ActiveIndex = -1;                                    // 活跃的索引信息
         private Timer timerRefresh = null;                               // 每秒更新界面的定时器 
-        private HslCommunication.Core.SimpleHybirdLock hybirdLock;       // 数据同步锁
+        private SimpleHybirdLock hybirdLock;                             // 数据同步锁
         private int ActiveTick = 0;
 
         #endregion

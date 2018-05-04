@@ -488,12 +488,15 @@ namespace HSLSharp.OpcUaSupport
         // close all device
         public void CloseDevices()
         {
-            for (int i = 0; i < deviceCores.Count; i++)
+            if (this.deviceCores.Count > 0)
             {
-                ThreadPool.QueueUserWorkItem( new WaitCallback( ThreadPoolCloseDevice ), deviceCores[i] );
+                for (int i = 0; i < deviceCores.Count; i++)
+                {
+                    ThreadPool.QueueUserWorkItem( new WaitCallback( ThreadPoolCloseDevice ), deviceCores[i] );
+                }
+                this.autoResetQuit.WaitOne( );
             }
 
-            this.autoResetQuit.WaitOne( );
             this.logNet?.WriteInfo( "所有设备完成下线操作。" );
         }
 

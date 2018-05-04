@@ -23,5 +23,17 @@ namespace HSLSharp
         {
             label2.Text = "V " + Util.SharpVersion.ToString( );
         }
+
+        private void linkLabel1_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+        {
+            try
+            {
+                System.Diagnostics.Process.Start( "explorer.exe", linkLabel1.Text );
+            }
+            catch(Exception ex)
+            {
+                HslCommunication.BasicFramework.SoftBasic.ShowExceptionMessage( ex );
+            }
+        }
     }
 }
