@@ -55,6 +55,16 @@ namespace HSLSharp.Device
 
 
         /// <summary>
+        /// 处理数据的核心方法，基于被动读取的设备的机制
+        /// </summary>
+        /// <param name="data">直接数据</param>
+        public virtual void AnalysisBytes( byte[] data )
+        {
+            ActiveTime = DateTime.Now;
+        }
+
+
+        /// <summary>
         /// 所有的请求列表
         /// </summary>
         public List<DeviceRequest> Requests { get; set; }

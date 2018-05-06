@@ -36,6 +36,8 @@ namespace HSLSharp.RequestSettings
             textBox4.Text = DeviceRequest.Length.ToString( );
             textBox6.Text = DeviceRequest.CaptureInterval.ToString( );
             comboBox1.SelectedItem = DeviceRequest.PraseRegularCode;
+
+
         }
 
 
@@ -43,6 +45,7 @@ namespace HSLSharp.RequestSettings
         /// 单次的设备请求信息
         /// </summary>
         public DeviceRequest DeviceRequest { get; set; }
+
 
         private void userButton1_Click( object sender, EventArgs e )
         {

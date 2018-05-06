@@ -159,7 +159,7 @@ namespace HSLSharp
             TreeNode node = treeView1.SelectedNode;
             if (node.Tag is DeviceNode deviceNode)
             {
-                // 允许添加设备
+                // 允许添加请求
                 using (RequestSettings.FormRequest formNode = new RequestSettings.FormRequest( new DeviceRequest( ) ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
@@ -224,6 +224,22 @@ namespace HSLSharp
                         }
                     }
                 }
+                else if (nodeClass.NodeType == NodeClassInfo.ModbusServer)
+                {
+                    if (node.Tag is NodeModbusServer serverNode)
+                    {
+                        // 编辑了异形服务器节点信息
+                        using (NodeSettings.FormModbusServer formNode = new NodeSettings.FormModbusServer( serverNode ))
+                        {
+                            if (formNode.ShowDialog( ) == DialogResult.OK)
+                            {
+                                node.Text = formNode.ModbusServer.Name;
+                                node.Tag = formNode.ModbusServer;
+                                isNodeSettingsModify = true;
+                            }
+                        }
+                    }
+                }
                 else
                 {
                     if (node.Tag is NodeModbusTcpClient modbusTcpNode)
@@ -239,7 +255,7 @@ namespace HSLSharp
                             }
                         }
                     }
-                    else if(node.Tag is NodeModbusTcpAline modbusTcpAline)
+                    else if (node.Tag is NodeModbusTcpAline modbusTcpAline)
                     {
                         // 编辑了Modbus-aline节点
                         using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( modbusTcpAline ))
@@ -265,7 +281,7 @@ namespace HSLSharp
                             }
                         }
                     }
-                    else if(node.Tag is NodeMelsecMc nodeMelsecMc)
+                    else if (node.Tag is NodeMelsecMc nodeMelsecMc)
                     {
                         // 编辑了三菱的节点数据
                         using (NodeSettings.FormMelsec3E formNode = new NodeSettings.FormMelsec3E( nodeMelsecMc ))
@@ -427,6 +443,11 @@ namespace HSLSharp
                     // 显示新增异形客户端
                     cMS_AlienClient.Show( treeView1, e.Location );
                 }
+                else if (node.Tag.GetType( ) == typeof( NodeModbusServer ))
+                {
+                    // 显示编辑Modbus服务器数据
+                    cMs_EditRequest.Show( treeView1, e.Location );
+                }
                 else if (node.Tag is DeviceNode)
                 {
                     // 显示第二个菜单框
@@ -436,10 +457,6 @@ namespace HSLSharp
                 {
                     // 显示第三个菜单框
                     cMs_EditRequest.Show( treeView1, e.Location );
-                }
-                else if (node.Tag is AlienNode)
-                {
-
                 }
             }
         }
@@ -571,7 +588,6 @@ namespace HSLSharp
                         NodeModbusTcpClient modbusNode = new NodeModbusTcpClient( );
                         modbusNode.LoadByXmlElement( item );
                         deviceNode.Tag = modbusNode;
-                        
                     }
                     else if (type == DeviceNode.ModbusTcpAlien)
                     {
@@ -656,6 +672,19 @@ namespace HSLSharp
 
                     TreeNodeRender( node, item );
                 }
+                else if(item.Name == "ModbusServer")
+                {
+                    TreeNode node = new TreeNode( item.Attribute( "Name" ).Value );
+                    node.ImageKey = "server_Local_16xLG";
+                    node.SelectedImageKey = "server_Local_16xLG";
+
+                    NodeModbusServer nodeClass = new NodeModbusServer( );
+                    nodeClass.LoadByXmlElement( item );
+                    node.Tag = nodeClass;
+                    treeNode.Nodes.Add( node );
+
+                    TreeNodeRender( node, item );
+                }
             }
         }
 
@@ -734,6 +763,8 @@ namespace HSLSharp
 
         #endregion
 
+        #region Node Add
+
         private void 新增服务器ToolStripMenuItem_Click( object sender, EventArgs e )
         {
             TreeNode node = treeView1.SelectedNode;
@@ -763,7 +794,7 @@ namespace HSLSharp
             TreeNode node = treeView1.SelectedNode;
             if (node.Tag is NodeClass nodeClass)
             {
-                // 允许添加类别
+                // 允许添加异形客户端
                 using (NodeSettings.FormModbusTcpAlien formNode = new NodeSettings.FormModbusTcpAlien( new NodeModbusTcpAline( ) ))
                 {
                     if (formNode.ShowDialog( ) == DialogResult.OK)
@@ -789,13 +820,12 @@ namespace HSLSharp
                 }
             }
         }
-
         private bool IsDTUExistModbusAlien( string dtu, TreeNode treeNode )
         {
             List<string> dtus = new List<string>( );
             foreach (TreeNode item in treeNode.Nodes)
             {
-                if(item.Tag is NodeModbusTcpAline modbusTcp)
+                if (item.Tag is NodeModbusTcpAline modbusTcp)
                 {
                     dtus.Add( modbusTcp.DTU );
                 }
@@ -807,7 +837,7 @@ namespace HSLSharp
 
         private void 三菱plcmelsecToolStripMenuItem_Click( object sender, EventArgs e )
         {
-            // 新增了Modbus-Tcp客户端
+            // 新增了三菱PLC客户端
             TreeNode node = treeView1.SelectedNode;
             if (node.Tag is NodeClass nodeClass)
             {
@@ -832,16 +862,6 @@ namespace HSLSharp
                 }
             }
         }
-
-        #region Private Member
-
-        private bool isNodeSettingsModify = false;            // 指示系统的节点是否已经被编辑过
-
-        #endregion
-
-
-
-
 
         private void 西门子PlcsiemensToolStripMenuItem_Click( object sender, EventArgs e )
         {
@@ -928,6 +948,7 @@ namespace HSLSharp
 
         }
 
+
         private void simplifyNetToolStripMenuItem_Click( object sender, EventArgs e )
         {
             TreeNode node = treeView1.SelectedNode;
@@ -935,7 +956,7 @@ namespace HSLSharp
             {
                 if (nodeClass.NodeType == NodeClassInfo.NodeClass)
                 {
-                    // 允许添加设备
+                    // 允许添加SimplifyNet设备
                     using (NodeSettings.FormSimplifyNet formNode = new NodeSettings.FormSimplifyNet( null ))
                     {
                         if (formNode.ShowDialog( ) == DialogResult.OK)
@@ -954,5 +975,46 @@ namespace HSLSharp
                 }
             }
         }
+
+
+        private void 新增ModbusTcpServerToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            TreeNode node = treeView1.SelectedNode;
+            if (node.Tag is NodeClass nodeClass)
+            {
+                if (nodeClass.NodeType == NodeClassInfo.NodeClass)
+                {
+                    // 允许添加Modbus-Tcp服务器
+                    using (NodeSettings.FormModbusServer formNode = new NodeSettings.FormModbusServer( ))
+                    {
+                        if (formNode.ShowDialog( ) == DialogResult.OK)
+                        {
+                            formNode.ModbusServer.Name = GetUniqueName( node, formNode.ModbusServer.Name );
+
+                            TreeNode nodeNew = new TreeNode( formNode.ModbusServer.Name );
+                            nodeNew.ImageKey = "server_Local_16xLG";
+                            nodeNew.SelectedImageKey = "server_Local_16xLG";
+                            nodeNew.Tag = formNode.ModbusServer;
+                            node.Nodes.Add( nodeNew );
+                            node.Expand( );
+                            isNodeSettingsModify = true;
+                        }
+                    }
+                }
+            }
+        }
+        
+
+        #endregion
+        
+        #region Private Member
+
+        private bool isNodeSettingsModify = false;            // 指示系统的节点是否已经被编辑过
+
+        #endregion
+
+
+        
+
     }
 }

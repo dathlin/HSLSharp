@@ -31,17 +31,19 @@ namespace HSLSharp
         private void InitializeComponent( )
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Devices");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("ModbusServer");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("ModbusAlien");
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Devices");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("ModbusServer");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("ModbusAlien");
             this.cMS_Device = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新增类别ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.类别classToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.空设备toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.西门子PlcsiemensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.三菱plcmelsecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.欧姆龙plcomronToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modbustcpclientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simplifyNetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑类别editClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,8 +72,6 @@ namespace HSLSharp
             this.编辑节点ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.删除节点ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new HSLSharp.Controls.TreeViewEx();
-            this.空设备toolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simplifyNetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cMS_Device.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.cMS_Request.SuspendLayout();
@@ -89,7 +89,7 @@ namespace HSLSharp
             this.编辑类别editClassToolStripMenuItem,
             this.删除deleteToolStripMenuItem});
             this.cMS_Device.Name = "contextMenuStrip1";
-            this.cMS_Device.Size = new System.Drawing.Size(181, 92);
+            this.cMS_Device.Size = new System.Drawing.Size(125, 70);
             // 
             // 新增类别ToolStripMenuItem
             // 
@@ -103,7 +103,7 @@ namespace HSLSharp
             this.simplifyNetToolStripMenuItem});
             this.新增类别ToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.action_add_16xLG;
             this.新增类别ToolStripMenuItem.Name = "新增类别ToolStripMenuItem";
-            this.新增类别ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.新增类别ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.新增类别ToolStripMenuItem.Text = "新增类别";
             // 
             // 类别classToolStripMenuItem
@@ -113,6 +113,14 @@ namespace HSLSharp
             this.类别classToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.类别classToolStripMenuItem.Text = "类别(class)";
             this.类别classToolStripMenuItem.Click += new System.EventHandler(this.类别classToolStripMenuItem_Click);
+            // 
+            // 空设备toolStripMenuItem
+            // 
+            this.空设备toolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Method_636;
+            this.空设备toolStripMenuItem.Name = "空设备toolStripMenuItem";
+            this.空设备toolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.空设备toolStripMenuItem.Text = "空设备(empty)";
+            this.空设备toolStripMenuItem.Click += new System.EventHandler(this.空设备toolStripMenuItem_Click);
             // 
             // 西门子PlcsiemensToolStripMenuItem
             // 
@@ -145,6 +153,14 @@ namespace HSLSharp
             this.modbustcpclientToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.modbustcpclientToolStripMenuItem.Text = "Modbus-tcp-client";
             this.modbustcpclientToolStripMenuItem.Click += new System.EventHandler(this.modbustcpclientToolStripMenuItem_Click);
+            // 
+            // simplifyNetToolStripMenuItem
+            // 
+            this.simplifyNetToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.FlagRed_16x;
+            this.simplifyNetToolStripMenuItem.Name = "simplifyNetToolStripMenuItem";
+            this.simplifyNetToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.simplifyNetToolStripMenuItem.Text = "SimplifyNet";
+            this.simplifyNetToolStripMenuItem.Click += new System.EventHandler(this.simplifyNetToolStripMenuItem_Click);
             // 
             // 编辑类别editClassToolStripMenuItem
             // 
@@ -185,8 +201,8 @@ namespace HSLSharp
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
@@ -322,6 +338,7 @@ namespace HSLSharp
             this.新增ModbusTcpServerToolStripMenuItem.Name = "新增ModbusTcpServerToolStripMenuItem";
             this.新增ModbusTcpServerToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
             this.新增ModbusTcpServerToolStripMenuItem.Text = "新增ModbusTcpServer";
+            this.新增ModbusTcpServerToolStripMenuItem.Click += new System.EventHandler(this.新增ModbusTcpServerToolStripMenuItem_Click);
             // 
             // cMS_AlienNode
             // 
@@ -387,36 +404,20 @@ namespace HSLSharp
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.Location = new System.Drawing.Point(20, 47);
             this.treeView1.Name = "treeView1";
-            treeNode7.Name = "node_devices";
-            treeNode7.Text = "Devices";
-            treeNode8.Name = "node_modbusServer";
-            treeNode8.Text = "ModbusServer";
-            treeNode9.Name = "node_modbusAlien";
-            treeNode9.Text = "ModbusAlien";
+            treeNode1.Name = "node_devices";
+            treeNode1.Text = "Devices";
+            treeNode2.Name = "node_modbusServer";
+            treeNode2.Text = "ModbusServer";
+            treeNode3.Name = "node_modbusAlien";
+            treeNode3.Text = "ModbusAlien";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.treeView1.Size = new System.Drawing.Size(428, 565);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.treeView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDown);
-            // 
-            // 空设备toolStripMenuItem
-            // 
-            this.空设备toolStripMenuItem.Image = global::HSLSharp.Properties.Resources.Method_636;
-            this.空设备toolStripMenuItem.Name = "空设备toolStripMenuItem";
-            this.空设备toolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.空设备toolStripMenuItem.Text = "空设备(empty)";
-            this.空设备toolStripMenuItem.Click += new System.EventHandler(this.空设备toolStripMenuItem_Click);
-            // 
-            // simplifyNetToolStripMenuItem
-            // 
-            this.simplifyNetToolStripMenuItem.Image = global::HSLSharp.Properties.Resources.FlagRed_16x;
-            this.simplifyNetToolStripMenuItem.Name = "simplifyNetToolStripMenuItem";
-            this.simplifyNetToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.simplifyNetToolStripMenuItem.Text = "SimplifyNet";
-            this.simplifyNetToolStripMenuItem.Click += new System.EventHandler(this.simplifyNetToolStripMenuItem_Click);
             // 
             // FormNodeSetting
             // 

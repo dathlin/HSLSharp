@@ -94,7 +94,7 @@
     <Compile Include="Configuration\Node\NodeClassRenderItem.cs" />
     <Compile Include="Configuration\Node\DeviceNode.cs" />
     <Compile Include="Configuration\Node\DeviceRequest.cs" />
-    <Compile Include="Configuration\ModbusServer\ModbusNode.cs" />
+    <Compile Include="Configuration\ModbusServer\ModbusServerNode.cs" />
     <Compile Include="Configuration\ModbusServer\ModbusRequest.cs" />
     <Compile Include="Configuration\Device\NodeModbusTcpClient.cs" />
     <Compile Include="Configuration\Node\IXmlConvert.cs" />
@@ -154,6 +154,12 @@
     </Compile>
     <Compile Include="NodeSettings\FormMelsec3E.Designer.cs">
       <DependentUpon>FormMelsec3E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NodeSettings\FormModbusServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NodeSettings\FormModbusServer.Designer.cs">
+      <DependentUpon>FormModbusServer.cs</DependentUpon>
     </Compile>
     <Compile Include="NodeSettings\FormModbusTcp.cs">
       <SubType>Form</SubType>
@@ -251,6 +257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormMelsec3E.resx">
       <DependentUpon>FormMelsec3E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NodeSettings\FormModbusServer.resx">
+      <DependentUpon>FormModbusServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NodeSettings\FormModbusTcp.resx">
       <DependentUpon>FormModbusTcp.cs</DependentUpon>

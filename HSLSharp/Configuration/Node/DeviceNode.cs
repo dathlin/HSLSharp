@@ -114,6 +114,7 @@ namespace HSLSharp.Configuration
         /// 其他电脑的SimplifyNet服务器
         /// </summary>
         public const int SimplifyNet = 50;
+        
 
         #endregion
 

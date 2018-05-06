@@ -13,6 +13,7 @@ using HslCommunication.Core.Net;
 using HSLSharp.Device;
 using System.Threading;
 using HslCommunication.Core;
+using HslCommunication.ModBus;
 
 namespace HSLSharp.OpcUaSupport
 {
@@ -32,7 +33,9 @@ namespace HSLSharp.OpcUaSupport
             logNet = Util.LogNet;                                        // 日志存储支持
             autoResetQuit = new AutoResetEvent( false );                 // 退出时候的同步锁
             deviceCores = new List<IDeviceCore>( );                      // 所有的设备的管理核心
+            dictDeviceCores = new Dictionary<string, IDeviceCore>( );    // 所有的设备的词典管理核心，加速设备查找速度
             networkAliens = new List<NetworkAlienClient>( );             // 所有的异形服务器列表
+            modbusTcpServers = new List<ModbusTcpServer>( );             // 所有Modbus服务器的列表
         }
         
         #endregion
@@ -84,8 +87,7 @@ namespace HSLSharp.OpcUaSupport
                 {
                     externalReferences[ObjectIds.ObjectsFolder] = references = new List<IReference>();
                 }
-
-
+                
 
                 // 从Xml文件进行加载数据
                 logNet?.WriteInfo( "正在从资源加载节点信息..." );
@@ -103,49 +105,7 @@ namespace HSLSharp.OpcUaSupport
 
 
                 StartAllNetworkAliens( );                   // 启动所有的异形服务器
-
-                //FolderState rootModbusAlien = CreateFolder( null, "ModbusAlien" );
-                //rootModbusAlien.AddReference( ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder );
-                //references.Add( new NodeStateReference( ReferenceTypes.Organizes, false, rootModbusAlien.NodeId ) );
-                //rootModbusAlien.EventNotifier = EventNotifiers.SubscribeToEvents;
-                //AddRootNotifier( rootModbusAlien );
-
-                //// 解析异形服务器
-                //foreach (var serverXml in element.Elements( ))
-                //{
-                //    if (serverXml.Attribute( "Name" ).Value == "ModbusAlien")
-                //    {
-                //        foreach (var alien in serverXml.Elements( "AlienNode" ))
-                //        {
-                //            AlienNode alienNode = new AlienNode( );
-                //            alienNode.LoadByXmlElement( alien );
-                //            FolderState rootAlien = CreateFolder( rootModbusAlien, alienNode.Name, alienNode.Description );
-
-
-                //        }
-                //    }
-                //}
-
-
-                //AddPredefinedNode( SystemContext, rootModbusAlien );
-
-                // 构建数据
-                //FolderState rootMy = CreateFolder(null,  "Modbus");
-                //rootMy.AddReference(ReferenceTypes.Organizes, true, ObjectIds.ObjectsFolder);
-                //references.Add(new NodeStateReference(ReferenceTypes.Organizes, false, rootMy.NodeId));
-                //rootMy.EventNotifier = EventNotifiers.SubscribeToEvents;
-                //AddRootNotifier(rootMy);
-
-
-
-
-                //foreach (var node in Util.NodeSettings.Nodes)
-                //{
-                //var dataVariableState = CreateBaseVariable( rootMy, node.NodeName, node.NodeDescription, DataTypeIds.Byte, ValueRanks.OneDimension, new Byte[node.DataLength] );
-
-                //dict_BaseDataVariableState.Add( dataVariableState.NodeId.ToString( ), dataVariableState );
-                //}
-                //AddPredefinedNode(SystemContext, rootMy);
+                StartModbusServer( );                       // 启动所有的ModbusTcp服务器
             }
         }
 
@@ -191,7 +151,15 @@ namespace HSLSharp.OpcUaSupport
                     FolderState son = CreateFolder( parent, alienNode.Name, alienNode.Description );
                     AddNodeClass( son, xmlNode, references );
                 }
+                else if(xmlNode.Name == "ModbusServer")
+                {
+                    NodeModbusServer serverNode = new NodeModbusServer( );
+                    serverNode.LoadByXmlElement( xmlNode );
+                    AddModbusTcpServer( serverNode );
 
+                    FolderState son = CreateFolder( parent, serverNode.Name, serverNode.Description );
+                    AddNodeClass( son, xmlNode, references );
+                }
             }
         }
 
@@ -222,7 +190,7 @@ namespace HSLSharp.OpcUaSupport
                 if (deviceReal != null)
                 {
                     deviceReal.OpcUaNode = deviceFolder.NodeId.ToString( );
-                    this.deviceCores.Add( deviceReal );
+                    AddDeviceCore( deviceReal );
                     deviceReal.WriteDeviceData = WriteDeviceData;
                     deviceReal.Name = name;
                     deviceReal.StartRead( );
@@ -474,10 +442,17 @@ namespace HSLSharp.OpcUaSupport
             }
             networkAlien.Port = alienNode.Port;
             networkAlien.OnClientConnected += NetworkAlien_OnClientConnected ;
-            networkAliens.Add( networkAlien );
+            this.networkAliens.Add( networkAlien );
         }
 
-
+        private void AddModbusTcpServer(NodeModbusServer nodeModbus)
+        {
+            ModbusTcpServer server = new ModbusTcpServer( );
+            server.LogNet = Util.LogNet;
+            server.Port = nodeModbus.Port;
+            this.modbusTcpServers.Add( server );
+        }
+        
 
         #endregion
 
@@ -508,7 +483,7 @@ namespace HSLSharp.OpcUaSupport
                 this.logNet?.WriteInfo( $"设备({deviceCore.UniqueId}) 下线。" );
                 if (Interlocked.Decrement( ref deviceCount ) == 0)
                 {
-                    autoResetQuit.Set( );
+                    this.autoResetQuit.Set( );
                 }
             }
         }
@@ -522,42 +497,50 @@ namespace HSLSharp.OpcUaSupport
         /// </summary>
         public List<IDeviceCore> DeviceCores => deviceCores;
 
-        #endregion
-
-        #region Dictionary Resources
-
-
 
 
         #endregion
-
+        
         #region Private Member
 
         private ILogNet logNet;                                    // 日志存储对象
         private List<IDeviceCore> deviceCores;                     // 所有的设备客户端列表
+        private Dictionary<string, IDeviceCore> dictDeviceCores;   // 所有的设备客户端词典列表，加速设备查找速度
         private int deviceCount = 0;                               // 已经加载的设备总数
         private AutoResetEvent autoResetQuit;                      // 退出系统的时候的同步锁
+        private List<NetworkAlienClient> networkAliens;            // 所有的异形客户端的列表
+        private List<ModbusTcpServer> modbusTcpServers;            // 所有的ModbusTcp服务器
 
         #endregion
 
         #region ModbusAlien
 
 
-        private List<NetworkAlienClient> networkAliens;            // 所有的异形客户端的列表
+        private void AddDeviceCore( IDeviceCore device )
+        {
+            this.deviceCores.Add( device );
+            if (this.dictDeviceCores.ContainsKey( device.UniqueId ))
+            {
+                this.logNet?.WriteError( "设备唯一码重复，无法添加集合，ID: " + device.UniqueId );
+            }
+            else
+            {
+                this.dictDeviceCores.Add( device.UniqueId, device );
+            }
+        }
+
+
         
 
 
         private void NetworkAlien_OnClientConnected( NetworkAlienClient  networkAlien, AlienSession session )
         {
             bool isExist = false;
-            for (int i = 0; i < deviceCores.Count; i++)
+
+            if(dictDeviceCores.ContainsKey( session.DTU ))
             {
-                if (deviceCores[i].UniqueId == session.DTU)
-                {
-                    deviceCores[i].SetAlineSession( session );
-                    isExist = true;
-                    break;
-                }
+                dictDeviceCores[session.DTU].SetAlineSession( session );
+                isExist = true;
             }
 
             if (!isExist)
@@ -574,6 +557,15 @@ namespace HSLSharp.OpcUaSupport
             for (int i = 0; i < networkAliens.Count; i++)
             {
                 networkAliens[i].ServerStart( );
+            }
+        }
+
+
+        private void StartModbusServer()
+        {
+            for (int i = 0; i < modbusTcpServers.Count; i++)
+            {
+                modbusTcpServers[i].ServerStart( );
             }
         }
 

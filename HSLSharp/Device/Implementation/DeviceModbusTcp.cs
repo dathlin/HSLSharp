@@ -20,7 +20,6 @@ namespace HSLSharp.Device
         /// <summary>
         /// 默认的构造方法
         /// </summary>
-        /// <param name="dtu"></param>
         /// <param name="element"></param>
         public DeviceModbusTcp( XElement element )
         {

@@ -2976,11 +2976,6 @@
             <param name="session"></param>
             <returns></returns>
         </member>
-        <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ServerStart">
-            <summary>
-            使用配置的端口初始化数据信息
-            </summary>
-        </member>
         <member name="M:HslCommunication.Core.Net.NetworkAlienClient.SetPassword(System.Byte[])">
             <summary>
             设置密码，长度为6
@@ -2998,11 +2993,6 @@
             退出异形客户端
             </summary>
             <param name="session">异形客户端的会话</param>
-        </member>
-        <member name="P:HslCommunication.Core.Net.NetworkAlienClient.Port">
-            <summary>
-            端口号
-            </summary>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkAlienClient.ToString">
             <summary>
@@ -3260,9 +3250,19 @@
             服务器程序的基础类
             </summary>
         </member>
+        <member name="M:HslCommunication.Core.Net.NetworkServerBase.#ctor">
+            <summary>
+            实例化一个默认的对象
+            </summary>
+        </member>
         <member name="P:HslCommunication.Core.Net.NetworkServerBase.IsStarted">
             <summary>
             服务器引擎是否启动
+            </summary>
+        </member>
+        <member name="P:HslCommunication.Core.Net.NetworkServerBase.Port">
+            <summary>
+            服务器的端口号
             </summary>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkServerBase.AsyncAcceptCallback(System.IAsyncResult)">
@@ -3287,6 +3287,11 @@
             启动服务器的引擎
             </summary>
             <param name="port">指定一个端口号</param>
+        </member>
+        <member name="M:HslCommunication.Core.Net.NetworkServerBase.ServerStart">
+            <summary>
+            使用已经配置好的端口启动服务器的引擎
+            </summary>
         </member>
         <member name="M:HslCommunication.Core.Net.NetworkServerBase.CloseAction">
             <summary>
@@ -4242,51 +4247,6 @@
         <member name="T:HslCommunication.Core.Singleton">
             <summary>
             一个双检锁的示例，适合一些占内存的静态数据对象，获取的时候才实例化真正的对象
-            </summary>
-        </member>
-        <member name="T:HslCommunication.Core.AdvancedHybirdLock">
-            <summary>
-            一个高级的混合线程同步锁，采用了基元用户加基元内核同步构造实现，并包含了自旋和线程所有权
-            </summary>
-        </member>
-        <member name="M:HslCommunication.Core.AdvancedHybirdLock.Dispose">
-            <summary>
-            释放资源
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Core.AdvancedHybirdLock.m_waiters">
-            <summary>
-            基元用户模式构造同步锁
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Core.AdvancedHybirdLock.m_waiterLock">
-            <summary>
-            基元内核模式构造同步锁
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Core.AdvancedHybirdLock.m_spincount">
-            <summary>
-            控制自旋的一个字段
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Core.AdvancedHybirdLock.m_owningThreadId">
-            <summary>
-            指出哪个线程拥有锁
-            </summary>
-        </member>
-        <member name="F:HslCommunication.Core.AdvancedHybirdLock.m_recursion">
-            <summary>
-            指示锁拥有了多少次
-            </summary>
-        </member>
-        <member name="M:HslCommunication.Core.AdvancedHybirdLock.Enter">
-            <summary>
-            获取锁
-            </summary>
-        </member>
-        <member name="M:HslCommunication.Core.AdvancedHybirdLock.Leave">
-            <summary>
-            离开锁
             </summary>
         </member>
         <member name="T:HslCommunication.Core.ByteTransformBase">
@@ -9379,6 +9339,11 @@
         <member name="E:HslCommunication.ModBus.ModbusTcpServer.OnDataReceived">
             <summary>
             接收到数据的时候就行触发
+            </summary>
+        </member>
+        <member name="P:HslCommunication.ModBus.ModbusTcpServer.OnlineCount">
+            <summary>
+            当前在线的客户端的数量
             </summary>
         </member>
         <member name="M:HslCommunication.ModBus.ModbusTcpServer.ReadCoil(System.UInt16)">

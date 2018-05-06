@@ -23,12 +23,18 @@ namespace HSLSharp.Device
         string OpcUaNode { get; set; }
 
         /// <summary>
-        /// 读取数据的核心方法
+        /// 读取数据的核心方法，基于主动读取的设备的机制
         /// </summary>
         /// <param name="address">其实地址</param>
         /// <param name="length">读取的数据长度</param>
         /// <returns>字节数据</returns>
         OperateResult<byte[]> ReadBytes( string address, ushort length );
+
+        /// <summary>
+        /// 处理数据的核心方法，基于被动读取的设备的机制
+        /// </summary>
+        /// <param name="data">直接数据</param>
+        void AnalysisBytes( byte[] data );
 
         /// <summary>
         /// 所有的请求列表
