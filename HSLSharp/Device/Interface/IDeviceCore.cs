@@ -82,7 +82,15 @@ namespace HSLSharp.Device
         /// <param name="alienSession">异形客户端的会话</param>
         void SetAlineSession( AlienSession alienSession );
 
+        /// <summary>
+        /// 请求成功次数的统计
+        /// </summary>
+        long RequestSuccessCount { get; set; }
 
+        /// <summary>
+        /// 请求失败的次数统计
+        /// </summary>
+        long RequestFailedCount { get; set; }
 
         #region Server Paint
 

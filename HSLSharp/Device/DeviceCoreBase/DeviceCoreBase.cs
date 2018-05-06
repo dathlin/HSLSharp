@@ -95,6 +95,16 @@ namespace HSLSharp.Device
         public string Name { get; set; }
 
         /// <summary>
+        /// 请求成功的次数统计
+        /// </summary>
+        public long RequestSuccessCount { get; set; }
+
+        /// <summary>
+        /// 请求失败的次数统计
+        /// </summary>
+        public long RequestFailedCount { get; set; }
+
+        /// <summary>
         /// 类型名称
         /// </summary>
         public string TypeName { get; set; }
@@ -210,10 +220,12 @@ namespace HSLSharp.Device
                             IsError = false;
                             WriteDeviceData?.Invoke( this, OpcUaNode, read.Content, Request );
                             ActiveTime = DateTime.Now;
+                            RequestSuccessCount++;
                         }
                         else
                         {
                             IsError = true;
+                            RequestFailedCount++;
                         }
                     }
                 }

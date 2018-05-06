@@ -33,6 +33,11 @@ namespace HSLSharp.Controls
         {
             if (lists != null)
             {
+
+                int offline = 0;
+                long requestSuccessTotle = 0;
+                long requestFailedTotle = 0;
+
                 e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
                 hybirdLock.Enter( );
                 // 每个格子大小为10*10 间隙2
@@ -41,9 +46,12 @@ namespace HSLSharp.Controls
                 {
                     Rectangle rectangle = new Rectangle( point.X, point.Y, 12, 12 );
                     lists[i].PaintRegion = rectangle;
+                    requestSuccessTotle += lists[i].RequestSuccessCount;
+                    requestFailedTotle += lists[i].RequestFailedCount;
 
                     if (lists[i].IsError)
                     {
+                        offline++;                 // 统计离线设备
                         e.Graphics.FillRectangle( Brushes.Pink, rectangle );
                         if (ActiveTick == 1) e.Graphics.DrawRectangle( Pens.Red, rectangle );
                     }
@@ -82,14 +90,20 @@ namespace HSLSharp.Controls
 
                 if (ActiveIndex >= 0 && ActiveIndex < lists.Count)
                 {
-                    Rectangle rectangle = new Rectangle( 0, Height - Font.Height - 1, Width - 1, Font.Height );
+                    Rectangle rectangle = new Rectangle( 1, Height - Font.Height - 1, Width - 1, Font.Height );
                     e.Graphics.FillRectangle( Brushes.Lavender, rectangle );
                     rectangle.X = 1;
-                    
-                   
-                        e.Graphics.DrawString( "名称：" + lists[ActiveIndex].Name + " 状态：" + (lists[ActiveIndex].IsError? "掉线" : "在线" )+
-                            " 上次接收时间：" + lists[ActiveIndex].ActiveTime.ToString( ), Font, Brushes.Blue, rectangle );
-                    
+
+
+                    e.Graphics.DrawString( "名称：" + lists[ActiveIndex].Name + " 状态：" + (lists[ActiveIndex].IsError ? "掉线" : "在线") +
+                        " 上次接收时间：" + lists[ActiveIndex].ActiveTime.ToString( ), Font, Brushes.Blue, rectangle );
+                }
+                else
+                {
+                    e.Graphics.DrawString( "设备总计：" + lists.Count, Font, Brushes.Chocolate, new Point( 1, Height - Font.Height - 1 ) );
+                    e.Graphics.DrawString( "离线总计：" + offline, Font, Brushes.Red, new Point( 150, Height - Font.Height - 1 ) );
+                    e.Graphics.DrawString( "请求成功：" + requestSuccessTotle, Font, Brushes.Purple, new Point( 300, Height - Font.Height - 1 ) );
+                    e.Graphics.DrawString( "请求失败：" + requestFailedTotle, Font, Brushes.Tomato, new Point( 500, Height - Font.Height - 1 ) );
                 }
 
                 hybirdLock.Leave( );
